@@ -114,23 +114,18 @@ void Initialization()//初始化函数
 		//======测试时所用代码块=====
 		//将所有的标志位都清为0
 		Serial.println("debug == 1");
-		//AT24CXX_WriteOneByte(0, 0x00);//LORA初始化完成的标志位
+		if (LORA_reset == 1)
+		{
+			Serial.println("LORA_reset == 1");
+			AT24CXX_WriteOneByte(0, 0x00);//LORA初始化完成的标志位
+		}
+		else
+		{
+			AT24CXX_WriteOneByte(0, 0x01);//LORA初始化完成的标志位
+		}
 		AT24CXX_WriteOneByte(1, 0x00);//EEPROM初始化完成的标志位
 		AT24CXX_WriteOneByte(2, 0x00);//申号完成的标志位
 	}
-	if (LORA_reset == 1)
-	{
-		Serial.println("LORA_reset == 1");
-		AT24CXX_WriteOneByte(0, 0x00);//LORA初始化完成的标志位
-	}
-	//-------------------------------------------
-
-	/*AT24CXX_WriteOneByte(0, 0x05);
-	Serial.println(AT24CXX_ReadOneByte(0), HEX);*/
-
-
-
-
 
 	//设置EEPROM的初始化
 	if (AT24CXX_ReadOneByte(1) == 0x01)
@@ -145,10 +140,18 @@ void Initialization()//初始化函数
 	}
 	else
 	{
-		AT24CXX_WriteOneByte(0, 0x00);//LORA初始化完成的标志位
+		if (LORA_reset == 1)
+		{
+			Serial.println("LORA_reset == 1");
+			AT24CXX_WriteOneByte(0, 0x00);//LORA初始化完成的标志位
+		}
+		else
+		{
+			AT24CXX_WriteOneByte(0, 0x01);//LORA初始化完成的标志位
+		}
 		AT24CXX_WriteOneByte(1, 0x00);//EEPROM初始化完成的标志位
 		AT24CXX_WriteOneByte(2, 0x00);//申号完成的标志位
-		for (size_t i = 3; i < 11; i++)//SN的存储
+		for (size_t i = 3; i <= 11; i++)//SN的存储
 		{
 			AT24CXX_WriteOneByte(i, 0x00);
 		}

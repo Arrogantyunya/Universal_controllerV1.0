@@ -36,7 +36,7 @@
 
 
  //全局变量
-static unsigned char Receive_IsBroadcast; 				//是否广播指令
+static unsigned char Receive_IsBroadcast = 0x00; //是否广播指令
 
 static unsigned char E011[47];//用来存放E011发送出去的数组
 

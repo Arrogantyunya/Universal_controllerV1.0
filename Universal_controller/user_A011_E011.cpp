@@ -36,6 +36,69 @@ unsigned char Send_E011(int Receive_IsBroadcast)//E011函数
 	E011[0] = E011_FrameHead;
 	E011[1] = E011_FrameId1;
 	E011[2] = E011_FrameId2;
+	E011[3] = E011_DataLen;
+	E011[4] = E011_DeviceTypeID1;
+	E011[5] = E011_DeviceTypeID2;
+	E011[6] = E011_IsBroadcast;
+	E011[7] = E011_ZoneId;
+	E011[8] = E011_DeviceSN1;
+	E011[9] = E011_DeviceSN2;
+	E011[10] = E011_DeviceSN3;
+	E011[11] = E011_DeviceSN4;
+	E011[12] = E011_DeviceSN5;
+	E011[13] = E011_DeviceSN6;
+	E011[14] = E011_DeviceSN7;
+	E011[15] = E011_DeviceSN8;
+	E011[16] = E011_DeviceSN9;
+	for (size_t i = 4; i <= E011_DataLen + 0x03; i++)
+	{
+		Check_Data[Check_Length] = E011[i];
+		// Check_Data[Check_Length] = 0x55;
+		if (debug == 1)
+		{
+			Serial.print("Check_Data ");
+			Serial.print(Check_Length);
+			Serial.print(" :");
+			Serial.println(Check_Data[Check_Length], HEX);
+		}
+		Check_Length++;
+		delay(1);
+	}
+	Serial.print("Check_Length = ");
+	Serial.println(Check_Length);
+
+	if (Check_Length > 0)
+	{
+		E011_CRC8 = GetCrc8(Check_Data, Check_Length);//得到CRC数据
+		if (debug == 1)
+		{
+			Serial.print("CRC8计算的值E011_CRC8 = 0x");
+			Serial.println(E011_CRC8, HEX);
+		}
+		Check_Length = 0;
+	}
+	E011[17] = E011_CRC8;
+	E011[18] = E011_FrameEnd1;
+	E011[19] = E011_FrameEnd2;
+	E011[20] = E011_FrameEnd3;
+	E011[21] = E011_FrameEnd4;
+	E011[22] = E011_FrameEnd5;
+	E011[23] = E011_FrameEnd6;
+
+	//该区域为串口查看E011回执的信息
+	if (debug == 1)
+	{
+		for (int i = 0; i < 24; i++)
+		{
+			Serial.print(i);
+			Serial.print("/");
+			Serial.println(E011[i], HEX);
+			delay(1);
+		}
+	}
+
+	Serial3.write(E011, 24);
+	Serial3.flush();
 	Send_Data_Lamp();//发送数据灯
 }
 
@@ -61,7 +124,7 @@ unsigned char E011_init()
 
 	E011_IsBroadcast = Receive_IsBroadcast;//E011的是否广播指令
 
-	E011_ZoneId = AT24CXX_ReadOneByte(12);           //E011的区域
+	E011_ZoneId = AT24CXX_ReadOneByte(12);         //E011的区域
 
 	E011_DeviceSN1 = AT24CXX_ReadOneByte(3);       //E011的SN1
 	E011_DeviceSN2 = AT24CXX_ReadOneByte(4);       //E011的SN2

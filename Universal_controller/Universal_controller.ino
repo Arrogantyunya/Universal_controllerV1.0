@@ -6,18 +6,6 @@
     Author:     刘家辉
 */
 
-// Define User Types below here or use a .h file
-//
-
-
-// Define Function Prototypes that use User Types below here or use a .h file
-//
-
-
-// Define Functions below here or use other .ino or cpp files
-//
-
-// The setup() function runs once each time the micro-controller starts
 #include "user_crc8.h"
 #include "user_judgement.h"
 #include "user_A011_E011.h"
@@ -27,13 +15,21 @@
 #include "AT24CXX.h"
 #include "i2c.h"
 
+
+//----------------------------
+static String LORA_RecData1, LORA_RecData2;
+
+
+
+
+
 //函 数 名：setup() 
 //功能描述：起始代码
 //函数说明：
 //调用函数：
 //全局变量：
 //输 入：
-//返 回： 
+//返 回：
 /////////////////////////////////////////////////////////////////////
 void setup()
 {
@@ -41,6 +37,7 @@ void setup()
 	Serial.println("初始化执行结束");
 	if (AT24CXX_ReadOneByte(0) == 0x01 && AT24CXX_ReadOneByte(1) == 0x01)
 	{
+		Serial.println("初始化程序执行成功！");
 		//初始化完成状态灯1红绿交替闪烁5次
 		for (size_t i = 0; i < 5; i++)
 		{
@@ -102,11 +99,15 @@ void setup()
 void loop()
 {
 	//读取设置的自动策略
+	if (AT24CXX_ReadOneByte(13) == 0x01)
+	{
+		
+	}
 
-	//Receive_information();	//LORA的接收函数
+	LORA_Receive_information();	//LORA的接收函数
 	//forswitch();				//forswitch
 
-	//这是重新设置所有的配置信息
+	//这是恢复为出厂设置，请慎用
 	if (digitalRead(K1) == LOW)
 	{
 		delay(2000);
@@ -118,11 +119,12 @@ void loop()
 			AT24CXX_WriteOneByte(0, 0x00);//lora初始化的标志位
 			AT24CXX_WriteOneByte(1, 0x00);//EEPROM设置的标志位
 			AT24CXX_WriteOneByte(2, 0x00);//申号的标志位
+			AT24CXX_WriteOneByte(13, 0x00);//自动策略的标志位
 			//-------------------------------------------
-			Serial.println("重新请求分号");
+			Serial.println("开始进行恢复出厂设置");
 
-			//
-			for (size_t i = 0; i < 3; i++)
+			//进行出厂设置灯
+			for (size_t i = 0; i < 10; i++)
 			{
 				digitalWrite(LED1, HIGH);
 				digitalWrite(LED4, HIGH);
@@ -168,6 +170,53 @@ void loop()
 		{
 			digitalWrite(KCZJ1, HIGH);
 			digitalWrite(KCZJ2, HIGH);
+		}
+	}
+}
+
+
+//函 数 名：LORA_Receive_information() 
+//功能描述：负责接收LORA接收到的信息然后传给Judgement_function()
+//函数说明：
+//调用函数：Judgement_function()
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+void LORA_Receive_information(void)
+{
+	if (Serial3.available())
+	{
+		LORA_RecData1 = Serial3.readString();
+	}
+	if (LORA_RecData1.length() > 0)
+	{
+		LORA_RecData2 = LORA_RecData1;
+		Receive_data_lamp();
+		// void remove (index,count)
+		//index为必选参数，表示从哪里开始删除，只填这一个参数，会将字符串从索引值开始一直到结尾的所有字符删除
+		//第二个参数count表示删除多少个字符
+		//作用到字符串的本身
+		LORA_RecData1.remove(0, LORA_RecData1.length());
+		Judgement_Length = 0;//收到新消息清空判断数组的长度值
+		Check_Length = 0;//收到新消息清空校验数组的长度值
+
+		char const *c = LORA_RecData2.c_str();
+
+		if (debug == 1)
+		{
+			Serial.println(String("LORA_RecData2.length()= ") + String(LORA_RecData2.length()));
+			Serial.println("接收到的数据为：");
+			//Serial.write(c);
+			//int shuzu_length = LORA_RecData2.length();
+			byte shuzu[50];
+			LORA_RecData2.getBytes(shuzu, (LORA_RecData2.length()+1));
+			//LORA_RecData2.toCharArray(shuzu, (LORA_RecData2.length() + 1));
+			for (size_t i = 0; i < LORA_RecData2.length(); i++)
+			{
+				Serial.print(String(i) + String(" / "));
+				Serial.println(shuzu[i]);
+			}
 		}
 	}
 }

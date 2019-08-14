@@ -33,7 +33,7 @@
 
 
 #define debug		1	//debug为1进入测试模式，每次重启所有标志位都清零
-#define LORA_reset	1	//LORA_reset为1进入LORA测试，每次重启LORA的标志位都清零
+#define LORA_reset	0	//LORA_reset为1进入LORA测试，每次重启LORA的标志位都清零
 #define LORA_NET	0	//LORA_NET为0代表lora的NET为节点，为1代表为网关,为0代表节点
 
 
