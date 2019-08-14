@@ -1,0 +1,30 @@
+Removed Pin From Net: NetName=LED4 Pin=U11-8
+Removed Pin From Net: NetName=LED3 Pin=U11-9
+Removed Pin From Net: NetName=LED2 Pin=U11-10
+Removed Pin From Net: NetName=LED1 Pin=U11-11
+Removed Pin From Net: NetName=AO1 Pin=U11-22
+Removed Pin From Net: NetName=AO2 Pin=U11-23
+Removed Pin From Net: NetName=AIN1 Pin=U11-24
+Removed Pin From Net: NetName=ANI2 Pin=U11-25
+Added Pin To Net: NetName=AO1 Pin=U11-8
+Added Pin To Net: NetName=AO2 Pin=U11-9
+Added Pin To Net: NetName=AIN1 Pin=U11-10
+Added Pin To Net: NetName=ANI2 Pin=U11-11
+Added Pin To Net: NetName=LED1 Pin=U11-22
+Added Pin To Net: NetName=LED2 Pin=U11-23
+Added Pin To Net: NetName=LED3 Pin=U11-24
+Added Pin To Net: NetName=LED4 Pin=U11-25
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component C27 10uF/10V
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component D6 ÂÌµÆ 0603
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component P1 Harder_2
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component P7 Harder_2
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component P8 Harder_4
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component P9 Harder_4
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component Q6 SS8050
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component R21 4.7K¦¸ (4701) ¡À1%
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component R31 510¦¸ (5100) ¡À1%
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component R47 1K¦¸ (1001) ¡À1%
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component R52 1K¦¸ (1001) ¡À1%
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component R66 10K¦¸ (1002) ¡À1%
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component R67 10K¦¸ (1002) ¡À1%
+Added Room: Name=µç´Å·§V3.0

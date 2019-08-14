@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=KCZJ-2 Pin=U11-26
+Removed Pin From Net: NetName=KCZJ-1 Pin=U11-27
+Change Component Designator: OldDesignator=24V NewDesignator=+1
+Added Pin To Net: NetName=KCZJ-1 Pin=U11-26
+Added Pin To Net: NetName=KCZJ-2 Pin=U11-27
+Added Room: Name=µç´Å·§V3.0

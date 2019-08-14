@@ -1,0 +1,11 @@
+Added Pin To Net: NetName=3.3V Pin=C19-1
+Added Pin To Net: NetName=485TX Pin=R39-1
+Added Pin To Net: NetName=3.3V Pin=R39-2
+Added Pin To Net: NetName=3.3V Pin=R46-1
+Added Pin To Net: NetName=3.3V Pin=R47-1
+Added Pin To Net: NetName=485TX Pin=U7-1
+Added Pin To Net: NetName=485RX Pin=U7-4
+Added Pin To Net: NetName=485RX Pin=U7-5
+Added Pin To Net: NetName=3.3V Pin=U7-14
+Added Pin To Net: NetName=3.3V Pin=U8-8
+Added Room: Name=µç´Å·§V3.0

@@ -1,0 +1,11 @@
+Added Component: Designator=LED1(LED_5mm)
+Add component. Clean all parameters for all variants
+Added Component: Designator=LED3(LED_5mm)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=NetLED1_1 Pin=LED1-1
+Added Pin To Net: NetName=GND Pin=LED1-2
+Added Pin To Net: NetName=NetLED3_1 Pin=LED3-1
+Added Pin To Net: NetName=NetD8_1 Pin=LED3-2
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component LED1 LED-5mm
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component LED3 LED-5mm
+Added Room: Name=µç´Å·§V3.0

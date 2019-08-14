@@ -1,0 +1,43 @@
+Removed Pin From Net: NetName=DO1 Pin=D1-1
+Removed Pin From Net: NetName=NetC1_2 Pin=D1-2
+Removed Pin From Net: NetName=DO2 Pin=D3-1
+Removed Pin From Net: NetName=NetC8_2 Pin=D3-2
+Removed Pin From Net: NetName=NetLED1_A Pin=LED1-A
+Removed Member From Class: ClassName=µç´Å·§V3.0 Member=D11
+Removed Member From Class: ClassName=µç´Å·§V3.0 Member=D12
+Change Component Designator: OldDesignator=D2 NewDesignator=D1
+Change Component Designator: OldDesignator=D4 NewDesignator=D2
+Change Component Designator: OldDesignator=D5 NewDesignator=D3
+Change Component Designator: OldDesignator=D6 NewDesignator=D4
+Change Component Designator: OldDesignator=D7 NewDesignator=D5
+Change Component Designator: OldDesignator=D8 NewDesignator=D6
+Change Component Designator: OldDesignator=D9 NewDesignator=D7
+Change Component Designator: OldDesignator=D10 NewDesignator=D8
+Change Component Designator: OldDesignator=D11 NewDesignator=D9
+Change Component Designator: OldDesignator=D12 NewDesignator=D10
+Change Component Designator: OldDesignator=LED2 NewDesignator=LED4
+Change Component Designator: OldDesignator=LED3 NewDesignator=LED5
+Added Component: Designator=LED2(LED_5mm)
+Add component. Clean all parameters for all variants
+Added Component: Designator=LED3(LED_5mm)
+Add component. Clean all parameters for all variants
+Added Pin To Net: NetName=DO1 Pin=LED1-A
+Added Pin To Net: NetName=DO2 Pin=LED2-A
+Added Pin To Net: NetName=NetLED1_A Pin=LED3-A
+Change Net Name : Old Net Name=NetD2_2 New Net Name=NetD1_2
+Change Net Name : Old Net Name=NetD5_A New Net Name=NetD3_A
+Change Net Name : Old Net Name=NetD6_A New Net Name=NetD4_A
+Change Net Name : Old Net Name=NetD8_A New Net Name=NetD6_A
+Change Net Name : Old Net Name=NetD8_K New Net Name=NetD6_K
+Change Net Name : Old Net Name=NetD11_A New Net Name=NetD9_A
+Change Net Name : Old Net Name=NetD11_K New Net Name=NetD9_K
+Change Net Name : Old Net Name=NetLED1_A New Net Name=NetLED3_A
+Change Net Name : Old Net Name=NetLED2_1 New Net Name=NetLED4_1
+Change Net Name : Old Net Name=NetLED2_2 New Net Name=NetLED4_2
+Change Net Name : Old Net Name=NetLED2_3 New Net Name=NetLED4_3
+Change Net Name : Old Net Name=NetLED3_1 New Net Name=NetLED5_1
+Change Net Name : Old Net Name=NetLED3_2 New Net Name=NetLED5_2
+Change Net Name : Old Net Name=NetLED3_3 New Net Name=NetLED5_3
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component LED4 LED2_Ë«É«¹²Òõ
+Added Member To Class: ClassName=µç´Å·§V3.0 Member=Component LED5 LED2_Ë«É«¹²Òõ
+Added Room: Name=µç´Å·§V3.0

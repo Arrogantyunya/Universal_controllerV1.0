@@ -1,0 +1,84 @@
+﻿//user_A011_E011.cpp
+/*
+*版权
+*
+* 文件名称:user_A011_E011.cpp
+* 文件标识:配置管理计划书
+* 摘要:
+*
+* 当前版本:V1.0
+* 作者:刘家辉
+* 完成日期:
+* 修改者:
+* 修改日期:
+*
+* 取代版本:
+* 原作者:刘家辉
+* 完成日期:
+*/
+
+#include "user_A011_E011.h"
+#include "user_initialization.h"
+
+//函 数 名：Receive_A011() 
+//功能描述：
+//函数说明：A011帧的函数
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+unsigned char Send_E011(int Receive_IsBroadcast)//E011函数
+{
+	E011_IsBroadcast = Receive_IsBroadcast;//E011的是否广播指令
+
+	E011_init();//E011初始化函数
+	E011[0] = E011_FrameHead;
+	E011[1] = E011_FrameId1;
+	E011[2] = E011_FrameId2;
+	Send_Data_Lamp();//发送数据灯
+}
+
+//函 数 名：E011_init() 
+//功能描述：
+//函数说明：E011初始化函数
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+unsigned char E011_init()
+{
+	E011_FrameHead = 0xFE;                  //E011的帧头
+
+	E011_FrameId1 = 0xE0;                   //E011的帧ID1
+	E011_FrameId2 = 0x11;                   //E011的帧ID2
+
+	E011_DataLen = 0x0D;                    //E011的数据长度
+
+	E011_DeviceTypeID1 = 0xC0;				//E011的设备类型1
+	E011_DeviceTypeID2 = 0x02;				//E011的设备类型2
+
+	E011_IsBroadcast = Receive_IsBroadcast;//E011的是否广播指令
+
+	E011_ZoneId = AT24CXX_ReadOneByte(12);           //E011的区域
+
+	E011_DeviceSN1 = AT24CXX_ReadOneByte(3);       //E011的SN1
+	E011_DeviceSN2 = AT24CXX_ReadOneByte(4);       //E011的SN2
+	E011_DeviceSN3 = AT24CXX_ReadOneByte(5);       //E011的SN3
+	E011_DeviceSN4 = AT24CXX_ReadOneByte(6);       //E011的SN4
+	E011_DeviceSN5 = AT24CXX_ReadOneByte(7);       //E011的SN5
+	E011_DeviceSN6 = AT24CXX_ReadOneByte(8);       //E011的SN6
+	E011_DeviceSN7 = AT24CXX_ReadOneByte(9);       //E011的SN7
+	E011_DeviceSN8 = AT24CXX_ReadOneByte(10);      //E011的SN8
+	E011_DeviceSN9 = AT24CXX_ReadOneByte(11);      //E011的SN9
+
+	E011_CRC8 = 0x00;                       //E011的CRC8校验码
+
+	E011_FrameEnd1 = 0x0D;                  //E011的帧尾1
+	E011_FrameEnd2 = 0x0A;                  //E011的帧尾2
+	E011_FrameEnd3 = 0x0D;                  //E011的帧尾3
+	E011_FrameEnd4 = 0x0A;                  //E011的帧尾4
+	E011_FrameEnd5 = 0x0D;                  //E011的帧尾5
+	E011_FrameEnd6 = 0x0A;                  //E011的帧尾6
+}

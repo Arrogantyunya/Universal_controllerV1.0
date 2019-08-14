@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=DO1 Pin=D1-1
+Removed Pin From Net: NetName=DO2 Pin=D3-1
+Removed Pin From Net: NetName=3.3V Pin=R1-1
+Removed Pin From Net: NetName=3.3V Pin=R10-1
+Removed Pin From Net: NetName=DO1 Pin=U1-2
+Removed Pin From Net: NetName=DO2 Pin=U2-2
+Added Pin To Net: NetName=GND Pin=D1-1
+Added Pin To Net: NetName=GND Pin=D3-1
+Added Pin To Net: NetName=DO1 Pin=R1-1
+Added Pin To Net: NetName=DO2 Pin=R10-1
+Added Pin To Net: NetName=GND Pin=U1-2
+Added Pin To Net: NetName=GND Pin=U2-2
+Added Room: Name=µç´Å·§V3.0

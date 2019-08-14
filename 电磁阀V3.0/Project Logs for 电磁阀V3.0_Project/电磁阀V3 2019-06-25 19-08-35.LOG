@@ -1,0 +1,23 @@
+Removed Pin From Net: NetName=LED1 Pin=U11-22
+Removed Pin From Net: NetName=LED2 Pin=U11-23
+Removed Pin From Net: NetName=LED3 Pin=U11-24
+Removed Pin From Net: NetName=LED4 Pin=U11-25
+Removed Pin From Net: NetName=DI1 Pin=U11-26
+Removed Pin From Net: NetName=DI2 Pin=U11-27
+Removed Pin From Net: NetName=DO2 Pin=U11-33
+Removed Pin From Net: NetName=DO1 Pin=U11-34
+Removed Pin From Net: NetName=KCZJ-1 Pin=U11-35
+Removed Pin From Net: NetName=KCZJ-2 Pin=U11-36
+Change Component Designator: OldDesignator=GND NewDesignator=GND-1
+Added Pin To Net: NetName=DI1 Pin=U11-22
+Added Pin To Net: NetName=DI2 Pin=U11-23
+Added Pin To Net: NetName=DO1 Pin=U11-24
+Added Pin To Net: NetName=DO2 Pin=U11-25
+Added Pin To Net: NetName=KCZJ-2 Pin=U11-26
+Added Pin To Net: NetName=KCZJ-1 Pin=U11-27
+Added Pin To Net: NetName=LED4 Pin=U11-33
+Added Pin To Net: NetName=LED3 Pin=U11-34
+Added Pin To Net: NetName=LED2 Pin=U11-35
+Added Pin To Net: NetName=LED1 Pin=U11-36
+Change Net Name : Old Net Name=Net1_1 New Net Name=Net3V3_1
+Added Room: Name=µç´Å·§V3.0
