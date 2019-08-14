@@ -76,9 +76,10 @@
 
 
 //全局函数声明
-void Initialization(void);		//初始化函数
-void Send_Data_Lamp(void);		//发送数据灯
-void Receive_data_lamp(void);	//接收数据灯
+void Initialization(void);				//初始化函数
+void Send_Data_Lamp(void);				//发送数据灯
+void Receive_data_lamp(void);			//接收数据灯
+void Restore_actory_setting_lamp(void);	//恢复出厂设置灯
 
 
 //全局变量

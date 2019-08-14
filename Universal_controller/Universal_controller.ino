@@ -18,9 +18,14 @@
 
 //----------------------------
 static String LORA_RecData1, LORA_RecData2;
+//全局变量
+static unsigned char Receive_Data[50];//用来存放接收到的数据
+static int Receive_Length = 0;//接收数据的长度
+static int CRC_Check_num = 0x00;//CRC校验的数值
 
 
-
+//----------------------------
+void LORA_Receive_information(void);
 
 
 //函 数 名：setup() 
@@ -123,35 +128,8 @@ void loop()
 			//-------------------------------------------
 			Serial.println("开始进行恢复出厂设置");
 
-			//进行出厂设置灯
-			for (size_t i = 0; i < 10; i++)
-			{
-				digitalWrite(LED1, HIGH);
-				digitalWrite(LED4, HIGH);
-				digitalWrite(LED2, LOW);
-				digitalWrite(LED3, LOW);
-				delay(250);
-				digitalWrite(LED1, LOW);
-				digitalWrite(LED4, LOW);
-				digitalWrite(LED2, HIGH);
-				digitalWrite(LED3, HIGH);
-				delay(250);
-			}
-			digitalWrite(LED1, LOW);
-			digitalWrite(LED4, LOW);
-			digitalWrite(LED2, LOW);
-			digitalWrite(LED3, LOW);
-
-			Initialization();
-			setup();
-
-
-			/*Serial.println("K1按下");
-			Serial.println("本设备开始上报当前的设置参数");
-			//进入E011函数上报请求当前参数
-			Send_E011(Receive_IsBroadcast);//这里的Receive_IsBroadcast是否有值？
-			Receive_Working_parameter_setting = 0x01;
-			EEPROM.write(31,Receive_Working_parameter_setting);*/
+			Initialization();//重新进行初始化的设置
+			setup();//重新进入setup()进行申号
 		}
 	}
 	//这是强制启动继电器
@@ -185,40 +163,128 @@ void loop()
 /////////////////////////////////////////////////////////////////////
 void LORA_Receive_information(void)
 {
-	if (Serial3.available())
+	while (Serial3.available() > 0)//接收串口收到的数据
 	{
-		LORA_RecData1 = Serial3.readString();
+		Receive_Data[Receive_Length++] = Serial3.read();
+		delay(3);
 	}
-	if (LORA_RecData1.length() > 0)
+
+	if (Receive_Length > 0)
 	{
-		LORA_RecData2 = LORA_RecData1;
-		Receive_data_lamp();
-		// void remove (index,count)
-		//index为必选参数，表示从哪里开始删除，只填这一个参数，会将字符串从索引值开始一直到结尾的所有字符删除
-		//第二个参数count表示删除多少个字符
-		//作用到字符串的本身
-		LORA_RecData1.remove(0, LORA_RecData1.length());
+		//Serial.write(Receive_Data,Receive_Length);//发16进制，自动转成ASCII码
 		Judgement_Length = 0;//收到新消息清空判断数组的长度值
 		Check_Length = 0;//收到新消息清空校验数组的长度值
-
-		char const *c = LORA_RecData2.c_str();
-
+		Receive_data_lamp();
 		if (debug == 1)
 		{
-			Serial.println(String("LORA_RecData2.length()= ") + String(LORA_RecData2.length()));
-			Serial.println("接收到的数据为：");
-			//Serial.write(c);
-			//int shuzu_length = LORA_RecData2.length();
-			byte shuzu[50];
-			LORA_RecData2.getBytes(shuzu, (LORA_RecData2.length()+1));
-			//LORA_RecData2.toCharArray(shuzu, (LORA_RecData2.length() + 1));
-			for (size_t i = 0; i < LORA_RecData2.length(); i++)
+			Serial.print("Receive_Length = ");//输出接收到的数据长度
+			Serial.println(Receive_Length);
+		}
+
+		//--------------------------------------------------------
+		//将Receive_Data的值处理得到judgement_Data
+		for (int i = 0; i < Receive_Length; i++)
+		{
+			Judgement_Length = i;
+			Judgement_Data[Judgement_Length] = Receive_Data[i];
+
+			//====================================================
+			if (debug == 1)
 			{
-				Serial.print(String(i) + String(" / "));
-				Serial.println(shuzu[i]);
+				Serial.print("Judgement_Data ");
+				Serial.print(Judgement_Length);
+				Serial.print(" :");
+				Serial.println(Judgement_Data[Judgement_Length], HEX);
+			}
+			delay(5);
+			//====================================================
+
+		}
+		if (debug == 1)
+		{
+			Serial.print("Judgement_Length = ");
+			Serial.println(Judgement_Length);
+		}
+		//--------------------------------------------------------
+
+
+		//--------------------------------------------------------
+		//将Receive_Data的值处理得到Check_Data
+		for (int i = 4; i < Receive_Length - 0x07; i++)
+		{
+			Check_Data[Check_Length] = Receive_Data[i];
+			if (debug == 1)
+			{
+				Serial.print("Check_Data ");
+				Serial.print(Check_Length);
+				Serial.print(" :");
+				Serial.println(Check_Data[Check_Length], HEX);
+			}
+			Check_Length++;
+			delay(5);
+		}
+		Serial.print("Check_Length = ");
+		Serial.println(Check_Length);
+		//--------------------------------------------------------
+
+		if (Check_Length > 0)
+		{
+			CRC_Check_num = GetCrc8(Check_Data, Check_Length);
+			if (debug == 1)
+			{
+				Serial.print("CRC8计算的值CRC_Check_num为：0x");
+				Serial.println(CRC_Check_num, HEX);
 			}
 		}
+		Receive_Length = 0;	//将Receive_Length清零
+		Check_Length = 0;	//将Check_Length清零
+
+		//--------------------------------------------------------
+		if (debug == 1)
+		{
+			CRC_Check_num = 0xD6;//这行代码是为了不让我每次都计算CRC，实际使用请注释
+		}
+		//--------------------------------------------------------
+
+		Judgement_function(Judgement_Data, Judgement_Length, CRC_Check_num);//判断函数
 	}
+
+
+	//-----------------------------------------------------------------------------------------------------
+	//if (Serial3.available())
+	//{
+	//	LORA_RecData1 = Serial3.readString();
+	//}
+	//if (LORA_RecData1.length() > 0)
+	//{
+	//	LORA_RecData2 = LORA_RecData1;
+	//	Receive_data_lamp();
+	//	// void remove (index,count)
+	//	//index为必选参数，表示从哪里开始删除，只填这一个参数，会将字符串从索引值开始一直到结尾的所有字符删除
+	//	//第二个参数count表示删除多少个字符
+	//	//作用到字符串的本身
+	//	LORA_RecData1.remove(0, LORA_RecData1.length());
+	//	Judgement_Length = 0;//收到新消息清空判断数组的长度值
+	//	Check_Length = 0;//收到新消息清空校验数组的长度值
+
+	//	char const *c = LORA_RecData2.c_str();
+
+	//	if (debug == 1)
+	//	{
+	//		Serial.println(String("LORA_RecData2.length()= ") + String(LORA_RecData2.length()));
+	//		Serial.println("接收到的数据为：");
+	//		//Serial.write(c);
+	//		//int shuzu_length = LORA_RecData2.length();
+	//		byte shuzu[50];
+	//		LORA_RecData2.getBytes(shuzu, (LORA_RecData2.length()+1));
+	//		//LORA_RecData2.toCharArray(shuzu, (LORA_RecData2.length() + 1));
+	//		for (size_t i = 0; i < LORA_RecData2.length(); i++)
+	//		{
+	//			Serial.print(String(i) + String(" / "));
+	//			Serial.println(shuzu[i]);
+	//		}
+	//	}
+	//}
 }
 
 /***

@@ -213,3 +213,26 @@ void Receive_data_lamp(void)
 	delay(250);
 	digitalWrite(LED4, LOW);
 }
+
+//恢复出厂设置灯
+void Restore_actory_setting_lamp(void)
+{
+	//进行出厂设置灯
+	for (size_t i = 0; i < 10; i++)
+	{
+		digitalWrite(LED1, HIGH);
+		digitalWrite(LED4, HIGH);
+		digitalWrite(LED2, LOW);
+		digitalWrite(LED3, LOW);
+		delay(250);
+		digitalWrite(LED1, LOW);
+		digitalWrite(LED4, LOW);
+		digitalWrite(LED2, HIGH);
+		digitalWrite(LED3, HIGH);
+		delay(250);
+	}
+	digitalWrite(LED1, LOW);
+	digitalWrite(LED4, LOW);
+	digitalWrite(LED2, LOW);
+	digitalWrite(LED3, LOW);
+}
