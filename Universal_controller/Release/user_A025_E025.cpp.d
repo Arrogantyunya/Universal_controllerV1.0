@@ -1,6 +1,6 @@
-C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_crc8.cpp.o: \
- C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_crc8.cpp \
- C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_crc8.h \
+C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A025_E025.cpp.o: \
+ C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A025_E025.cpp \
+ C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A025_E025.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple/arduino.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple/wirish.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple/WString.h \

@@ -20,7 +20,59 @@
 #include "user_A011_E011.h"
 #include "user_initialization.h"
 
-//函 数 名：Receive_A011() 
+
+
+void Receive_A011(unsigned char * Judgement_Data, int Judgement_Length)//A011函数
+{
+
+	//--------------------------------------------------------
+	//该区域为测试传输进Receive_A011函数的数据是否正确的测试代码块
+	//需要测试时请取消注释
+	if (debug ==1)
+	{
+		Serial.println("进入Receive_A011函数");
+		for (int i = 0; i < Judgement_Length + 1; i++)
+		{
+			Serial.print("A011Judgement_Data ");
+			Serial.print(i);
+			Serial.print(" :");
+			Serial.println(Judgement_Data[i], HEX);
+			delay(1);
+		}
+		delay(500);
+		Serial.print("Judgement_Length = ");
+		Serial.println(Judgement_Length);
+	}
+	//--------------------------------------------------------
+	//int ZoneID = Judgement_Data[7];
+	//if (debug == 1)
+	//{
+	//	Serial.println(ZoneID, HEX);
+	//}
+	//AT24CXX_WriteOneByte(12, ZoneID);//将区域ID写入数组
+	//for (size_t i = 8; i <= 16; i++)
+	//{
+	//	AT24CXX_WriteOneByte(i - 5, Judgement_Data[i]);
+	//	if (debug == 1)
+	//	{
+	//		Serial.print(String("AT24CXX_ReadOneByte[ ") + String(i-5) + String(" ]="));
+	//		Serial.println(AT24CXX_ReadOneByte(i - 5), HEX);
+	//	}
+	//}
+
+	//是否广播指令
+	Receive_IsBroadcast = Judgement_Data[6];
+	//进行状态的回执
+	Send_E011(Receive_IsBroadcast);
+	if (debug == 1)
+	{
+		Serial.println("完成A011状态回执");
+		Serial.println("结束Receive_A011函数");
+	}
+}
+
+
+//函 数 名：Send_E011() 
 //功能描述：
 //函数说明：A011帧的函数
 //调用函数：
@@ -100,6 +152,7 @@ unsigned char Send_E011(int Receive_IsBroadcast)//E011函数
 	Serial3.write(E011, 24);
 	Serial3.flush();
 	Send_Data_Lamp();//发送数据灯
+	return 0;
 }
 
 //函 数 名：E011_init() 

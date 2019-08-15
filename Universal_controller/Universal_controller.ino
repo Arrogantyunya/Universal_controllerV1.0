@@ -6,6 +6,9 @@
     Author:     刘家辉
 */
 
+#include "user_Set_Correlation.h"
+#include "user_A025_E025.h"
+#include "user_A021_E021.h"
 #include "user_crc8.h"
 #include "user_judgement.h"
 #include "user_A011_E011.h"

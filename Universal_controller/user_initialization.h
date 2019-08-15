@@ -83,7 +83,7 @@ void Restore_actory_setting_lamp(void);	//恢复出厂设置灯
 
 
 //全局变量
-
+static unsigned char Receive_IsBroadcast = 0x00; //是否广播指令
 
 
 //类结构声明

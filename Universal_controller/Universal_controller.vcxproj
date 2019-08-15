@@ -73,7 +73,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Universal_controller;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\libraries\EEPROM;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple\avr;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple\libmaple;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple\stm32f1;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\variants\generic_stm32f103r;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\include;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\stm32f1\include;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\usb\stm32f1;D:\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\usb\usb_lib;D:\Arduino\hardware\Arduino_STM32-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Universal_controller;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\libraries\EEPROM;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple\avr;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple\libmaple;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\cores\maple\stm32f1;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\variants\generic_stm32f103r;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\include;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\stm32f1\include;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\usb\stm32f1;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master\STM32F1\system\libmaple\usb\usb_lib;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\hardware\Arduino_STM32-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>$(ProjectDir)__vm\.Universal_controller.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <PreprocessorDefinitions>DEBUG_LEVEL=DEBUG_NONE;BOARD_generic_stm32f103r;VECT_TAB_ADDR=0x8000000;ERROR_LED_PORT=GPIOB;ERROR_LED_PIN=1;F_CPU=72000000L;ARDUINO=10809;ARDUINO_GENERIC_STM32F103R;ARDUINO_ARCH_STM32F1;CONFIG_MAPLE_MINI_NO_DISABLE_DEBUG=1;SERIAL_USB;GENERIC_BOOTLOADER;MCU_STM32F103RC;__STM32F1__;ARDUINO_ARCH_STM32;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -109,20 +109,26 @@
     <ClInclude Include="AT24CXX.h" />
     <ClInclude Include="i2c.h" />
     <ClInclude Include="user_A011_E011.h" />
+    <ClInclude Include="user_A021_E021.h" />
+    <ClInclude Include="user_A025_E025.h" />
     <ClInclude Include="user_crc8.h" />
     <ClInclude Include="user_initialization.h" />
     <ClInclude Include="user_judgement.h" />
     <ClInclude Include="user_lorainit.h" />
+    <ClInclude Include="user_Set_Correlation.h" />
     <ClInclude Include="__vm\.Universal_controller.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AT24CXX.cpp" />
     <ClCompile Include="i2c.cpp" />
     <ClCompile Include="user_A011_E011.cpp" />
+    <ClCompile Include="user_A021_E021.cpp" />
+    <ClCompile Include="user_A025_E025.cpp" />
     <ClCompile Include="user_crc8.cpp" />
     <ClCompile Include="user_initialization.cpp" />
     <ClCompile Include="user_judgement.cpp" />
     <ClCompile Include="user_lorainit.cpp" />
+    <ClCompile Include="user_Set_Correlation.cpp" />
   </ItemGroup>
   <PropertyGroup>
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
