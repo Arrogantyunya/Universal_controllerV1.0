@@ -82,9 +82,11 @@ void Receive_A011(unsigned char * Judgement_Data, int Judgement_Length)//A011函
 /////////////////////////////////////////////////////////////////////
 unsigned char Send_E011(int Receive_IsBroadcast)//E011函数
 {
-	E011_IsBroadcast = Receive_IsBroadcast;//E011的是否广播指令
 
 	E011_init();//E011初始化函数
+
+	E011_IsBroadcast = Receive_IsBroadcast;//E011的是否广播指令
+
 	E011[0] = E011_FrameHead;
 	E011[1] = E011_FrameId1;
 	E011[2] = E011_FrameId2;

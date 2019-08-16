@@ -10,12 +10,55 @@
 #endif
 
 
+#include<arduino.h>	//引用标准库的头文件
+#include"user_initialization.h"//初始化
+#include"user_crc8.h"//CRC校验
+#include"user_judgement.h"//判断
+
+
 //引脚定义
 
 
 
 //全局变量
+static unsigned char E020[24];//用来存放E020发送出去的数组
 
+static int E020_FrameHead = 0xFE;		//E020的帧头
+
+static int E020_FrameId1 = 0xE0;		//E020的帧ID1
+static int E020_FrameId2 = 0x20;		//E020的帧ID2
+
+static int E020_DataLen = 0x0D;			//E020的数据长度
+
+static int E020_DeviceTypeID1 = 0xC0;	//E020的设备类型1
+static int E020_DeviceTypeID2 = 0x02;	//E020的设备类型2
+
+static int E020_IsBroadcast = 0x00;		//E020的是否广播指令
+
+static int E020_ZoneId = 0x00;			//E020的区域
+
+static int E020_Status = 0x00;			//E020的状态值被声明成了枚举
+
+static int E020_Allocate1 = 0x00;		//E020的Allocate1
+static int E020_Allocate2 = 0x00;		//E020的Allocate2
+static int E020_Allocate3 = 0x00;		//E020的Allocate3
+static int E020_Allocate4 = 0x00;		//E020的Allocate4
+static int E020_Allocate5 = 0x00;		//E020的Allocate5
+static int E020_Allocate6 = 0x00;		//E020的Allocate6
+static int E020_Allocate7 = 0x00;		//E020的Allocate7
+static int E020_Allocate8 = 0x00;		//E020的Allocate8
+
+static int E020_CRC8 = 0x00;			//E020的CRC8校验码
+
+static int E020_FrameEnd1 = 0x0D;		//E020的帧尾1
+static int E020_FrameEnd2 = 0x0A;		//E020的帧尾2
+static int E020_FrameEnd3 = 0x0D;		//E020的帧尾3
+static int E020_FrameEnd4 = 0x0A;		//E020的帧尾4
+static int E020_FrameEnd5 = 0x0D;		//E020的帧尾5
+static int E020_FrameEnd6 = 0x0A;		//E020的帧尾6
+
+static unsigned char E020_Check_Data[50];   //用来存放接收到的数据
+static int E020_Check_Length = 0;
 
 
 
@@ -48,15 +91,7 @@ static enum Device_status
 	State_Storage_Exceeding_the_Upper_Limit = 0x0B,//关联状态失败，存储超上限
 	Set_reserved_field_success = 0x0C,//设置预留字段成功
 	Set_reserved_field_failed = 0x0D,//设置预留字段失败
-	Digital_output_device1_turn_on = 0x0E,//数字输出设备1开启
-	Digital_output_device1_turn_off = 0x0F,//数字输出设备1关闭
-	Digital_output_device2_turn_on = 0x10,//数字输出设备2开启
-	Digital_output_device2_turn_off = 0x11,//数字输出设备2关闭
-	Analog_output_device1_turn_on = 0x12,//模拟输出设备1开启
-	Analog_output_device1_turn_off = 0x13,//模拟输出设备1关闭
-	Analog_output_device2_turn_on = 0x14,//模拟输出设备1开启
-	Analog_output_device2_turn_off = 0x15,//模拟输出设备1关闭
-	Data_loss_due_to_abnormal_power_off = 0x16//异常断电数据丢失
+	Data_loss_due_to_abnormal_power_off = 0x0E//异常断电数据丢失
 }E020_status = FactoryMode;
 
 ////继电器的状态(结构类型，枚举)

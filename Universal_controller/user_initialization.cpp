@@ -155,8 +155,16 @@ void Initialization()//初始化函数
 		{
 			AT24CXX_WriteOneByte(i, 0x00);
 		}
-		AT24CXX_WriteOneByte(12, 0);//LORA主设备区域的存储
+		AT24CXX_WriteOneByte(12, 0x00);//LORA主设备区域ID的存储
+		AT24CXX_WriteOneByte(13, 0x00);//LORA自动策略关联的标志位
+		for (size_t i = 14; i <= 41; i++)
+		{
+			AT24CXX_WriteOneByte(i, 0x00);
+		}
 
+
+
+		//---------------------------------------------------------
 		AT24CXX_WriteOneByte(1, 0x01);//EEPROM初始化完成的标志位
 		//Serial.println(EEPROM.read(1),HEX);
 		Serial.println("EEPROM存储空间的初始化完成");

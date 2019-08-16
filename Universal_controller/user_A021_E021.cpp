@@ -27,7 +27,8 @@ void Receive_A021(unsigned char * Judgement_Data, int Judgement_Length)
 	}
 	//--------------------------------------------------------
 
-
+	//防止数据冲突，增加延时随机函数
+	delay(random(0,5000));
 	//进行状态的回执
 	Send_E021(Receive_IsBroadcast);
 	if (debug == 1)
@@ -39,10 +40,159 @@ void Receive_A021(unsigned char * Judgement_Data, int Judgement_Length)
 
 unsigned char Send_E021(int Receive_IsBroadcast)
 {
+	E021_init();
+
+	E021_IsBroadcast = Receive_IsBroadcast;//E021的是否广播指令
+
+	Send_Data_Lamp();//发送数据灯
 	return 0;
 }
 
 unsigned char E021_init()
 {
+	E021_FrameHead = 0xFE;		//E021的帧头
+
+	E021_FrameId1 = 0xE0;		//E021的帧ID1
+	E021_FrameId2 = 0x21;		//E021的帧ID2
+
+	E021_DataLen = 0x14;			//E021的数据长度
+
+	E021_DeviceTypeID1 = 0xC0;	//E021的设备类型1
+	E021_DeviceTypeID2 = 0x02;	//E021的设备类型2
+
+	E021_IsBroadcast = 0x00;		//E021的是否广播指令
+
+	E021_ZoneId = AT24CXX_ReadOneByte(12);			//E021的区域
+
+	E021_GetDigitalStatus();
+	E021_GetAnalogStatus();
+
+
+	return 0;
+}
+
+
+//E021得到数字状态
+int E021_GetDigitalStatus()
+{
+	byte DI_1[8] = { 0,0,0,0,0,0,0,0 }; String Str_DI1; int DIBin_1 = 0;
+	byte DI_2[8] = { 0,0,0,0,0,0,0,0 }; String Str_DI2; int DIBin_2 = 0;
+	byte DO_1[8] = { 0,0,0,0,0,0,0,0 }; String Str_DO1; int DOBin_1 = 0;
+	byte DO_2[8] = { 0,0,0,0,0,0,0,0 }; String Str_DO2; int DOBin_2 = 0;
+
+	DI_2[0] = 1;
+	DI_2[1] = 0;
+	DI_2[2] = 1;
+	DI_2[3] = 1;
+	DI_2[4] = 0;
+	DI_2[5] = 0;
+	DI_2[6] = digitalRead(DI2);	//digitalRead(DI2)
+	DI_2[7] = digitalRead(DI1);	//digitalRead(DI1)
+
+	for (int i = 7; i >= 0; i--)
+	{
+		DIBin_1 = DIBin_1 | (DI_1[7 - i] << i);
+		DIBin_2 = DIBin_2 | (DI_2[7 - i] << i);
+		if (debug == 1)
+		{
+			Serial.print(String("DIBin_1 = "));
+			Serial.println(DIBin_1, BIN);
+			Serial.print(String("DIBin_2 = "));
+			Serial.println(DIBin_2, BIN);
+		}
+	}
+
+	Str_DI1 = String(DIBin_1,HEX); Str_DI2 = String(DIBin_2, HEX);
+
+	if (debug == 1)
+	{
+		Serial.print("Str_DI1 = 0x");
+		Serial.println(Str_DI1);
+		Serial.print("Str_DI2 = 0x");
+		Serial.println(Str_DI2);
+	}
+
+	long DI1_long = Str_DI1.toInt();
+	long DI2_long = Str_DI2.toInt();
+	if (debug == 1)
+	{
+		Serial.print("DI1_long = ");
+		Serial.println(DI1_long,HEX);
+		Serial.print("DI2_long = ");
+		Serial.println(DI2_long,HEX);
+	}
+
+	E021_digIn1 = int(DI1_long); //转换为真的数字
+	E021_digIn2 = int(DI2_long);
+
+	if (debug == 1)
+	{
+		Serial.print("E021_digIn1,E021_digIn2 = ");
+		Serial.println(E021_digIn1, HEX);
+		Serial.print(" , ");
+		Serial.println(E021_digIn2, HEX);
+	}
+//--------------------------------------------------
+	DO_2[0] = 1;
+	DO_2[1] = 0;
+	DO_2[2] = 1;
+	DO_2[3] = 0;
+	DO_2[4] = 0;
+	DO_2[5] = 0;
+	DO_2[4] = digitalRead(KCZJ2);	//digitalRead(KCZJ2);
+	DO_2[5] = digitalRead(KCZJ1);	//digitalRead(KCZJ1);
+	DO_2[6] = digitalRead(DO2);		//digitalRead(D02);
+	DO_2[7] = digitalRead(DO1);		//digitalRead(D01);
+
+	for (int i = 7; i >= 0; i--)
+	{
+		DOBin_1 = DOBin_1 | (DO_1[7 - i] << i);
+		DOBin_2 = DOBin_2 | (DO_2[7 - i] << i);
+		if (debug == 1)
+		{
+			Serial.print(String("DOBin_1 = "));
+			Serial.println(DOBin_1, BIN);
+			Serial.print(String("DOBin_2 = "));
+			Serial.println(DOBin_2, BIN);
+		}
+	}
+
+	Str_DO1 = String(DOBin_1, HEX); Str_DO2 = String(DOBin_2, HEX);
+
+	if (debug == 1)
+	{
+		Serial.print("Str_DO1 = 0x");
+		Serial.println(Str_DO1);
+		Serial.print("Str_DO2 = 0x");
+		Serial.println(Str_DO2);
+	}
+	long DO1_long = Str_DO1.toInt();
+	long DO2_long = Str_DO2.toInt();
+	if (debug == 1)
+	{
+		Serial.print("DI1_long = ");
+		Serial.println(DI1_long, HEX);
+		Serial.print("DI2_long = ");
+		Serial.println(DI2_long, HEX);
+	}
+	E021_digOut1 = int(DO1_long);//转换为真的数字
+	E021_digOut2 = int(DO2_long);
+
+	if (debug == 1)
+	{
+		Serial.print("E021_digOut1,E021_digOut2 = ");
+		Serial.println(E021_digOut1, HEX);
+		Serial.print(" , ");
+		Serial.println(E021_digOut2, HEX);
+	}
+
+	return 0;
+}
+
+
+//E021得到模拟状态
+int E021_GetAnalogStatus()
+{
+	E021_anaIn1_1 = 0x00;
 	return 0;
 }

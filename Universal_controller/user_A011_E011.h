@@ -38,7 +38,7 @@
  //全局变量
 //static unsigned char Receive_IsBroadcast = 0x00; //是否广播指令
 
-static unsigned char E011[47];//用来存放E011发送出去的数组
+static unsigned char E011[24];//用来存放E011发送出去的数组
 
 static int E011_FrameHead = 0xFE;		//E011的帧头
 
