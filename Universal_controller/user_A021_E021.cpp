@@ -102,9 +102,9 @@ int E021_GetDigitalStatus()
 		}
 	}
 
-	Str_DI1 = String(DIBin_1,HEX); Str_DI2 = String(DIBin_2, HEX);
+	//Str_DI1 = String(DIBin_1,HEX); Str_DI2 = String(DIBin_2, HEX);
 
-	if (debug == 1)
+	/*if (debug == 1)
 	{
 		Serial.print("Str_DI1 = 0x");
 		Serial.println(Str_DI1);
@@ -120,10 +120,10 @@ int E021_GetDigitalStatus()
 		Serial.println(DI1_long,HEX);
 		Serial.print("DI2_long = ");
 		Serial.println(DI2_long,HEX);
-	}
+	}*/
 
-	E021_digIn1 = int(DI1_long); //转换为真的数字
-	E021_digIn2 = int(DI2_long);
+	E021_digIn1 = DIBin_1;
+	E021_digIn2 = DIBin_2;
 
 	if (debug == 1)
 	{
@@ -157,9 +157,9 @@ int E021_GetDigitalStatus()
 		}
 	}
 
-	Str_DO1 = String(DOBin_1, HEX); Str_DO2 = String(DOBin_2, HEX);
+	//Str_DO1 = String(DOBin_1, HEX); Str_DO2 = String(DOBin_2, HEX);
 
-	if (debug == 1)
+	/*if (debug == 1)
 	{
 		Serial.print("Str_DO1 = 0x");
 		Serial.println(Str_DO1);
@@ -174,9 +174,9 @@ int E021_GetDigitalStatus()
 		Serial.println(DI1_long, HEX);
 		Serial.print("DI2_long = ");
 		Serial.println(DI2_long, HEX);
-	}
-	E021_digOut1 = int(DO1_long);//转换为真的数字
-	E021_digOut2 = int(DO2_long);
+	}*/
+	E021_digOut1 = DOBin_1;
+	E021_digOut2 = DOBin_2;
 
 	if (debug == 1)
 	{
@@ -193,6 +193,70 @@ int E021_GetDigitalStatus()
 //E021得到模拟状态
 int E021_GetAnalogStatus()
 {
-	E021_anaIn1_1 = 0x00;
+	int analogRead1 = analogRead(VIN1);
+	int analogRead2 = analogRead(VIN1);
+	float ar1 = (analogRead1 * 0.8056) * 11;//4537.65
+	float ar2 = (analogRead1 * 0.8056) * 11;
+	if (debug == 1)
+	{
+		ar1 = 5.69;ar2 = 17.36;
+		Serial.println(String("ar1 = ") + ar1 + String("mV"));
+		Serial.println(String("ar2 = ") + ar2 + String("mV"));
+	}
+
+
+	if (floor(ar1) >= 0 && floor(ar1) <= 99)//[0],(0,99]
+	{
+		E021_anaIn1_1 = floor(ar1);
+		E021_anaIn1_2 = (ar1 - E021_anaIn1_1) * 100;
+		E021_anaIn1_3 = 'E2';
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaIn1_1 = ") + E021_anaIn1_1);
+			Serial.println(String("E021_anaIn1_2 = ") + E021_anaIn1_2);
+			Serial.println(String("E021_anaIn1_3 = ") + String(E021_anaIn1_3));
+		}
+	}
+	else//超出量程
+	{
+		Serial.println("模拟输入1超出量程");
+		/*E021_anaIn1_1 = floor(ar1);
+		E021_anaIn1_2 = (ar1 - E021_anaIn1_1) * 100;
+		E021_anaIn1_3 = 0xE2;*/
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaIn1_1 = ") + E021_anaIn1_1);
+			Serial.println(String("E021_anaIn1_2 = ") + E021_anaIn1_2);
+			Serial.println(String("E021_anaIn1_3 = ") + String(E021_anaIn1_3));
+		}
+	}
+
+	if (floor(ar2) >= 0 && floor(ar2) <= 99)//[0],(0,99]
+	{
+		E021_anaIn2_1 = floor(ar2);
+		E021_anaIn2_2 = (ar2 - E021_anaIn2_1) * 100;
+		E021_anaIn2_3 = 'E2';
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaIn2_1 = ") + E021_anaIn2_1);
+			Serial.println(String("E021_anaIn2_2 = ") + E021_anaIn2_2);
+			Serial.println(String("E021_anaIn2_3 = ") + String(E021_anaIn2_3));
+		}
+	}
+	else//超出量程
+	{
+		Serial.println("模拟输入2超出量程");
+		/*E021_anaIn2_1 = floor(ar2);
+		E021_anaIn2_2 = (ar2 - E021_anaIn2_1) * 100;
+		E021_anaIn2_3 = 0xE2;*/
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaIn2_1 = ") + E021_anaIn2_1);
+			Serial.println(String("E021_anaIn2_2 = ") + E021_anaIn2_2);
+			Serial.println(String("E021_anaIn2_3 = ") + String(E021_anaIn2_3));
+		}
+	}
+
+
 	return 0;
 }
