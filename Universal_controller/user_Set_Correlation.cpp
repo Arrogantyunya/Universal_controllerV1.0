@@ -766,7 +766,7 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 							//在这里得到需要设定的电压值
 							if (Judgement_Data[16] == 0xE2)
 							{
-								Set_AOVoltage1 = (Judgement_Data[14] + Judgement_Data[15] * 0.01)*1000;
+								Set_AOVoltage1 = (Judgement_Data[14] + Judgement_Data[15] * 0.01);
 								if (debug == 1)
 								{
 									Serial.println("Set_AOVoltage1 = " + String(Set_AOVoltage1) + "V");
@@ -774,9 +774,25 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 							}
 							//float ar1 = ((analogRead1 * 0.8056) * 11;//4537.65
 							//float ar1 = ((analogRead1 * 0.8056) * 0.011;//4537.65
-							Analog_Value1 = (Set_AOVoltage1 / 0.011) / 0.8065;
+							float AV1 = (Set_AOVoltage1 / 0.011) / 0.8056;
+							if (AV1 - floor(AV1) >= 0.5)
+							{
+								Analog_Value1 = floor(AV1) + 1;
+							}
+							else if (AV1 - floor(AV1) < 0.5)
+							{
+								Analog_Value1 = floor(AV1);
+							}
+							else
+							{
+								if (debug == 1)
+								{
+									Serial.println("意外BUG区");
+								}
+							}
 							if (debug == 1)
 							{
+								Serial.println("AV1 = " + String(AV1));
 								Serial.println("Analog_Value1 = " + String(Analog_Value1));
 							}
 
@@ -872,10 +888,27 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 									Serial.println("Set_AOVoltage1 = " + String(Set_AOVoltage2) + "mv");
 								}
 							}
-							//float ar1 = (analogRead1 * 0.8056) * 11;//4537.65
-							Analog_Value2 = (Set_AOVoltage2 / 11) / 0.8065;
+							//float ar1 = ((analogRead1 * 0.8056) * 11;//4537.65
+							//float ar1 = ((analogRead1 * 0.8056) * 0.011;//4537.65
+							float AV2 = (Set_AOVoltage2 / 0.011) / 0.8056;
+							if (AV2 - floor(AV2) >= 0.5)
+							{
+								Analog_Value2 = floor(AV2) + 1;
+							}
+							else if (AV2 - floor(AV2) < 0.5)
+							{
+								Analog_Value2 = floor(AV2);
+							}
+							else
+							{
+								if (debug == 1)
+								{
+									Serial.println("意外BUG区");
+								}
+							}
 							if (debug == 1)
 							{
+								Serial.println("AV2 = " + String(AV2));
 								Serial.println("Analog_Value2 = " + String(Analog_Value2));
 							}
 
@@ -974,12 +1007,31 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 									Serial.println("Set_AOVoltage1,2 = " + String(Set_AOVoltage2) + "mv");
 								}
 							}
-							//float ar1 = (analogRead1 * 0.8056) * 11;//4537.65
-							Analog_Value1 = (Set_AOVoltage1 / 11) / 0.8065;
-							Analog_Value2 = (Set_AOVoltage2 / 11) / 0.8065;
+							//float ar1 = ((analogRead1 * 0.8056) * 11;//4537.65
+							//float ar1 = ((analogRead1 * 0.8056) * 0.011;//4537.65
+							float AV1 = (Set_AOVoltage1 / 0.011) / 0.8056;
+							float AV2 = (Set_AOVoltage2 / 0.011) / 0.8056;
+							if (AV2 - floor(AV2) >= 0.5)
+							{
+								Analog_Value1 = floor(AV1) + 1;
+								Analog_Value2 = floor(AV2) + 1;
+							}
+							else if (AV2 - floor(AV2) < 0.5)
+							{
+								Analog_Value1 = floor(AV1);
+								Analog_Value2 = floor(AV2);
+							}
+							else
+							{
+								if (debug == 1)
+								{
+									Serial.println("意外BUG区");
+								}
+							}
 							if (debug == 1)
 							{
-								Serial.println("Analog_Value1，2 = " + String(Analog_Value2));
+								Serial.println("AV1,2 = " + String(AV2));
+								Serial.println("Analog_Value1,2 = " + String(Analog_Value2));
 							}
 
 							//决定在这里赋时间值，先赋持续时间的值到数组
@@ -1087,7 +1139,11 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 		//判断为组播
 		else if (Judgement_Data[6] == 0x55)
 		{
+			//判断组
+			if (true)
+			{
 
+			}
 		}
 		//不存在的广播功能
 		else
