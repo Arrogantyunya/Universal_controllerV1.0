@@ -5,6 +5,14 @@
 #include "user_A021_E021.h"
 #include "user_initialization.h"
 
+//函 数 名：Receive_A021() 
+//功能描述：A021的执行函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 void Receive_A021(unsigned char * Judgement_Data, int Judgement_Length)
 {
 	//--------------------------------------------------------
@@ -29,6 +37,10 @@ void Receive_A021(unsigned char * Judgement_Data, int Judgement_Length)
 
 	//防止数据冲突，增加延时随机函数
 	delay(random(0,5000));
+
+	//是否广播指令
+	Receive_IsBroadcast = Judgement_Data[6];
+
 	//进行状态的回执
 	Send_E021(Receive_IsBroadcast);
 	if (debug == 1)
@@ -38,16 +50,93 @@ void Receive_A021(unsigned char * Judgement_Data, int Judgement_Length)
 	}
 }
 
+//函 数 名：Send_E021() 
+//功能描述：E021的的回执函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 unsigned char Send_E021(int Receive_IsBroadcast)
 {
 	E021_init();
 
 	E021_IsBroadcast = Receive_IsBroadcast;//E021的是否广播指令
 
+	E021[0] = E021_FrameHead;
+	E021[1] = E021_FrameId1;
+	E021[2] = E021_FrameId2;
+	E021[3] = E021_DataLen;
+	E021[4] = E021_DeviceTypeID1;
+	E021[5] = E021_DeviceTypeID2;
+	E021[6] = E021_IsBroadcast;
+	E021[7] = E021_ZoneId;
+	E021[8] = E021_digIn1;
+	E021[9] = E021_digIn2;
+	E021[10] = E021_digOut1;
+	E021[11] = E021_digOut2;
+	E021[12] = E021_anaIn1_1;
+	E021[13] = E021_anaIn1_2;
+	E021[14] = E021_anaIn1_3;
+	E021[15] = E021_anaIn2_1;
+	E021[16] = E021_anaIn2_2;
+	E021[17] = E021_anaIn2_3;
+	E021[18] = E021_anaOut1_1;
+	E021[19] = E021_anaOut1_2;
+	E021[20] = E021_anaOut1_3;
+	E021[21] = E021_anaOut2_1;
+	E021[22] = E021_anaOut2_2;
+	E021[23] = E021_anaOut2_3;
+	for (size_t i = 4; i <= E021_DataLen + 0x03; i++)
+	{
+		Check_Data[Check_Length] = E021[i];
+		// Check_Data[Check_Length] = 0x55;
+		if (debug == 1)
+		{
+			Serial.print("Check_Data ");
+			Serial.print(Check_Length);
+			Serial.print(" :");
+			Serial.println(Check_Data[Check_Length], HEX);
+		}
+		Check_Length++;
+		delay(1);
+	}
+	Serial.print("Check_Length = ");
+	Serial.println(Check_Length);
+
+	if (Check_Length > 0)
+	{
+		E021_CRC8 = GetCrc8(Check_Data, Check_Length);//得到CRC数据
+		if (debug == 1)
+		{
+			Serial.print("CRC8计算的值E021_CRC8 = 0x");
+			Serial.println(E021_CRC8, HEX);
+		}
+		Check_Length = 0;
+	}
+	E021[24] = E021_CRC8;
+	E021[25] = E021_FrameEnd1;
+	E021[26] = E021_FrameEnd2;
+	E021[27] = E021_FrameEnd3;
+	E021[28] = E021_FrameEnd4;
+	E021[29] = E021_FrameEnd5;
+	E021[30] = E021_FrameEnd6;
+
+	Serial3.write(E021,31);
+	Serial3.flush();
 	Send_Data_Lamp();//发送数据灯
 	return 0;
 }
 
+//函 数 名：E025_init() 
+//功能描述：E025的的初始化函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 unsigned char E021_init()
 {
 	E021_FrameHead = 0xFE;		//E021的帧头
@@ -66,7 +155,6 @@ unsigned char E021_init()
 
 	E021_GetDigitalStatus();
 	E021_GetAnalogStatus();
-
 
 	return 0;
 }
@@ -195,26 +283,33 @@ int E021_GetAnalogStatus()
 {
 	int analogRead1 = analogRead(VIN1);
 	int analogRead2 = analogRead(VIN1);
+	int analogRead3 = analogRead(AO1);
+	int analogRead4 = analogRead(AO2);
 	float ar1 = (analogRead1 * 0.8056) * 11;//4537.65
-	float ar2 = (analogRead1 * 0.8056) * 11;
+	float ar2 = (analogRead2 * 0.8056) * 11;
+	float ar3 = (analogRead3 * 0.8056) * 11;//4537.65
+	float ar4 = (analogRead4 * 0.8056) * 11;
 	if (debug == 1)
 	{
-		ar1 = 5.69;ar2 = 17.36;
+		ar1 = 5.69; ar2 = 17.36;
+		ar3 = 0.79; ar4 = 99.36;
 		Serial.println(String("ar1 = ") + ar1 + String("mV"));
 		Serial.println(String("ar2 = ") + ar2 + String("mV"));
+		Serial.println(String("ar3 = ") + ar3 + String("mV"));
+		Serial.println(String("ar4 = ") + ar4 + String("mV"));
 	}
 
-
+	//模拟输入1
 	if (floor(ar1) >= 0 && floor(ar1) <= 99)//[0],(0,99]
 	{
 		E021_anaIn1_1 = floor(ar1);
 		E021_anaIn1_2 = (ar1 - E021_anaIn1_1) * 100;
-		E021_anaIn1_3 = 'E2';
+		E021_anaIn1_3 = 0xE2;
 		if (debug == 1)
 		{
 			Serial.println(String("E021_anaIn1_1 = ") + E021_anaIn1_1);
 			Serial.println(String("E021_anaIn1_2 = ") + E021_anaIn1_2);
-			Serial.println(String("E021_anaIn1_3 = ") + String(E021_anaIn1_3));
+			Serial.println(String("E021_anaIn1_3 = ") + E021_anaIn1_3);
 		}
 	}
 	else//超出量程
@@ -227,20 +322,21 @@ int E021_GetAnalogStatus()
 		{
 			Serial.println(String("E021_anaIn1_1 = ") + E021_anaIn1_1);
 			Serial.println(String("E021_anaIn1_2 = ") + E021_anaIn1_2);
-			Serial.println(String("E021_anaIn1_3 = ") + String(E021_anaIn1_3));
+			Serial.println(String("E021_anaIn1_3 = ") + E021_anaIn1_3);
 		}
 	}
 
+	//模拟输入2
 	if (floor(ar2) >= 0 && floor(ar2) <= 99)//[0],(0,99]
 	{
 		E021_anaIn2_1 = floor(ar2);
 		E021_anaIn2_2 = (ar2 - E021_anaIn2_1) * 100;
-		E021_anaIn2_3 = 'E2';
+		E021_anaIn2_3 = 0xE2;
 		if (debug == 1)
 		{
 			Serial.println(String("E021_anaIn2_1 = ") + E021_anaIn2_1);
 			Serial.println(String("E021_anaIn2_2 = ") + E021_anaIn2_2);
-			Serial.println(String("E021_anaIn2_3 = ") + String(E021_anaIn2_3));
+			Serial.println(String("E021_anaIn2_3 = ") + E021_anaIn2_3);
 		}
 	}
 	else//超出量程
@@ -253,10 +349,62 @@ int E021_GetAnalogStatus()
 		{
 			Serial.println(String("E021_anaIn2_1 = ") + E021_anaIn2_1);
 			Serial.println(String("E021_anaIn2_2 = ") + E021_anaIn2_2);
-			Serial.println(String("E021_anaIn2_3 = ") + String(E021_anaIn2_3));
+			Serial.println(String("E021_anaIn2_3 = ") + E021_anaIn2_3);
 		}
 	}
 
+	//模拟输出1
+	if (floor(ar3) >= 0 && floor(ar3) <= 99)//[0],(0,99]
+	{
+		E021_anaOut1_1 = floor(ar3);
+		E021_anaOut1_2 = (ar3 - E021_anaOut1_1) * 100;
+		E021_anaOut1_3 = 0xE2;
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaOut1_1 = ") + E021_anaOut1_1);
+			Serial.println(String("E021_anaOut1_2 = ") + E021_anaOut1_2);
+			Serial.println(String("E021_anaOut1_3 = ") + E021_anaOut1_3);
+		}
+	}
+	else//超出量程
+	{
+		Serial.println("模拟输入2超出量程");
+		/*E021_anaOut1_1 = floor(ar3);
+		E021_anaOut1_2 = (ar3 - E021_anaOut1_1) * 100;
+		E021_anaOut1_3 = 0xE2;*/
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaOut1_1 = ") + E021_anaOut1_1);
+			Serial.println(String("E021_anaOut1_2 = ") + E021_anaOut1_2);
+			Serial.println(String("E021_anaOut1_3 = ") + E021_anaOut1_3);
+		}
+	}
 
+	//模拟输出2
+	if (floor(ar4) >= 0 && floor(ar4) <= 99)//[0],(0,99]
+	{
+		E021_anaOut2_1 = floor(ar4);
+		E021_anaOut2_2 = (ar4 - E021_anaOut2_1) * 100;
+		E021_anaOut2_3 = 0xE2;
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaOut2_1 = ") + E021_anaOut2_1);
+			Serial.println(String("E021_anaOut2_2 = ") + E021_anaOut2_2);
+			Serial.println(String("E021_anaOut2_3 = ") + E021_anaOut2_3);
+		}
+	}
+	else//超出量程
+	{
+		Serial.println("模拟输入2超出量程");
+		/*E021_anaOut2_1 = floor(ar4);
+		E021_anaOut2_2 = (ar4 - E021_anaOut2_1) * 100;
+		E021_anaOut2_3 = 0xE2;*/
+		if (debug == 1)
+		{
+			Serial.println(String("E021_anaOut2_1 = ") + E021_anaOut2_1);
+			Serial.println(String("E021_anaOut2_2 = ") + E021_anaOut2_2);
+			Serial.println(String("E021_anaOut2_3 = ") + E021_anaOut2_3);
+		}
+	}
 	return 0;
 }

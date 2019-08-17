@@ -44,8 +44,8 @@ void Initialization()//初始化函数
 	pinMode(LED2, OUTPUT);//LED2，灯1绿
 	pinMode(LED3, OUTPUT);//LED3，灯2绿
 	pinMode(LED4, OUTPUT);//LED4，灯2红
-	pinMode(A01, OUTPUT);//模拟输出1
-	pinMode(A02, OUTPUT);//模拟输出2
+	//pinMode(AO1, OUTPUT);//模拟输出1
+	//pinMode(AO2, OUTPUT);//模拟输出2
 	pinMode(K1, INPUT);//按键1
 	pinMode(K2, INPUT);//按键2
 	pinMode(LORA_PWR, OUTPUT);//LORA电源
@@ -54,8 +54,8 @@ void Initialization()//初始化函数
 	pinMode(WAKE_UP, OUTPUT);//LORA唤醒
 	pinMode(VIN1, INPUT_ANALOG);//模拟输入电压1
 	pinMode(VIN2, INPUT_ANALOG);//模拟输入电压2
-	pinMode(A01, OUTPUT);//模拟输出1
-	pinMode(A02, OUTPUT);//模拟输出2
+	pinMode(AO1, OUTPUT);//模拟输出1
+	pinMode(AO2, OUTPUT);//模拟输出2
 	pinMode(DI1, INPUT_PULLDOWN);//数字输入1
 	pinMode(DI2, INPUT_PULLDOWN);//数字输入2
 	pinMode(DO1, OUTPUT);//数字输出1

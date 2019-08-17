@@ -21,7 +21,14 @@
 #include "user_initialization.h"
 
 
-
+//函 数 名：Receive_A011() 
+//功能描述：A011的执行函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 void Receive_A011(unsigned char * Judgement_Data, int Judgement_Length)//A011函数
 {
 
@@ -62,6 +69,7 @@ void Receive_A011(unsigned char * Judgement_Data, int Judgement_Length)//A011函
 
 	//是否广播指令
 	Receive_IsBroadcast = Judgement_Data[6];
+
 	//进行状态的回执
 	Send_E011(Receive_IsBroadcast);
 	if (debug == 1)

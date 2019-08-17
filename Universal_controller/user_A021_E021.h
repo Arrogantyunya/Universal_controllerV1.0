@@ -22,7 +22,7 @@
 
 
 //全局变量
-static unsigned char E021[32];//用来存放E021发送出去的数组
+static unsigned char E021[31];//用来存放E021发送出去的数组
 
 static int E021_FrameHead = 0xFE;		//E021的帧头
 
@@ -44,13 +44,13 @@ static int E021_digIn2 = 0x00;			//E021的数字输入2
 static int E021_digOut1 = 0x00;			//E021的数字输出1
 static int E021_digOut2 = 0x00;			//E021的数字输出2
 
-static int E021_anaIn1_1 = 0;			//E021的模拟输入1_1
-static int E021_anaIn1_2 = 0;			//E021的模拟输入1_2
-static unsigned char E021_anaIn1_3 = 'E2';		//E021的模拟输入1_3
+static int E021_anaIn1_1 = 0x00;		//E021的模拟输入1_1
+static int E021_anaIn1_2 = 0x00;		//E021的模拟输入1_2
+static int E021_anaIn1_3 = 0xE2;		//E021的模拟输入1_3
 
-static int E021_anaIn2_1 = 0;			//E021的模拟输入2_1
-static int E021_anaIn2_2 = 0;			//E021的模拟输入2_2
-static unsigned char E021_anaIn2_3 = 'E2';		//E021的模拟输入2_3
+static int E021_anaIn2_1 = 0x00;		//E021的模拟输入2_1
+static int E021_anaIn2_2 = 0x00;		//E021的模拟输入2_2
+static int E021_anaIn2_3 = 0xE2;		//E021的模拟输入2_3
 
 static int E021_anaOut1_1 = 0x00;		//E021的模拟输出1_1
 static int E021_anaOut1_2 = 0x00;		//E021的模拟输出1_2

@@ -14,6 +14,7 @@
 #include"user_initialization.h"//初始化
 #include"user_crc8.h"//CRC校验
 #include"user_judgement.h"//判断
+#include "user_A021_E021.h"
 
 
 //引脚定义
@@ -21,6 +22,25 @@
 
 
 //全局变量
+static unsigned char Out_State[6];              //用来存放状态值rd1
+static unsigned long duration[6];               //用来存放持续时间值Duration_time
+static unsigned long remaining[6];              //用来存放剩余时间值Remaining
+static unsigned long ot[6];                     //用来存放旧时间值oldtime
+
+static unsigned long time_huns = 0;             //时间百位
+static unsigned long time_tens = 0;             //时间十位
+static unsigned long time_ones = 0;             //时间个位
+
+static unsigned long Duration_time = 0;         //持续时间
+static unsigned long Remaining = 0;             //剩余时间
+static unsigned long oldtime = 0;				//旧时间
+
+static float Set_AOVoltage1 = 0;			//设置模拟输出电压值1
+static float Set_AOVoltage2 = 0;			//设置模拟输出电压值2
+static int Analog_Value1 = 0;				//analogwrite时输出的值1
+static int Analog_Value2 = 0;				//analogwrite时输出的值2
+//------------------------------------------------------------------------
+
 static unsigned char E020[24];//用来存放E020发送出去的数组
 
 static int E020_FrameHead = 0xFE;		//E020的帧头
@@ -94,14 +114,18 @@ static enum Device_status
 	Data_loss_due_to_abnormal_power_off = 0x0E//异常断电数据丢失
 }E020_status = FactoryMode;
 
-////继电器的状态(结构类型，枚举)
-//static enum RD1S
-//{
-//	KCZJ1_ON = 1,//继电器1开
-//	KCZJ2_ON = 2,//继电器2开
-//	LED2_ON = 3,//LED2开								
-//	Stateless = 0//无状态指令
-//}rd1 = Stateless;
+//输出状态(结构类型，枚举)
+static enum OUT_STATES
+{
+	DO1_ON = 1,//数字输出1开
+	DO2_ON = 2,//数字输出2开
+	DO3_ON = 3,//数字输出3开
+	DO4_ON = 4,//数字输出4开
+	AO1_ON = 5,//模拟输出1开
+	AO2_ON = 6,//模拟输出2开
+
+	Stateless = 0//无状态指令
+}out_state = Stateless;
 
 //union DEVICE_SN
 //{

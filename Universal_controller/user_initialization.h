@@ -40,8 +40,8 @@
  //引脚定义
 #define K1			PC0		//按键1
 #define K2			PC1		//按键2
-#define A01			PC2		//模拟输出1
-#define A02			PC3		//模拟输出2
+#define AO1			PC2		//模拟输出1
+#define AO2			PC3		//模拟输出2
 #define VIN1		PA0		//模拟输入1
 #define VIN2		PA1		//模拟输入2
 #define TX_485		PA2		//485TX
