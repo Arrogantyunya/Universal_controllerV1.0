@@ -427,7 +427,7 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 						//2路关
 						else if (Judgement_Data[14] == 0x00)
 						{
-							//将1路关的状态值写入
+							//将2路关的状态值写入
 							out_state = Stateless;
 							Out_State[1] = out_state;
 							digitalWrite(DO2, LOW);
@@ -1139,10 +1139,616 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 		//判断为组播
 		else if (Judgement_Data[6] == 0x55)
 		{
-			//判断组
-			if (true)
+			//判断是否属于DO1的组
+			if (Judgement_Data[8] == AT24CXX_ReadOneByte(16) || Judgement_Data[8] == AT24CXX_ReadOneByte(17) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(18) || Judgement_Data[8] == AT24CXX_ReadOneByte(19) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(20))
 			{
+				//判断是否属于DO1的子设备类型
+				if (Judgement_Data[12] == AT24CXX_ReadOneByte(14) && Judgement_Data[13] == AT24CXX_ReadOneByte(15))
+				{
+					//1路开
+					if (Judgement_Data[14] == 0x01)
+					{
+						//digitalWrite(DO1, HIGH);
 
+						//将1路开的状态值写入
+						out_state = DO1_ON;
+						Out_State[0] = out_state;
+
+						//决定在这里赋时间值，先赋持续时间的值到数组
+						Duration_time = Judgement_Data[15] * 0x1000 + Judgement_Data[16] * 0x100 + Judgement_Data[17];
+						duration[0] = Duration_time;
+						if (debug == 1)
+						{
+							Serial.print("Duration_time=");
+							Serial.println(Duration_time);
+							Serial.print("duration[0]=");
+							Serial.println(duration[0]);
+						}
+
+						//然后赋旧时间的值到数组
+						oldtime = millis();
+						ot[0] = oldtime;
+						if (debug == 1)
+						{
+							Serial.print("oldtime=");
+							Serial.println(oldtime);
+							Serial.print("ot[0]=");
+							Serial.println(ot[0]);
+						}
+
+						if (Out_State[0] == DO1_ON)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					//1路关
+					else if (Judgement_Data[14] == 0x00)
+					{
+						//将1路关的状态值写入
+						out_state = Stateless;
+						Out_State[0] = out_state;
+						digitalWrite(DO1, LOW);
+
+						if (debug == 1)
+						{
+							Serial.println("数字输出1关");
+						}
+
+						if (Out_State[0] == Stateless)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					else
+					{
+						if (debug == 1)
+						{
+							Serial.println("不存在的开度");
+						}
+					}
+				}
+			}
+			//判断是否属于DO2的组
+			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(23) || Judgement_Data[8] == AT24CXX_ReadOneByte(24) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(25) || Judgement_Data[8] == AT24CXX_ReadOneByte(26) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(27))
+			{
+				if (Judgement_Data[12] == AT24CXX_ReadOneByte(21) && Judgement_Data[13] == AT24CXX_ReadOneByte(22))
+				{
+					//2路开
+					if (Judgement_Data[14] == 0x01)
+					{
+						//digitalWrite(DO2, HIGH);
+
+						//将2路开的状态值写入
+						out_state = DO2_ON;
+						Out_State[1] = out_state;
+
+						//决定在这里赋时间值，先赋持续时间的值到数组
+						Duration_time = Judgement_Data[15] * 0x1000 + Judgement_Data[16] * 0x100 + Judgement_Data[17];
+						duration[1] = Duration_time;
+						if (debug == 1)
+						{
+							Serial.print("Duration_time=");
+							Serial.println(Duration_time);
+							Serial.print("duration[1]=");
+							Serial.println(duration[1]);
+						}
+
+						//然后赋旧时间的值到数组
+						oldtime = millis();
+						ot[1] = oldtime;
+						if (debug == 1)
+						{
+							Serial.print("oldtime=");
+							Serial.println(oldtime);
+							Serial.print("ot[1]=");
+							Serial.println(ot[1]);
+						}
+
+						if (Out_State[1] == DO2_ON)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					//2路关
+					else if (Judgement_Data[14] == 0x00)
+					{
+						//将2路关的状态值写入
+						out_state = Stateless;
+						Out_State[1] = out_state;
+						digitalWrite(DO2, LOW);
+
+						if (debug == 1)
+						{
+							Serial.println("数字输出2关");
+						}
+
+						if (Out_State[1] == Stateless)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					else
+					{
+						if (debug == 1)
+						{
+							Serial.println("不存在的开度");
+						}
+					}
+				}
+			}
+			//判断是否属于DO3的组
+			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(30) || Judgement_Data[8] == AT24CXX_ReadOneByte(31) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(32) || Judgement_Data[8] == AT24CXX_ReadOneByte(33) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(34))
+			{
+				if (Judgement_Data[12] == AT24CXX_ReadOneByte(28) && Judgement_Data[13] == AT24CXX_ReadOneByte(29))
+				{
+					//3路开
+					if (Judgement_Data[14] == 0x01)
+					{
+						//digitalWrite(KCZJ1, );
+
+						//将3路开的状态值写入
+						out_state = DO3_ON;
+						Out_State[2] = out_state;
+
+						//决定在这里赋时间值，先赋持续时间的值到数组
+						Duration_time = Judgement_Data[15] * 0x1000 + Judgement_Data[16] * 0x100 + Judgement_Data[17];
+						duration[2] = Duration_time;
+						if (debug == 1)
+						{
+							Serial.print("Duration_time=");
+							Serial.println(Duration_time);
+							Serial.print("duration[2]=");
+							Serial.println(duration[2]);
+						}
+
+						//然后赋旧时间的值到数组
+						oldtime = millis();
+						ot[2] = oldtime;
+						if (debug == 1)
+						{
+							Serial.print("oldtime=");
+							Serial.println(oldtime);
+							Serial.print("ot[2]=");
+							Serial.println(ot[2]);
+						}
+
+						if (Out_State[2] == DO3_ON)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					//3路关
+					else if (Judgement_Data[14] == 0x00)
+					{
+						//将3路关的状态值写入
+						out_state = Stateless;
+						Out_State[2] = out_state;
+						digitalWrite(KCZJ1, HIGH);
+
+						if (debug == 1)
+						{
+							Serial.println("数字输出3关");
+						}
+
+						if (Out_State[1] == Stateless)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					else
+					{
+						if (debug == 1)
+						{
+							Serial.println("不存在的开度");
+						}
+					}
+				}
+			}
+			//判断是否属于DO4的组
+			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(37) || Judgement_Data[8] == AT24CXX_ReadOneByte(38) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(39) || Judgement_Data[8] == AT24CXX_ReadOneByte(40) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(41))
+			{
+				if (Judgement_Data[12] == AT24CXX_ReadOneByte(35) && Judgement_Data[13] == AT24CXX_ReadOneByte(36))
+				{
+					//4路开
+					if (Judgement_Data[14] == 0x01)
+					{
+						//digitalWrite(KCZJ2, LOW);
+
+						//将4路开的状态值写入
+						out_state = DO4_ON;
+						Out_State[3] = out_state;
+
+						//决定在这里赋时间值，先赋持续时间的值到数组
+						Duration_time = Judgement_Data[15] * 0x1000 + Judgement_Data[16] * 0x100 + Judgement_Data[17];
+						duration[3] = Duration_time;
+						if (debug == 1)
+						{
+							Serial.print("Duration_time=");
+							Serial.println(Duration_time);
+							Serial.print("duration[3]=");
+							Serial.println(duration[3]);
+						}
+
+						//然后赋旧时间的值到数组
+						oldtime = millis();
+						ot[3] = oldtime;
+						if (debug == 1)
+						{
+							Serial.print("oldtime=");
+							Serial.println(oldtime);
+							Serial.print("ot[3]=");
+							Serial.println(ot[3]);
+						}
+
+						if (Out_State[3] == DO4_ON)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					//4路关
+					else if (Judgement_Data[14] == 0x00)
+					{
+						//将4路关的状态值写入
+						out_state = Stateless;
+						Out_State[3] = out_state;
+						digitalWrite(KCZJ2, HIGH);
+
+						if (debug == 1)
+						{
+							Serial.println("数字输出4关");
+						}
+
+						if (Out_State[3] == Stateless)
+						{
+							E020_status = Set_digital_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_digital_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					else
+					{
+						if (debug == 1)
+						{
+							Serial.println("不存在的开度");
+						}
+					}
+				}
+			}
+			//判断是否属于AO1的组
+			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(44) || Judgement_Data[8] == AT24CXX_ReadOneByte(45) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(46) || Judgement_Data[8] == AT24CXX_ReadOneByte(47) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(48))
+			{
+				if (Judgement_Data[12] == AT24CXX_ReadOneByte(42) && Judgement_Data[13] == AT24CXX_ReadOneByte(43))
+				{
+					//模拟输出1路开
+					if (Judgement_Data[14] != 0x00 && Judgement_Data[15] != 0x00 && Judgement_Data[16] != 0x00)
+					{
+						//analogWrite
+						//将1路开的状态值写入
+						out_state = AO1_ON;
+						Out_State[4] = out_state;
+
+						//在这里得到需要设定的电压值
+						if (Judgement_Data[16] == 0xE2)
+						{
+							Set_AOVoltage1 = (Judgement_Data[14] + Judgement_Data[15] * 0.01);
+							if (debug == 1)
+							{
+								Serial.println("Set_AOVoltage1 = " + String(Set_AOVoltage1) + "V");
+							}
+						}
+						//float ar1 = ((analogRead1 * 0.8056) * 11;//4537.65
+						//float ar1 = ((analogRead1 * 0.8056) * 0.011;//4537.65
+						float AV1 = (Set_AOVoltage1 / 0.011) / 0.8056;
+						if (AV1 - floor(AV1) >= 0.5)
+						{
+							Analog_Value1 = floor(AV1) + 1;
+						}
+						else if (AV1 - floor(AV1) < 0.5)
+						{
+							Analog_Value1 = floor(AV1);
+						}
+						else
+						{
+							if (debug == 1)
+							{
+								Serial.println("意外BUG区");
+							}
+						}
+						if (debug == 1)
+						{
+							Serial.println("AV1 = " + String(AV1));
+							Serial.println("Analog_Value1 = " + String(Analog_Value1));
+						}
+
+						//决定在这里赋时间值，先赋持续时间的值到数组
+						Duration_time = Judgement_Data[17] * 0x1000 + Judgement_Data[18] * 0x100 + Judgement_Data[19];
+						duration[4] = Duration_time;
+						if (debug == 1)
+						{
+							Serial.print("Duration_time=");
+							Serial.println(Duration_time);
+							Serial.print("duration[4]=");
+							Serial.println(duration[4]);
+						}
+
+						//然后赋旧时间的值到数组
+						oldtime = millis();
+						ot[4] = oldtime;
+						if (debug == 1)
+						{
+							Serial.print("oldtime=");
+							Serial.println(oldtime);
+							Serial.print("ot[4]=");
+							Serial.println(ot[4]);
+						}
+
+						if (Out_State[4] == AO1_ON)
+						{
+							E020_status = Set_analog_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_analog_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					//模拟输出1路关
+					else if (Judgement_Data[14] == 0x00 && Judgement_Data[15] == 0x00 && Judgement_Data[16] == 0x00)
+					{
+						//将模拟输出1路关的状态值写入
+						out_state = Stateless;
+						Out_State[4] = out_state;
+						analogWrite(AO1, 0);
+						if (debug == 1)
+						{
+							Serial.println("模拟输出2关");
+						}
+
+						if (Out_State[4] == Stateless)
+						{
+							E020_status = Set_analog_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_analog_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					else
+					{
+						if (debug == 1)
+						{
+							Serial.println("意外BUG区");
+						}
+					}
+				}
+			}
+			//判断是否属于AO2的组
+			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(51) || Judgement_Data[8] == AT24CXX_ReadOneByte(52) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(53) || Judgement_Data[8] == AT24CXX_ReadOneByte(54) ||
+				Judgement_Data[8] == AT24CXX_ReadOneByte(55))
+			{
+				if (Judgement_Data[12] == AT24CXX_ReadOneByte(49) && Judgement_Data[13] == AT24CXX_ReadOneByte(50))
+				{
+					//模拟输出2路开
+					if (Judgement_Data[14] != 0x00 && Judgement_Data[15] != 0x00 && Judgement_Data[16] != 0x00)
+					{
+						//analogWrite
+						//将2路开的状态值写入
+						out_state = AO2_ON;
+						Out_State[5] = out_state;
+
+						//在这里得到需要设定的电压值
+						if (Judgement_Data[16] == 0xE2)
+						{
+							Set_AOVoltage2 = Judgement_Data[14] + Judgement_Data[15] * 0.01;
+							if (debug == 1)
+							{
+								Serial.println("Set_AOVoltage1 = " + String(Set_AOVoltage2) + "mv");
+							}
+						}
+						//float ar1 = ((analogRead1 * 0.8056) * 11;//4537.65
+						//float ar1 = ((analogRead1 * 0.8056) * 0.011;//4537.65
+						float AV2 = (Set_AOVoltage2 / 0.011) / 0.8056;
+						if (AV2 - floor(AV2) >= 0.5)
+						{
+							Analog_Value2 = floor(AV2) + 1;
+						}
+						else if (AV2 - floor(AV2) < 0.5)
+						{
+							Analog_Value2 = floor(AV2);
+						}
+						else
+						{
+							if (debug == 1)
+							{
+								Serial.println("意外BUG区");
+							}
+						}
+						if (debug == 1)
+						{
+							Serial.println("AV2 = " + String(AV2));
+							Serial.println("Analog_Value2 = " + String(Analog_Value2));
+						}
+
+						//决定在这里赋时间值，先赋持续时间的值到数组
+						Duration_time = Judgement_Data[17] * 0x1000 + Judgement_Data[18] * 0x100 + Judgement_Data[19];
+						duration[5] = Duration_time;
+						if (debug == 1)
+						{
+							Serial.print("Duration_time=");
+							Serial.println(Duration_time);
+							Serial.print("duration[5]=");
+							Serial.println(duration[5]);
+						}
+
+						//然后赋旧时间的值到数组
+						oldtime = millis();
+						ot[5] = oldtime;
+						if (debug == 1)
+						{
+							Serial.print("oldtime=");
+							Serial.println(oldtime);
+							Serial.print("ot[5]=");
+							Serial.println(ot[5]);
+						}
+
+						if (Out_State[5] == AO2_ON)
+						{
+							E020_status = Set_analog_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_analog_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					//模拟输出2路关
+					else if (Judgement_Data[14] == 0x00 && Judgement_Data[15] == 0x00 && Judgement_Data[16] == 0x00)
+					{
+						//将模拟输出2路关的状态值写入
+						out_state = Stateless;
+						Out_State[5] = out_state;
+						analogWrite(AO2, 0);
+						if (debug == 1)
+						{
+							Serial.println("模拟输出2关");
+						}
+
+						if (Out_State[5] == Stateless)
+						{
+							E020_status = Set_analog_output_status_success;
+						}
+						else
+						{
+							E020_status = Set_analog_output_status_failed;
+						}
+
+						//是否广播指令
+						Receive_IsBroadcast = Judgement_Data[6];
+
+						//进行状态的回执
+						Send_E020(Receive_IsBroadcast, E020_status);
+					}
+					else
+					{
+						if (debug == 1)
+						{
+							Serial.println("意外BUG区");
+						}
+					}
+				}
+			}
+			else
+			{
+				//不存在的任何组
+				if (debug == 1)
+				{
+					Serial.println("不存在的任何组");
+				}
 			}
 		}
 		//不存在的广播功能
