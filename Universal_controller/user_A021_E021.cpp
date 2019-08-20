@@ -7,7 +7,7 @@
 
 //函 数 名：Receive_A021() 
 //功能描述：A021的执行函数
-//函数说明：
+//函数说明：查询输入输出接口状态
 //调用函数：
 //全局变量：
 //输 入：
@@ -139,6 +139,9 @@ unsigned char Send_E021(int Receive_IsBroadcast)
 /////////////////////////////////////////////////////////////////////
 unsigned char E021_init()
 {
+
+	Delivery_oldtime = millis();//定时上报状态
+
 	E021_FrameHead = 0xFE;		//E021的帧头
 
 	E021_FrameId1 = 0xE0;		//E021的帧ID1
@@ -407,4 +410,13 @@ int E021_GetAnalogStatus()
 		}
 	}
 	return 0;
+}
+
+long Get_Delivery_oldtime()
+{
+	if (debug == 1)
+	{
+		//Serial.println(String("Delivery_oldtime = ") + Delivery_oldtime);
+	}
+	return Delivery_oldtime;
 }

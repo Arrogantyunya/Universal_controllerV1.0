@@ -112,8 +112,21 @@ void loop()
 		
 	}
 
+	forswitch();
+
 	LORA_Receive_information();	//LORA的接收函数
-	//forswitch();				//forswitch
+
+	if (debug == 1)
+	{
+		/*Serial.println(String("Delivery_time = ") + Delivery_time);
+		delay(1500);*/
+	}
+
+	if (millis() - Get_Delivery_oldtime() >= Delivery_time * 1000 && Get_Delivery_oldtime() > 0)
+	{
+		//进行状态的回执
+		Send_E021(Receive_IsBroadcast);
+	}
 
 	//这是恢复为出厂设置，请慎用
 	if (digitalRead(K1) == LOW)

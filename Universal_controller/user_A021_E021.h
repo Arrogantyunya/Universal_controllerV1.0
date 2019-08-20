@@ -72,6 +72,9 @@ static int E021_FrameEnd6 = 0x0A;		//E021的帧尾6
 static unsigned char E021_Check_Data[50];   //用来存放接收到的数据
 static int E021_Check_Length = 0;
 
+static unsigned long Delivery_time = 120;		//用于处理定时发送的新时间变量
+static unsigned long Delivery_oldtime = 0;		//用于处理定时发送的旧时间变量
+
 
 
 //全局函数声明
@@ -80,6 +83,7 @@ unsigned char Send_E021(int Receive_IsBroadcast);  //E021函数
 unsigned char E021_init();	//E021初始化函数
 int E021_GetDigitalStatus();//E021得到数字状态
 int E021_GetAnalogStatus();	//E021得到模拟状态
+long Get_Delivery_oldtime();//得到旧时间
 
 
 //类结构声明

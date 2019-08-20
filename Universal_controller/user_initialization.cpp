@@ -44,8 +44,6 @@ void Initialization()//初始化函数
 	pinMode(LED2, OUTPUT);//LED2，灯1绿
 	pinMode(LED3, OUTPUT);//LED3，灯2绿
 	pinMode(LED4, OUTPUT);//LED4，灯2红
-	//pinMode(AO1, OUTPUT);//模拟输出1
-	//pinMode(AO2, OUTPUT);//模拟输出2
 	pinMode(K1, INPUT);//按键1
 	pinMode(K2, INPUT);//按键2
 	pinMode(LORA_PWR, OUTPUT);//LORA电源
@@ -157,7 +155,11 @@ void Initialization()//初始化函数
 		}
 		AT24CXX_WriteOneByte(12, 0x00);//LORA主设备区域ID的存储
 		AT24CXX_WriteOneByte(13, 0x00);//LORA自动策略关联的标志位
-		for (size_t i = 14; i <= 41; i++)
+		for (size_t i = 14; i <= 55; i++)//工作组数组的初始化
+		{
+			AT24CXX_WriteOneByte(i, 0x00);
+		}
+		for (size_t i = 56; i <= 88; i++)//预留字段的初始化
 		{
 			AT24CXX_WriteOneByte(i, 0x00);
 		}

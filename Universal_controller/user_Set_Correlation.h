@@ -91,6 +91,10 @@ void Receive_A024(unsigned char * Judgement_Data, int Judgement_Length);  //A024
 unsigned char Send_E020(int Receive_IsBroadcast,int E020_status );  //E020函数
 unsigned char E020_init();	//E011初始化函数
 unsigned char SN_ZoneISOK(unsigned char * Judgement_Data, int Judgement_Length);	//测试SN区域是否写入成功函数
+int Verification_Reserved_field(unsigned char * Judgement_Data, int Initial);
+void forswitch();
+void Analog1_Write();
+void Analog2_Write();
 
 
 //类结构声明
