@@ -1845,8 +1845,23 @@ void Receive_A023(unsigned char * Judgement_Data, int Judgement_Length)//A023函
 	}
 	//--------------------------------------------------------
 
+	if (Judgement_Data[7] == 0x01/*AT24CXX_ReadOneByte(12)*/)
+	{
+		//先将字符串数组拼接成Strring字符串，读取出来
+		for (size_t i = 8; i <= Judgement_Length-7; i++)
+		{
+			//强制转换为char类型
+			AssStat1.concat(String(char(Judgement_Data[i])));
+		}
+		if (debug == 1)
+		{
+			Serial.println(AssStat1);
+		}
+		Serial.println(AssStat1);
+	}
 
-
+	//先分割#，分割为条件语句以及执行语句
+	data_processing(AssStat1);
 
 	//是否广播指令
 	Receive_IsBroadcast = Judgement_Data[6];
@@ -2579,13 +2594,69 @@ void forswitch()
 	}
 }
 
+//函 数 名：Analog1_Write()
+//功能描述：
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 void Analog1_Write()
 {
 	
 }
 
+//函 数 名：Analog2_Write()
+//功能描述：
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 void Analog2_Write()
 {
+
+}
+
+//函 数 名：int data_processing(String data_1)
+//功能描述：数据处理函数，分割# 处理判断以及执行
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+int data_processing(String data_1)
+{
+	return 0;
+}
+
+//函 数 名：int condition_test(String con1)
+//功能描述：处理判断语句的函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+int condition_test(String con1)
+{
+	return 0;
+}
+
+//函 数 名：int implement_test(String imp1)
+//功能描述：处理执行语句的函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+int implement_test(String imp1)
+{
+	return 0;
 }
 
 

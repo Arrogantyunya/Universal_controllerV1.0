@@ -21,7 +21,7 @@ int LORA_Initialization(void);//初始化函数
 String addr_write();
 
 //全局变量
-static unsigned char lora_data[50];
+static unsigned char lora_data[200];
 static unsigned char lora_len = 0;
 static unsigned int lora_Completion_Degree = 0;
 

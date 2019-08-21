@@ -22,7 +22,7 @@
 //----------------------------
 static String LORA_RecData1, LORA_RecData2;
 //全局变量
-static unsigned char Receive_Data[50];//用来存放接收到的数据
+static unsigned char Receive_Data[200];//用来存放接收到的数据
 static int Receive_Length = 0;//接收数据的长度
 static int CRC_Check_num = 0x00;//CRC校验的数值
 
@@ -59,29 +59,29 @@ void setup()
 			digitalWrite(LED2, LOW);
 		}
 
-		while (AT24CXX_ReadOneByte(2) == 0x00)//Register_OK_flag	已经完成申号的标志位
-		{
-			//代表未设置工作参数
-			Serial.println("未设置工作参数,如需要设置工作参数，请长按按键1");
-			digitalWrite(LED2, HIGH);
-			delay(1500);
-			//等待按键1按下
-			if (digitalRead(K1) == LOW)
-			{
-				delay(2000);
-				if (digitalRead(K1) == LOW)
-				{
-					digitalWrite(LED2, LOW);
-					Serial.println("K1按下");
-					Serial.println("本设备开始上报当前的设置参数");
+		//while (AT24CXX_ReadOneByte(2) == 0x00)//Register_OK_flag	已经完成申号的标志位
+		//{
+		//	//代表未设置工作参数
+		//	Serial.println("未设置工作参数,如需要设置工作参数，请长按按键1");
+		//	digitalWrite(LED2, HIGH);
+		//	delay(1500);
+		//	//等待按键1按下
+		//	if (digitalRead(K1) == LOW)
+		//	{
+		//		delay(2000);
+		//		if (digitalRead(K1) == LOW)
+		//		{
+		//			digitalWrite(LED2, LOW);
+		//			Serial.println("K1按下");
+		//			Serial.println("本设备开始上报当前的设置参数");
 
-					delay(250);
-					//进入E011函数上报请求当前参数
-					Send_E011(Receive_IsBroadcast);//这里的Receive_IsBroadcast是否有值？
-					AT24CXX_WriteOneByte(2, 0X01);
-				}
-			}
-		}
+		//			delay(250);
+		//			//进入E011函数上报请求当前参数
+		//			Send_E011(Receive_IsBroadcast);//这里的Receive_IsBroadcast是否有值？
+		//			AT24CXX_WriteOneByte(2, 0X01);
+		//		}
+		//	}
+		//}
 	}
 	else
 	{
@@ -179,12 +179,27 @@ void loop()
 /////////////////////////////////////////////////////////////////////
 void LORA_Receive_information(void)
 {
+	//do {
+	//		while (Serial3.available() > 0)//接收串口收到的数据
+	//		{
+	//			if (Receive_Length >= 200) break;
+	//			Receive_Data[Receive_Length++] = Serial3.read();
+	//			Serial.print(Receive_Data[Receive_Length - 1], HEX);
+	//			Serial.print(" ");
+	//			delay(5);
+	//		}
+	//	if (Receive_Length >= 60) Receive_Length = 0;
+
+	//} while (1);
+	Receive_Length = 0;
 	while (Serial3.available() > 0)//接收串口收到的数据
 	{
+		if (Receive_Length >= 200) break;
 		Receive_Data[Receive_Length++] = Serial3.read();
+		/*Serial.print(Receive_Data[Receive_Length - 1], HEX);
+		Serial.print(" ");*/
 		delay(3);
 	}
-
 	if (Receive_Length > 0)
 	{
 		//Serial.write(Receive_Data,Receive_Length);//发16进制，自动转成ASCII码

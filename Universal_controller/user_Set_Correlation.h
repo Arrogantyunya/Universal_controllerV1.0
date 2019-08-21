@@ -80,6 +80,8 @@ static int E020_FrameEnd6 = 0x0A;		//E020的帧尾6
 static unsigned char E020_Check_Data[50];   //用来存放接收到的数据
 static int E020_Check_Length = 0;
 
+static String AssStat1, AssStat2;//Association_statement，关联语句1
+
 
 
 //全局函数声明
@@ -95,7 +97,9 @@ int Verification_Reserved_field(unsigned char * Judgement_Data, int Initial);
 void forswitch();
 void Analog1_Write();
 void Analog2_Write();
-
+int data_processing(String data_1);//数据处理函数，分割# 处理判断以及执行
+int condition_test(String con1);//处理判断语句的函数
+int implement_test(String imp1);//处理执行语句的函数
 
 //类结构声明
 //LORA开关型设备的通用回执状态(结构类型，枚举)
