@@ -80,7 +80,8 @@ static int E020_FrameEnd6 = 0x0A;		//E020的帧尾6
 static unsigned char E020_Check_Data[50];   //用来存放接收到的数据
 static int E020_Check_Length = 0;
 
-static String AssStat1, AssStat2;//Association_statement，关联语句1
+static String AssStat, AssStat1, AssStat2;//Association_statement，关联语句1
+static String condition_1, implement_1;//判断语句以及执行语句
 
 
 

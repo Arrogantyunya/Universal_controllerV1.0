@@ -1851,23 +1851,22 @@ void Receive_A023(unsigned char * Judgement_Data, int Judgement_Length)//A023函
 		for (size_t i = 8; i <= Judgement_Length-7; i++)
 		{
 			//强制转换为char类型
-			AssStat1.concat(String(char(Judgement_Data[i])));
+			AssStat.concat(String(char(Judgement_Data[i])));//拼接成关联语句，AssStat
 		}
 		if (debug == 1)
 		{
-			Serial.println(AssStat1);
+			Serial.println(AssStat);
 		}
-		Serial.println(AssStat1);
 	}
 
 	//先分割#，分割为条件语句以及执行语句
-	data_processing(AssStat1);
+	data_processing(AssStat);
 
 	//是否广播指令
 	Receive_IsBroadcast = Judgement_Data[6];
 
 	//进行状态的回执
-	Send_E020(Receive_IsBroadcast, E020_status);
+	//Send_E020(Receive_IsBroadcast, E020_status);
 	if (debug == 1)
 	{
 		Serial.println("完成A023状态回执");
@@ -2342,6 +2341,14 @@ unsigned char SN_ZoneISOK(unsigned char * Judgement_Data, int Judgement_Length)
 	//Serial.println(String("Device_SN1.str_SN = ") + Device_SN1.str_SN);
 }
 
+//函 数 名：Verification_Reserved_field() 
+//功能描述：验证预留字段是否写入成功的函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 int Verification_Reserved_field(unsigned char * Judgement_Data, int Initial)
 {
 	int Check_Value = 0;
@@ -2371,6 +2378,14 @@ int Verification_Reserved_field(unsigned char * Judgement_Data, int Initial)
 	}
 }
 
+//函 数 名：forswitch() 
+//功能描述：执行片轮询的函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
 void forswitch()
 {
 	if (Out_State[0] == Stateless && Out_State[1] == Stateless &&
@@ -2620,16 +2635,33 @@ void Analog2_Write()
 
 }
 
-//函 数 名：int data_processing(String data_1)
-//功能描述：数据处理函数，分割# 处理判断以及执行
+//函 数 名：int data_processing(String AssStat)
+//功能描述：数据处理函数，分割#,分成condition，implement
 //函数说明：
 //调用函数：
 //全局变量：
 //输 入：
 //返 回：
 /////////////////////////////////////////////////////////////////////
-int data_processing(String data_1)
+int data_processing(String AssStat)
 {
+	String AssStat_dp = AssStat;
+	if (debug == 1)
+	{
+		Serial.println("data_processing:");
+	}
+	condition_1 = AssStat.substring(0, AssStat.indexOf("#"));//截取#前的语句，为条件语句condition_1
+	implement_1 = AssStat.substring(AssStat.indexOf("#") + 1, AssStat.length());//截取#前的语句，为执行语句implement_1
+
+	if (debug == 1)
+	{
+		Serial.println(String("condition_1: ") + condition_1);
+		Serial.println(String("implement_1: ") + implement_1);
+	}
+
+	condition_test(condition_1);//将condition_1传入处理判断语句的函数
+	implement_test(implement_1);//将implement_1传入处理执行语句的函数
+
 	return 0;
 }
 
@@ -2641,8 +2673,172 @@ int data_processing(String data_1)
 //输 入：
 //返 回：
 /////////////////////////////////////////////////////////////////////
-int condition_test(String con1)
+int condition_test(String condition_1)
 {
+	String con1 = condition_1;//condition_1的备份
+	String con[5];//条件语句块数组
+	String imp[5];//执行语句块数组
+	String coni_i[10];//条件执行语句块分割逗号
+	String coni;//con[i]的备份
+	int semicolon_num = 0;//分号的个数
+	int comma_num = 0;//逗号的个数 
+	int for_num1 = 0, fornum2 = 0;//
+	//----------------------------------------
+
+
+	semicolon_num = 0;//将分号个数清零
+
+	//得到分号;的个数
+	for (size_t i = 0; i < con1.length(); i++)
+	{
+		if (con1.indexOf(";") != -1)
+		{
+			con1 = con1.substring(con1.indexOf(";") + 1, con1.length());
+			//Serial.println(String("con1: ") + con1);
+			semicolon_num++;
+		}
+		else
+		{
+			//Serial.println("没有分号;");
+		}
+	}
+
+	if (debug == 1)
+	{
+		Serial.println("分号个数semicolon_num = " + String(semicolon_num));
+	}
+
+	for_num1 = 0;
+	//通过分号的个数判断需要截取几段
+	if (semicolon_num == 0)
+	{
+		for_num1 = 0;
+	}
+	else if (semicolon_num == 2)
+	{
+		for_num1 = 3;
+	}
+	else if (semicolon_num == 4)
+	{
+		for_num1 = 5;
+	}
+	else
+	{
+		Serial.println("超出个数");
+	}
+
+	if (debug == 1)
+	{
+		Serial.println("for_num1 = " + String(for_num1));
+	}
+
+	//截取段数，并且输出
+	for (size_t i = 0; i < for_num1; i++)
+	{
+		con[i] = condition_1.substring(0, condition_1.indexOf(";"));//截取出con[i]
+		coni = con[i];//con[i]的备份
+		if (debug == 1)
+		{
+			Serial.println(String("con[ ") + i + " ]:  " + con[i]);//输出判断语句
+		}
+		condition_1.remove(0, condition_1.indexOf(";") + 1);//将con1删减一部分
+		
+		comma_num = 0;//将逗号个数清零
+
+		//将con[i]拆分成coni[i]
+		for (size_t i_1 = 0; i_1 < con[i].length(); i_1++)
+		{
+			//得到逗号,的个数comma_num
+			if (con[i].indexOf(",") != -1)
+			{
+				/*coni_i[i] = coni.substring(coni.indexOf(",") + 1, coni.length());
+				Serial.println(String("coni_ ") + i + " :  " + coni_i[i]);*/
+				con[i].remove(0, con[i].indexOf(",") + 1);//将con[i]删减一部分
+				//Serial.println(con[i]);
+				comma_num++;
+			}
+			else
+			{
+				//Serial.println("没有逗号,");
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println(String("逗号个数comma_num = ") + comma_num);
+		}
+
+		fornum2 = 0;
+
+		//通过分号的个数判断需要截取几段
+		if (comma_num == 0)
+		{
+			fornum2 = 0;
+		}
+		else if (comma_num == 2)
+		{
+			fornum2 = 3;
+		}
+		else if (comma_num == 4)
+		{
+			fornum2 = 5;
+		}
+		else
+		{
+			Serial.println("超出个数");
+		}
+
+		if (debug == 1)
+		{
+			Serial.println(String("fornum2 = ") + fornum2);
+		}
+
+		//通过逗号的个数截取出coni_i
+		if (fornum2 == 0)
+		{
+			coni_i[0] = coni;
+			Serial.println(String("coni_i[0]") + " :  " + coni_i[0]);//输出第一条判断语句
+		}
+		else
+		{
+			for (size_t i = 0; i < fornum2; i++)
+			{
+				coni_i[i] = coni.substring(0, coni.indexOf(","));
+				Serial.println(String("coni_i[ ") + i + " ]:  " + coni_i[i]);//输出第一条判断语句
+				coni.remove(0, coni.indexOf(",") + 1);//将con1删减一部分
+			}
+			Serial.println("");
+		}
+
+		//调用函数开始进行判断
+
+
+		//开始进行实际的判断
+		if (true)
+		{
+
+		}
+		if (coni_i[0] == String("X1"))
+		{
+			//Serial.println("coni_i[0] == String(X1)");
+		}
+		else if (coni_i[0] == String("X2"))
+		{
+
+		}
+		else if (coni_i[0] == String("U1"))
+		{
+
+		}
+		else if (coni_i[0] == String("U2"))
+		{
+
+		}
+		else if (coni_i[0] == String("X2"))
+		{
+
+		}
+	}
+
 	return 0;
 }
 
