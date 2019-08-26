@@ -4,6 +4,7 @@
 
 #include "user_Set_Correlation.h"
 #include "user_initialization.h"
+#include "user_HEXtoDEC.h"
 
 //函 数 名：Receive_A013() 
 //功能描述：A013的执行函数
@@ -1825,6 +1826,7 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 /////////////////////////////////////////////////////////////////////
 void Receive_A023(unsigned char * Judgement_Data, int Judgement_Length)//A023函数
 {
+	String AssStat, AssStat1, AssStat2;//Association_statement，关联语句1
 	//--------------------------------------------------------
 	//该区域为测试传输进Receive_A023函数的数据是否正确的测试代码块
 	//需要测试时请取消注释
@@ -1837,6 +1839,7 @@ void Receive_A023(unsigned char * Judgement_Data, int Judgement_Length)//A023函
 			Serial.print(i);
 			Serial.print(" :");
 			Serial.println(Judgement_Data[i], HEX);
+			Serial.flush();
 			delay(1);
 		}
 		delay(200);
@@ -2658,6 +2661,7 @@ int data_processing(String AssStat)
 	{
 		Serial.println(String("condition_1: ") + condition_1);
 		Serial.println(String("implement_1: ") + implement_1);
+		Serial.flush();
 	}
 
 	//将condition_1传入处理判断语句的函数，返回值赋给ret_condition_test
@@ -2689,17 +2693,19 @@ int data_processing(String AssStat)
 
 	if (debug == 1)
 	{
+		ret_condition_test = 3;
 		Return_value[0] = 1;//真
 		Return_value[1] = 2;//与
 		Return_value[2] = 1;//真
 		Return_value[3] = 2;//与
 		Return_value[4] = 1;//真
-	}
-	for (size_t i = 0; i < 5; i++)
-	{
-		Serial.println("========");
-		Serial.println(String("Return_value[") + i + "]=" + Return_value[i]);
-		Serial.println("========");
+
+		Serial.println("--------");
+		for (size_t i = 0; i < 5; i++)
+		{
+			Serial.println(String("Return_value[") + i + "]=" + Return_value[i]);
+		}
+		Serial.println("--------");
 	}
 
 	//这里就是判断与，或逻辑条件是否成立
@@ -2820,7 +2826,24 @@ int data_processing(String AssStat)
 	//输出这里表示逻辑成立
 	Serial.println("逻辑关系成立！！！");
 
-	implement_test(implement_1);//将implement_1执行语句传入处理执行语句的函数
+	//implement_test(implement_1);//将implement_1执行语句传入处理执行语句的函数
+	int ret_implement_test = implement_test(implement_1);//得到执行语句的语句段数
+
+	if (debug == 1)
+	{
+		Serial.println(String("ret_implement_test = ") + ret_implement_test);
+	}
+	
+	//这里的for循环是为了去执行 执行语句。
+	for (size_t i = 0; i < ret_implement_test; i++)
+	{
+		if (Implement_Handle(i, ret_implement_test) == 0)
+		{
+			//这里应该有错误处理
+		}
+		//Implement_Handle(i, ret_implement_test);
+	}
+
 
 	//------------------------------------------------
 	//------这里应该需要将所有的数组清零，防止下次冲突-------
@@ -2839,21 +2862,20 @@ int data_processing(String AssStat)
 //调用函数：
 //全局变量：
 //输 入：
-//返 回：语句段数
+//返 回：条件语句的语句段数
 /////////////////////////////////////////////////////////////////////
 int condition_test(String condition_1)
 {
 	String con_1 = condition_1;//condition_1的备份
 	String CON[5];//条件语句块数组
-	String imp[5];//执行语句块数组
 	String coni;//CON[i]的备份
-	int semicolon_num = 0;//分号的个数
-	int comma_num = 0;//逗号的个数 
-	int for_num1 = 0, fornum2 = 0;//
+	int semicolon_num_con = 0;//分号的个数
+	int comma_num_con = 0;//逗号的个数 
+	int for_num1_con = 0, for_num2_con = 0;//
 	//----------------------------------------
 
 
-	semicolon_num = 0;//将分号个数清零
+	semicolon_num_con = 0;//将分号个数清零
 
 	//得到分号;的个数
 	for (size_t i = 0; i < con_1.length(); i++)
@@ -2862,7 +2884,7 @@ int condition_test(String condition_1)
 		{
 			con_1 = con_1.substring(con_1.indexOf(";") + 1, con_1.length());
 			Serial.println(String("con1: ") + con_1);
-			semicolon_num++;
+			semicolon_num_con++;
 		}
 		else
 		{
@@ -2872,15 +2894,15 @@ int condition_test(String condition_1)
 
 	if (debug == 1)
 	{
-		Serial.println("分号个数semicolon_num = " + String(semicolon_num));
+		Serial.println("分号个数semicolon_num = " + String(semicolon_num_con));
 	}
 
-	for_num1 = 0;
+	for_num1_con = 0;
 
 	//通过分号的个数判断需要截取几段
-	if (semicolon_num == 0)
+	if (semicolon_num_con == 0)
 	{
-		for_num1 = 0;
+		for_num1_con = 0;
 		//---------------------------------------------------
 		//因为当fornum1 = 0时，后面的循环体不执行，所以需要单独写出来
 		CON[0] = condition_1;
@@ -2897,7 +2919,7 @@ int condition_test(String condition_1)
 				Serial.println(String("coni_ ") + i + " :  " + coni_i[i]);*/
 				CON[i_0].remove(0, CON[i_0].indexOf(",") + 1);//将CON[i]删减一部分
 				//Serial.println(con[i]);
-				comma_num++;
+				comma_num_con++;
 			}
 			else
 			{
@@ -2906,23 +2928,23 @@ int condition_test(String condition_1)
 		}
 		if (debug == 1)
 		{
-			Serial.println(String("逗号个数comma_num = ") + comma_num);
+			Serial.println(String("逗号个数comma_num = ") + comma_num_con);
 		}
 
-		fornum2 = 0;
+		for_num2_con = 0;
 
 		//通过分号的个数判断需要截取几段
-		if (comma_num == 0)
+		if (comma_num_con == 0)
 		{
-			fornum2 = 0;
+			for_num2_con = 0;
 		}
-		else if (comma_num == 2)
+		else if (comma_num_con == 2)
 		{
-			fornum2 = 3;
+			for_num2_con = 3;
 		}
-		else if (comma_num == 4)
+		else if (comma_num_con == 4)
 		{
-			fornum2 = 5;
+			for_num2_con = 5;
 		}
 		else
 		{
@@ -2931,10 +2953,10 @@ int condition_test(String condition_1)
 
 		if (debug == 1)
 		{
-			Serial.println(String("fornum2 = ") + fornum2);
+			Serial.println(String("fornum2 = ") + for_num2_con);
 		}
 
-		for (size_t i = 0; i < fornum2; i++)
+		for (size_t i = 0; i < for_num2_con; i++)
 		{
 			con0[i] = coni.substring(0, coni.indexOf(","));
 			Serial.println(String("con0[ ") + i + " ]:  " + con0[i]);//输出第一条判断语句
@@ -2944,13 +2966,13 @@ int condition_test(String condition_1)
 
 		//---------------------------------------------------
 	}
-	else if (semicolon_num == 2)
+	else if (semicolon_num_con == 2)
 	{
-		for_num1 = 3;
+		for_num1_con = 3;
 	}
-	else if (semicolon_num == 4)
+	else if (semicolon_num_con == 4)
 	{
-		for_num1 = 5;
+		for_num1_con = 5;
 	}
 	else
 	{
@@ -2959,11 +2981,11 @@ int condition_test(String condition_1)
 
 	if (debug == 1)
 	{
-		Serial.println("for_num1 = " + String(for_num1));
+		Serial.println("for_num1 = " + String(for_num1_con));
 	}
 
 	//截取段数，并且输出
-	for (i_0 = 0; i_0 < for_num1; i_0++)
+	for (i_0 = 0; i_0 < for_num1_con; i_0++)
 	{
 		CON[i_0] = condition_1.substring(0, condition_1.indexOf(";"));//截取出CON[i]
 		coni = CON[i_0];//CON[i]的备份
@@ -2973,7 +2995,7 @@ int condition_test(String condition_1)
 		}
 		condition_1.remove(0, condition_1.indexOf(";") + 1);//将condition_1删减一部分
 
-		comma_num = 0;//将逗号个数清零
+		comma_num_con = 0;//将逗号个数清零
 
 		//将CON[i]拆分成coni[i]
 		for (i_1 = 0; i_1 < CON[i_0].length(); i_1++)
@@ -2985,7 +3007,7 @@ int condition_test(String condition_1)
 				Serial.println(String("coni_ ") + i + " :  " + coni_i[i]);*/
 				CON[i_0].remove(0, CON[i_0].indexOf(",") + 1);//将CON[i]删减一部分
 				//Serial.println(con[i]);
-				comma_num++;
+				comma_num_con++;
 			}
 			else
 			{
@@ -2994,23 +3016,23 @@ int condition_test(String condition_1)
 		}
 		if (debug == 1)
 		{
-			Serial.println(String("逗号个数comma_num = ") + comma_num);
+			Serial.println(String("逗号个数comma_num = ") + comma_num_con);
 		}
 
-		fornum2 = 0;
+		for_num2_con = 0;
 
 		//通过分号的个数判断需要截取几段
-		if (comma_num == 0)
+		if (comma_num_con == 0)
 		{
-			fornum2 = 0;
+			for_num2_con = 0;
 		}
-		else if (comma_num == 2)
+		else if (comma_num_con == 2)
 		{
-			fornum2 = 3;
+			for_num2_con = 3;
 		}
-		else if (comma_num == 4)
+		else if (comma_num_con == 4)
 		{
-			fornum2 = 5;
+			for_num2_con = 5;
 		}
 		else
 		{
@@ -3019,11 +3041,11 @@ int condition_test(String condition_1)
 
 		if (debug == 1)
 		{
-			Serial.println(String("fornum2 = ") + fornum2);
+			Serial.println(String("fornum2 = ") + for_num2_con);
 		}
 
 		//通过逗号的个数截取出coni_i
-		if (fornum2 == 0)
+		if (for_num2_con == 0)
 		{
 			if (i_0 == 0)
 			{
@@ -3060,7 +3082,7 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
-					if (i < fornum2)
+					if (i < for_num2_con)
 					{
 						con0[i] = coni.substring(0, coni.indexOf(","));
 						Serial.println(String("con0[ ") + i + " ]:  " + con0[i]);//输出第一条判断语句
@@ -3077,7 +3099,7 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
-					if (i < fornum2)
+					if (i < for_num2_con)
 					{
 						con1[i] = coni.substring(0, coni.indexOf(","));
 						Serial.println(String("con1[ ") + i + " ]:  " + con1[i]);//输出第一条判断语句
@@ -3094,7 +3116,7 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
-					if (i < fornum2)
+					if (i < for_num2_con)
 					{
 						con2[i] = coni.substring(0, coni.indexOf(","));
 						Serial.println(String("con2[ ") + i + " ]:  " + con2[i]);//输出第一条判断语句
@@ -3111,7 +3133,7 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
-					if (i < fornum2)
+					if (i < for_num2_con)
 					{
 						con3[i] = coni.substring(0, coni.indexOf(","));
 						Serial.println(String("con3[ ") + i + " ]:  " + con3[i]);//输出第一条判断语句
@@ -3128,7 +3150,7 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
-					if (i < fornum2)
+					if (i < for_num2_con)
 					{
 						con4[i] = coni.substring(0, coni.indexOf(","));
 						Serial.println(String("con4[ ") + i + " ]:  " + con4[i]);//输出第一条判断语句
@@ -3301,17 +3323,684 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	return 0;
 }
 
+int Implement_Handle(int impx, int ret_Implement_test)
+{
+	String TOP[2];//Trinomial Operational Processing三项式操作处理
+	long top_Int[2];//Trinomial Operational Processing三项式操作处理
+	float top_Float[2];//Trinomial Operational Processing三项式操作处理
+	int imp_time;
+	//---------------------------------
+	if (impx == 0)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Strimp[i] = imp0[i];
+			if (debug == 1)
+			{
+				Serial.println(String("Strimp[") + i + "]:" + Strimp[i]);
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println("Strimp[i] = imp0[i]");
+		}
+	}
+	else if (impx == 1)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Strimp[i] = imp1[i];
+			if (debug == 1)
+			{
+				Serial.println(String("Strimp[") + i + "]:" + Strimp[i]);
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println("Strimp[i] = imp1[i]");
+		}
+	}
+	else if (impx == 2)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Strimp[i] = imp2[i];
+			if (debug == 1)
+			{
+				Serial.println(String("Strimp[") + i + "]:" + Strimp[i]);
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println("Strimp[i] = imp2[i]");
+		}
+	}
+	else if (impx == 3)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Strimp[i] = imp3[i];
+			if (debug == 1)
+			{
+				Serial.println(String("Strimp[") + i + "]:" + Strimp[i]);
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println("Strimp[i] = imp3[i]");
+		}
+	}
+	else if (impx == 4)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			Strimp[i] = imp4[i];
+			if (debug == 1)
+			{
+				Serial.println(String("Strimp[") + i + "]:" + Strimp[i]);
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println("Strimp[i] = imp4[i]");
+		}
+	}
+	else
+	{
+		return 0;
+	}
+	
+	if (Strimp[0] == String("Y1"))
+	{
+		//这是对Y1直接赋值
+		if (Strimp[1] == String("="))
+		{
+			//判断数字输出Y1为高电平
+			if (Strimp[2] == String("1"))
+			{
+				digitalWrite(DO1, HIGH);
+			}
+			//判断数字输出Y1为低电平
+			else if (Strimp[2] == String("0"))
+			{
+				digitalWrite(DO1, LOW);
+			}
+		}
+		//三目运算符
+		else if (Strimp[1].indexOf(":") != -1)
+		{
+			//截取：冒号前的语句为TOP[0],并转换为真正的数字
+			TOP[0] = Strimp[1].substring(0, Strimp[1].indexOf(":"));
+			top_Int[0] = TOP[0].toInt();
+			//截取：冒号后的语句为TOP[1],并转换为真正的数字
+			TOP[1] = Strimp[1].substring(Strimp[1].indexOf(":") + 1, Strimp[1].length());
+			top_Int[1] = TOP[1].toInt();
+
+			if (debug == 1)
+			{
+				Serial.println(String("TOP[0] = ") + TOP[0]);
+				Serial.println(String("TOP[1] = ") + TOP[1]);
+				Serial.println(top_Int[0]);
+				Serial.println(top_Int[1]);
+			}
+
+			//执行三项式的前半段
+			if (top_Int[0] == 0x01)
+			{
+				digitalWrite(DO1, HIGH);
+				//Serial.println("digitalWrite(DO1, HIGH)");
+			}
+			else if (top_Int[0] == 0x00)
+			{
+				digitalWrite(DO1, LOW);
+			}
+			
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+
+			delay(imp_time*1000);//持续时间
+
+			//执行三项式的后半段
+			if (top_Int[1] == 0x01)
+			{
+				digitalWrite(DO1, HIGH);
+			}
+			else if (top_Int[1] == 0x00)
+			{
+				digitalWrite(DO1, LOW);
+				//Serial.println("digitalWrite(DO1, LOW)");
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else if (Strimp[0] == String("Y2"))
+	{
+
+	}
+	else if (Strimp[0] == String("V1"))
+	{
+		//三目运算符
+		if (Strimp[1].indexOf(":") != -1)
+		{
+			//截取：冒号前的语句为TOP[0],并转换为真正的数字
+			TOP[0] = Strimp[1].substring(0, Strimp[1].indexOf(":"));
+			Serial.println(String("TOP[0] = ") + TOP[0]);
+
+			//toInt()不会处理数字后字母，例如0050E2，处理结果为50
+			top_Int[0] = TOP[0].toInt();
+
+			if (TOP[0].indexOf("E1") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 10;
+			}
+			else if (TOP[0].indexOf("E2") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 100;
+			}
+			else
+			{
+				return 0;
+			}
+
+			//截取：冒号后的语句为TOP[1],并转换为真正的数字
+			TOP[1] = Strimp[1].substring(Strimp[1].indexOf(":") + 1, Strimp[1].length());
+			Serial.println(String("TOP[1] = ") + TOP[1]);
+
+			top_Int[1] = TOP[1].toInt();
+
+			if (TOP[1].indexOf("E1") != -1)
+			{
+				top_Float[1] = float(top_Int[1]) / 10;
+			}
+			else if (TOP[1].indexOf("E2") != -1)
+			{
+				top_Float[1] = float(top_Int[1]) / 100;
+			}
+			else
+			{
+				return 0;
+			}
+
+			if (debug == 1)
+			{
+				Serial.println(String("TOP[0] = ") + TOP[0]);
+				Serial.println(String("TOP[1] = ") + TOP[1]);
+				Serial.println(top_Int[0]);
+				Serial.println(top_Int[1]);
+				Serial.println(top_Float[0]);
+				Serial.println(top_Float[1]);
+			}
+
+			float AV1 = (top_Float[0] / 0.011) / 0.8056;
+			if (AV1 - floor(AV1) >= 0.5)
+			{
+				Analog_Value1 = floor(AV1) + 1;
+			}
+			else if (AV1 - floor(AV1) < 0.5)
+			{
+				Analog_Value1 = floor(AV1);
+			}
+
+			analogWrite(AO1, Analog_Value1);
+
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+
+			delay(imp_time * 1000);//持续时间
+
+			AV1 = (top_Float[1] / 0.011) / 0.8056;
+			if (AV1 - floor(AV1) >= 0.5)
+			{
+				Analog_Value1 = floor(AV1) + 1;
+			}
+			else if (AV1 - floor(AV1) < 0.5)
+			{
+				Analog_Value1 = floor(AV1);
+			}
+
+			analogWrite(AO1, Analog_Value1);
+		}
+		else if (Strimp[1].indexOf("E") != -1)
+		{
+			//此处代码需要重新检查
+			top_Int[0] = Strimp[1].toInt();
+
+			if (Strimp[1].indexOf("E1") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 10;
+			}
+			else if (Strimp[1].indexOf("E2") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 100;
+			}
+			else
+			{
+				return 0;
+			}
+			if (debug == 1)
+			{
+				Serial.println(top_Int[0]);
+				Serial.println(top_Float[0]);
+			}
+
+			float AV1 = (top_Float[1] / 0.011) / 0.8056;
+			if (AV1 - floor(AV1) >= 0.5)
+			{
+				Analog_Value1 = floor(AV1) + 1;
+			}
+			else if (AV1 - floor(AV1) < 0.5)
+			{
+				Analog_Value1 = floor(AV1);
+			}
+
+			analogWrite(AO1, Analog_Value1);
+
+			if (Strimp[2] != String("\0"))
+			{
+				char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+				imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+
+				if (debug == 1)
+				{
+					Serial.print("imp_time = ");
+					Serial.println(imp_time);
+				}
+
+				if (debug == 1)
+				{
+					imp_time = 1;
+				}
+
+				delay(imp_time * 1000);//持续时间
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else if (Strimp[0] == String("V2"))
+	{
+
+	}
+	else if (Strimp[0] == String("D0"))
+	{
+		if (Strimp[1] == String("="))
+		{
+			//此处代码需要检查
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+
+			delay(imp_time * 1000);//持续时间
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		return 0;
+	}
+}
+
 //函 数 名：int implement_test(String imp1)
 //功能描述：处理执行语句的函数
 //函数说明：
 //调用函数：
 //全局变量：
 //输 入：
-//返 回：
+//返 回：执行语句的语句段数
 /////////////////////////////////////////////////////////////////////
-int implement_test(String imp1)
+int implement_test(String implement_1)
 {
-	return 0;
+	String imp_1 = implement_1;//implement_1的备份
+	if (debug == 1)
+	{
+		Serial.println("int implement_test(String implement_1)");
+		Serial.println(String("implement_1 = ") + implement_1);
+	}
+	String IMP[5];//执行语句块数组
+	String impi;//IMP[i]的备份
+	int semicolon_num_imp = 0;//分号的个数
+	int comma_num_imp = 0;//逗号的个数 
+	int for_num1_imp = 0, for_num2_imp = 0;//
+	//-----------------------------------------------------
+
+	semicolon_num_imp = 0;//将分号个数清零
+
+	//得到分号;的个数
+	for (size_t i = 0; i < imp_1.length(); i++)
+	{
+		if (imp_1.indexOf(";") != -1)
+		{
+			imp_1 = imp_1.substring(imp_1.indexOf(";") + 1, imp_1.length());
+			Serial.println(String("imp_1: ") + imp_1);
+			semicolon_num_imp++;
+		}
+		else
+		{
+			//Serial.println("没有分号;");
+		}
+	}
+
+	if (debug == 1)
+	{
+		Serial.println("分号个数semicolon_num_imp = " + String(semicolon_num_imp));
+	}
+
+	for_num1_imp = 0;
+
+	//通过分号的个数判断需要截取几段
+	if (semicolon_num_imp == 0)
+	{
+		for_num1_imp = 0;
+		//---------------------------------------------------
+		//因为当fornum1 = 0时，后面的循环体不执行，所以需要单独写出来
+		IMP[0] = condition_1;
+		impi = IMP[0];//CON[i]的备份
+		Serial.println(String("IMP[0]: ") + IMP[0]);
+
+		//将con[i]拆分成coni[i]
+		for (size_t i = 0; i < IMP[0].length(); i++)
+		{
+			//得到逗号,的个数comma_num
+			if (IMP[i_0].indexOf(",") != -1)
+			{
+				/*impi_i[i] = impi.substring(impi.indexOf(",") + 1, impi.length());
+				Serial.println(String("impi_ ") + i + " :  " + impi_i[i]);*/
+				IMP[i_0].remove(0, IMP[i_0].indexOf(",") + 1);//将IMP[i]删减一部分
+				//Serial.println(con[i]);
+				comma_num_imp++;
+			}
+			else
+			{
+				//Serial.println("没有逗号,");
+			}
+		}
+		if (debug == 1)
+		{
+			Serial.println(String("逗号个数comma_num = ") + comma_num_imp);
+		}
+
+		for_num2_imp = 0;
+
+		//通过分号的个数判断需要截取几段
+		if (comma_num_imp == 0)
+		{
+			for_num2_imp = 0;
+		}
+		else if (comma_num_imp == 2)
+		{
+			for_num2_imp = 3;
+		}
+		else if (comma_num_imp == 4)
+		{
+			for_num2_imp = 5;
+		}
+		else
+		{
+			Serial.println("超出个数");
+		}
+
+		if (debug == 1)
+		{
+			Serial.println(String("fornum2 = ") + for_num2_imp);
+		}
+
+		for (size_t i = 0; i < for_num2_imp; i++)
+		{
+			imp0[i] = impi.substring(0, impi.indexOf(","));
+			Serial.println(String("imp0[ ") + i + " ]:  " + imp0[i]);//输出第一条判断语句
+			impi.remove(0, impi.indexOf(",") + 1);//将imp1删减一部分
+		}
+		Serial.println("");
+
+		//---------------------------------------------------
+	}
+	else if (semicolon_num_imp == 1)
+	{
+		for_num1_imp = 2;
+	}
+	else if (semicolon_num_imp == 2)
+	{
+		for_num1_imp = 3;
+	}
+	else if (semicolon_num_imp == 3)
+	{
+		for_num1_imp = 4;
+	}
+
+	//截取段数，并且输出
+	for (i_2 = 0; i_2 < for_num1_imp; i_2++)
+	{
+		IMP[i_2] = implement_1.substring(0, implement_1.indexOf(";"));//截取出IMP[i]
+		impi = IMP[i_2];//IMP[i]的备份
+		if (debug == 1)
+		{
+			Serial.println(String("IMP[ ") + i_2 + " ]:  " + IMP[i_2]);//输出判断语句
+		}
+		implement_1.remove(0, implement_1.indexOf(";") + 1);//将implement_1删减一部分
+
+		comma_num_imp = 0;//将逗号个数清零
+
+		//将CON[i]拆分成coni[i]
+		for (i_3 = 0; i_3 < IMP[i_2].length(); i_3++)
+		{
+			//得到逗号,的个数comma_num
+			if (IMP[i_2].indexOf(",") != -1)
+			{
+				IMP[i_2].remove(0, IMP[i_2].indexOf(",") + 1);//将CON[i]删减一部分
+				//Serial.println(con[i]);
+				comma_num_imp++;
+			}
+			else
+			{
+				//Serial.println("没有逗号,");
+			}
+		}
+
+		if (debug == 1)
+		{
+			Serial.println(String("逗号个数comma_num_imp = ") + comma_num_imp);
+		}
+
+		for_num2_imp = 0;
+
+		//通过逗号的个数判断需要截取几段
+		if (comma_num_imp == 0)
+		{
+			for_num2_imp = 0;
+		}
+		else if (comma_num_imp == 2)
+		{
+			for_num2_imp = 3;
+		}
+		else if (comma_num_imp == 4)
+		{
+			for_num2_imp = 5;
+		}
+		else
+		{
+			Serial.println("超出个数");
+		}
+
+		if (debug == 1)
+		{
+			Serial.println(String("for_num2_imp = ") + for_num2_imp);
+		}
+
+		//通过逗号的个数截取出impi_i
+		if (for_num2_imp == 0)
+		{
+			if (i_2 == 0)
+			{
+				con0[0] = impi;
+				Serial.println(String("imp0[0]") + " :  " + imp0[0]);//输出第一条判断语句
+				Serial.println("");
+			}
+			else if (i_2 == 1)
+			{
+				imp1[0] = impi;
+				Serial.println(String("imp1[0]") + " :  " + imp1[0]);//输出第一条判断语句
+				Serial.println("");
+			}
+			else if (i_2 == 2)
+			{
+				imp2[0] = impi;
+				Serial.println(String("imp2[0]") + " :  " + imp2[0]);//输出第一条判断语句
+				Serial.println("");
+			}
+			else if (i_2 == 3)
+			{
+				imp3[0] = impi;
+				Serial.println(String("imp3[0]") + " :  " + imp3[0]);//输出第一条判断语句
+				Serial.println("");
+			}
+			else
+			{
+				Serial.println("----------");
+			}
+		}
+		else
+		{
+			if (i_2 == 0)
+			{
+				for (size_t i = 0; i < 5; i++)
+				{
+					if (i < for_num2_imp)
+					{
+						imp0[i] = impi.substring(0, impi.indexOf(","));
+						Serial.println(String("imp0[ ") + i + " ]:  " + imp0[i]);//输出第一条判断语句
+						impi.remove(0, impi.indexOf(",") + 1);//将con1删减一部分
+					}
+					else
+					{
+						imp0[i] = String('\0');
+					}
+				}
+				Serial.println("");
+			}
+			else if (i_2 == 1)
+			{
+				for (size_t i = 0; i < 5; i++)
+				{
+					if (i < for_num2_imp)
+					{
+						imp1[i] = impi.substring(0, impi.indexOf(","));
+						Serial.println(String("imp1[ ") + i + " ]:  " + imp1[i]);//输出第一条判断语句
+						impi.remove(0, impi.indexOf(",") + 1);//将con1删减一部分
+					}
+					else
+					{
+						imp1[i] = String('\0');
+					}
+				}
+				Serial.println("");
+			}
+			else if (i_2 == 2)
+			{
+				for (size_t i = 0; i < 5; i++)
+				{
+					if (i < for_num2_imp)
+					{
+						imp2[i] = impi.substring(0, impi.indexOf(","));
+						Serial.println(String("imp2[ ") + i + " ]:  " + imp2[i]);//输出第一条判断语句
+						impi.remove(0, impi.indexOf(",") + 1);//将con1删减一部分
+					}
+					else
+					{
+						imp2[i] = String('\0');
+					}
+				}
+				Serial.println("");
+			}
+			else if (i_2 == 3)
+			{
+				for (size_t i = 0; i < 5; i++)
+				{
+					if (i < for_num2_imp)
+					{
+						imp3[i] = impi.substring(0, impi.indexOf(","));
+						Serial.println(String("imp3[ ") + i + " ]:  " + imp3[i]);//输出第一条判断语句
+						impi.remove(0, impi.indexOf(",") + 1);//将con1删减一部分
+					}
+					else
+					{
+						imp3[i] = String('\0');
+					}
+				}
+				Serial.println("");
+			}
+			else if (i_2 == 4)
+			{
+				for (size_t i = 0; i < 5; i++)
+				{
+					if (i < for_num2_imp)
+					{
+						imp4[i] = impi.substring(0, impi.indexOf(","));
+						Serial.println(String("imp4[ ") + i + " ]:  " + imp4[i]);//输出第一条判断语句
+						impi.remove(0, impi.indexOf(",") + 1);//将con1删减一部分
+					}
+					else
+					{
+						imp4[i] = String('\0');
+					}
+				}
+				Serial.println("");
+			}
+			else
+			{
+				Serial.println("=====");
+			}
+		}
+
+	}
+	return i_2;
 }
 
 //函 数 名：array_empty_test()
@@ -3330,12 +4019,20 @@ void array_empty_test()
 	}
 	for (size_t i = 0; i < 5; i++)
 	{
+		//清空判断数组
+		for (size_t i = 0; i < 5; i++)
+		{
+			Strcon[i] == 0;
+			Strimp[i] == 0;
+		}
+
 		if (i == 0)
 		{
 			//Serial.print("con0[0-5] = ");
 			for (size_t ii = 0; ii < 5; ii++)
 			{
 				con0[ii] = String('\0');
+				imp0[ii] = String('\0');
 			}
 			//Serial.println("");
 		}
@@ -3345,6 +4042,7 @@ void array_empty_test()
 			for (size_t ii = 0; ii < 5; ii++)
 			{
 				con1[ii] = String('\0');
+				imp1[ii] = String('\0');
 			}
 			//Serial.println("");
 		}
@@ -3354,6 +4052,7 @@ void array_empty_test()
 			for (size_t ii = 0; ii < 5; ii++)
 			{
 				con2[ii] = String('\0');
+				imp2[ii] = String('\0');
 			}
 			//Serial.println("");
 		}
@@ -3363,6 +4062,7 @@ void array_empty_test()
 			for (size_t ii = 0; ii < 5; ii++)
 			{
 				con3[ii] = String('\0');
+				imp3[ii] = String('\0');
 			}
 			//Serial.println("");
 		}
@@ -3372,6 +4072,7 @@ void array_empty_test()
 			for (size_t ii = 0; ii < 5; ii++)
 			{
 				con4[ii] = String('\0');
+				imp4[ii] = String('\0');
 			}
 			//Serial.println("");
 		}
@@ -3405,6 +4106,15 @@ void array_print_test()
 			{
 				Serial.print(con0[ii]);
 				Serial.print("[]");
+				Serial.flush();
+			}
+			Serial.println("");
+			Serial.print("imp0[0-5] = ");
+			for (size_t ii = 0; ii < 5; ii++)
+			{
+				Serial.print(imp0[ii]);
+				Serial.print("[]");
+				Serial.flush();
 			}
 			Serial.println("");
 		}
@@ -3415,6 +4125,15 @@ void array_print_test()
 			{
 				Serial.print(con1[ii]);
 				Serial.print("[]");
+				Serial.flush();
+			}
+			Serial.println("");
+			Serial.print("imp1[0-5] = ");
+			for (size_t ii = 0; ii < 5; ii++)
+			{
+				Serial.print(imp1[ii]);
+				Serial.print("[]");
+				Serial.flush();
 			}
 			Serial.println("");
 		}
@@ -3425,6 +4144,15 @@ void array_print_test()
 			{
 				Serial.print(con2[ii]);
 				Serial.print("[]");
+				Serial.flush();
+			}
+			Serial.println("");
+			Serial.print("imp2[0-5] = ");
+			for (size_t ii = 0; ii < 5; ii++)
+			{
+				Serial.print(imp2[ii]);
+				Serial.print("[]");
+				Serial.flush();
 			}
 			Serial.println("");
 		}
@@ -3435,6 +4163,15 @@ void array_print_test()
 			{
 				Serial.print(con3[ii]);
 				Serial.print("[]");
+				Serial.flush();
+			}
+			Serial.println("");
+			Serial.print("imp3[0-5] = ");
+			for (size_t ii = 0; ii < 5; ii++)
+			{
+				Serial.print(imp3[ii]);
+				Serial.print("[]");
+				Serial.flush();
 			}
 			Serial.println("");
 		}
@@ -3445,6 +4182,15 @@ void array_print_test()
 			{
 				Serial.print(con4[ii]);
 				Serial.print("[]");
+				Serial.flush();
+			}
+			Serial.println("");
+			Serial.print("imp4[0-5] = ");
+			for (size_t ii = 0; ii < 5; ii++)
+			{
+				Serial.print(imp4[ii]);
+				Serial.print("[]");
+				Serial.flush();
 			}
 			Serial.println("");
 		}
@@ -3452,6 +4198,7 @@ void array_print_test()
 		{
 			Serial.println("输出错误");
 		}
+		delay(50);
 	}
 }
 

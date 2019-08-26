@@ -51,6 +51,9 @@
     <ClInclude Include="user_Set_Correlation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="user_HEXtoDEC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="user_initialization.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="user_Set_Correlation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="user_HEXtoDEC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

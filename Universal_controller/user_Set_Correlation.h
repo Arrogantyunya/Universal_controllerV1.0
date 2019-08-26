@@ -80,11 +80,11 @@ static int E020_FrameEnd6 = 0x0A;		//E020的帧尾6
 static unsigned char E020_Check_Data[50];   //用来存放接收到的数据
 static int E020_Check_Length = 0;
 
-static String AssStat, AssStat1, AssStat2;//Association_statement，关联语句1
+//static String AssStat, AssStat1, AssStat2;//Association_statement，关联语句1
 static String condition_1, implement_1;//判断语句以及执行语句
 static String con0[5], con1[5], con2[5], con3[5], con4[5];//条件语句块数组
 static String imp0[5], imp1[5], imp2[5], imp3[5], imp4[5];//执行语句块数组
-static String Strcon[3];
+static String Strcon[5],Strimp[5];//实际使用到的条件语句块以及执行语句块，用来充当变量的数组赋值
 static size_t i_0 = 0, i_1 = 0, i_2 = 0, i_3 = 0;//循环次数函数
 
 
@@ -104,7 +104,8 @@ void Analog2_Write();
 int data_processing(String data_1);//数据处理函数，分割# 处理判断以及执行
 int condition_test(String con1);//处理判断语句的函数
 int implement_test(String imp1);//处理执行语句的函数
-int Condition_Judgment(int conx, int ret_condition_test);
+int Condition_Judgment(int conx, int ret_condition_test);//条件语句判断函数
+int Implement_Handle(int impx, int ret_Implement_test);
 void array_empty_test();//数组清空函数
 void array_print_test();//数组打印测试函数
 

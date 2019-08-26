@@ -112,6 +112,7 @@
     <ClInclude Include="user_A021_E021.h" />
     <ClInclude Include="user_A025_E025.h" />
     <ClInclude Include="user_crc8.h" />
+    <ClInclude Include="user_HEXtoDEC.h" />
     <ClInclude Include="user_initialization.h" />
     <ClInclude Include="user_judgement.h" />
     <ClInclude Include="user_lorainit.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="user_A021_E021.cpp" />
     <ClCompile Include="user_A025_E025.cpp" />
     <ClCompile Include="user_crc8.cpp" />
+    <ClCompile Include="user_HEXtoDEC.cpp" />
     <ClCompile Include="user_initialization.cpp" />
     <ClCompile Include="user_judgement.cpp" />
     <ClCompile Include="user_lorainit.cpp" />
