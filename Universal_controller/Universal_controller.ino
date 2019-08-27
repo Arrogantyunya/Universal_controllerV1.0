@@ -23,7 +23,7 @@
 //----------------------------
 static String LORA_RecData1, LORA_RecData2;
 //全局变量
-static unsigned char Receive_Data[100];//用来存放接收到的数据
+static unsigned char Receive_Data[200];//用来存放接收到的数据
 static int Receive_Length = 0;//接收数据的长度
 static int CRC_Check_num = 0x00;//CRC校验的数值
 
@@ -201,7 +201,7 @@ void loop()
 			array_print_test();//数组打印测试
 
 			//先分割#，分割为条件语句以及执行语句
-			data_processing(AssStat);
+			//data_processing(AssStat);
 
 			AssStat.remove(0);//删除AssStat
 		}
@@ -212,12 +212,7 @@ void loop()
 
 	forswitch();
 
-	for (size_t i = 0; i < 5; i++)
-	{
-		LORA_Receive_information();	//LORA的接收函数
-		delay(50);
-	}
-	//LORA_Receive_information();	//LORA的接收函数
+	LORA_Receive_information();	//LORA的接收函数
 
 	if (debug == 1)
 	{
@@ -295,21 +290,12 @@ void LORA_Receive_information(void)
 
 	//} while (1);
 	Receive_Length = 0;
-	if (Serial3.available() > 0)
-	{
-		Serial.println(Serial3.availableForWrite());
-		delay(500);
-	}
 	while (Serial3.available() > 0)//接收串口收到的数据
 	{
+		if (Receive_Length >= 200) break;
 		Receive_Data[Receive_Length++] = Serial3.read();
-		/*Serial.print(Receive_Data[Receive_Length - 1], HEX);
-		Serial.print(" ");*/
-		/*if (Receive_Length >= 80)
-		{
-			Serial.println("!!!Receive_Length >= 150!!!");
-			Receive_Length = 0;
-		}*/
+		Serial.print(Receive_Data[Receive_Length - 1], HEX);
+		Serial.print(" ");
 		delay(5);
 	}
 	if (Receive_Length > 0)
