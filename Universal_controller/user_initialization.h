@@ -32,9 +32,20 @@
 #include "i2c.h"
 
 
-#define debug		1	//debug为1进入测试模式，每次重启所有标志位都清零
-#define LORA_reset	0	//LORA_reset为1进入LORA测试，每次重启LORA的标志位都清零
-#define LORA_NET	0	//LORA_NET为0代表lora的NET为节点，为1代表为网关,为0代表节点
+#define debug			1		//debug为1进入测试模式，每次重启所有标志位都清零
+#define LORA_reset		0		//LORA_reset为1进入LORA测试，每次重启LORA的标志位都清零
+#define LORA_NET		0		//LORA_NET为0代表lora的NET为节点，为1代表为网关,为0代表节点
+
+#define AT24C01_bytes	127		//代表最大的存储空间
+#define AT24C02_bytes	255		//代表最大的存储空间
+#define AT24C04_bytes	511		//代表最大的存储空间
+#define AT24C08_bytes	1023	//代表最大的存储空间
+#define AT24C16_bytes	2047	//代表最大的存储空间
+#define AT24C32_bytes	4095	//代表最大的存储空间
+#define AT24C64_bytes	8191	//代表最大的存储空间
+#define AT24C128_bytes	16383	//代表最大的存储空间
+#define AT24C256_bytes	32767	//代表最大的存储空间
+
 
 
  //引脚定义

@@ -60,4 +60,5 @@ C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_
  C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_judgement.h \
  C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A021_E021.h \
  C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A025_E025.h \
- C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A011_E011.h
+ C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_A011_E011.h \
+ C:\Users\Administrator\AppData\Local\Temp\VMBuilds\Universal_controller\Arduino_STM32-master_genericSTM32F103R\Release\user_HEXtoDEC.h

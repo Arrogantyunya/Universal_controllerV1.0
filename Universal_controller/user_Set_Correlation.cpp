@@ -1826,7 +1826,7 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 /////////////////////////////////////////////////////////////////////
 void Receive_A023(unsigned char * Judgement_Data, int Judgement_Length)//A023函数
 {
-	String AssStat, AssStat1, AssStat2;//Association_statement，关联语句1
+	//String AssStat, AssStat1, AssStat2;//Association_statement，关联语句1
 	//--------------------------------------------------------
 	//该区域为测试传输进Receive_A023函数的数据是否正确的测试代码块
 	//需要测试时请取消注释
@@ -1847,30 +1847,180 @@ void Receive_A023(unsigned char * Judgement_Data, int Judgement_Length)//A023函
 		Serial.println(Judgement_Length);
 	}
 	//--------------------------------------------------------
-
-	if (Judgement_Data[7] == 0x01/*AT24CXX_ReadOneByte(12)*/)
+	//这里还要记得改回来
+	//区域正确并且存储的语句小于5句
+	if (Judgement_Data[7] == 0x01/*AT24CXX_ReadOneByte(12)*/ && AT24CXX_ReadOneByte(13) < 5)
 	{
-		//先将字符串数组拼接成Strring字符串，读取出来
-		for (size_t i = 8; i <= Judgement_Length-7; i++)
-		{
-			//强制转换为char类型
-			AssStat.concat(String(char(Judgement_Data[i])));//拼接成关联语句，AssStat
-		}
+		Storage_bytes_Flag = AT24CXX_ReadOneByte(89);
 		if (debug == 1)
 		{
-			Serial.println(AssStat);
+			Serial.println(String("Storage_bytes_Flag = ") + Storage_bytes_Flag);
+		}
+		if (Storage_bytes_Flag + Judgement_Length <= AT24C02_bytes)
+		{
+			int Storage_bytes_Flag_1 = Storage_bytes_Flag;//开始存储的位置值
+			int JD_x = 0;//for循环增量
+			int Storage_Check = 0;//存储校验
+			int Sentence_num = 0;//策略语句的个数
+			int Sentence_begin[5];//策略语句的开始处
+			int Sentence_end[5];//策略语句的开始处
+			//========================================
+
+			//将Storage_bytes_Flag的值更新为结尾
+			Storage_bytes_Flag = Storage_bytes_Flag + Judgement_Length;
+			int Storage_bytes_Flag_2 = Storage_bytes_Flag;//将结尾的值赋给Storage_bytes_Flag_2
+			if (debug == 1)
+			{
+				Serial.println(String("Storage_bytes_Flag = ") + Storage_bytes_Flag);
+			}
+			//将Storage_bytes_Flag的值+1写入EEPROM，作为下一次语句存储的初始值
+			AT24CXX_WriteOneByte(89, Storage_bytes_Flag + 1);
+
+			Sentence_num = AT24CXX_ReadOneByte(13);//先读取出已经存在的策略语句的个数
+			Sentence_num = Sentence_num + 1;//然后增加一句策略语句
+			AT24CXX_WriteOneByte(13, Sentence_num);//在将这个值重新写入到EEPROM
+			if (debug == 1)
+			{
+				Serial.println(String("AT24CXX[") + 13 + "] = " + String(AT24CXX_ReadOneByte(13)));
+			}
+
+			//这里是将策略帧写入EEPROM，并输出校验位Storage_Check
+			for (size_t i = Storage_bytes_Flag_1; i <= Storage_bytes_Flag_2; i++)
+			{
+				AT24CXX_WriteOneByte(i, Judgement_Data[JD_x]);
+				if (debug == 1)
+				{
+					Serial.println(String("Judgement_Data[") + JD_x + "] = " + String(Judgement_Data[JD_x], HEX));
+					Serial.println(String("AT24CXX[") + i + "] = " + String(AT24CXX_ReadOneByte(i), HEX));
+					Serial.flush();
+				}
+				if (AT24CXX_ReadOneByte(i) == Judgement_Data[JD_x])
+				{
+					Storage_Check++;
+				}
+				JD_x++;
+			}
+
+			if (debug == 1)
+			{
+				Serial.println(String("Storage_Check = ") + Storage_Check);
+			}
+
+			if (Storage_Check == Judgement_Length + 1)
+			{
+				E020_status = Set_association_status_succeed;
+				if (debug == 1)
+				{
+					Serial.println(String("E020_status = Set_association_status_succeed") + String(E020_status));
+				}
+			}
+			else
+			{
+				E020_status = Set_association_status_failed;
+				if (debug == 1)
+				{
+					Serial.println(String("E020_status = Set_association_status_failed") + String(E020_status));
+				}
+			}
+
+			//--------这里是将开始与结束位置的值写入对应的EEPROM----------
+			if (Sentence_num == 1)
+			{
+				AT24CXX_WriteOneByte(90, Storage_bytes_Flag_1);//开始位置1的写入
+				AT24CXX_WriteOneByte(91, Storage_bytes_Flag);//结束位置1的写入
+				if (debug == 1)
+				{
+					Serial.println(String("AT24CXX[") + 90 + "] = " + String(AT24CXX_ReadOneByte(90)));
+					Serial.println(String("AT24CXX[") + 91 + "] = " + String(AT24CXX_ReadOneByte(91)));
+				}
+			}
+			else if (Sentence_num == 2)
+			{
+				AT24CXX_WriteOneByte(92, Storage_bytes_Flag_1);//开始位置2的写入
+				AT24CXX_WriteOneByte(93, Storage_bytes_Flag);//结束位置2的写入
+				if (debug == 1)
+				{
+					Serial.println(String("AT24CXX[") + 92 + "] = " + String(AT24CXX_ReadOneByte(92)));
+					Serial.println(String("AT24CXX[") + 93 + "] = " + String(AT24CXX_ReadOneByte(93)));
+				}
+			}
+			else if (Sentence_num == 3)
+			{
+				AT24CXX_WriteOneByte(94, Storage_bytes_Flag_1);//开始位置2的写入
+				AT24CXX_WriteOneByte(95, Storage_bytes_Flag);//结束位置2的写入
+				if (debug == 1)
+				{
+					Serial.println(String("AT24CXX[") + 94 + "] = " + String(AT24CXX_ReadOneByte(94)));
+					Serial.println(String("AT24CXX[") + 95 + "] = " + String(AT24CXX_ReadOneByte(95)));
+				}
+			}
+			else if (Sentence_num == 4)
+			{
+				AT24CXX_WriteOneByte(96, Storage_bytes_Flag_1);//开始位置2的写入
+				AT24CXX_WriteOneByte(97, Storage_bytes_Flag);//结束位置2的写入
+				if (debug == 1)
+				{
+					Serial.println(String("AT24CXX[") + 96 + "] = " + String(AT24CXX_ReadOneByte(96)));
+					Serial.println(String("AT24CXX[") + 97 + "] = " + String(AT24CXX_ReadOneByte(97)));
+				}
+			}
+			else if (Sentence_num == 5)
+			{
+				AT24CXX_WriteOneByte(98, Storage_bytes_Flag_1);//开始位置2的写入
+				AT24CXX_WriteOneByte(99, Storage_bytes_Flag);//结束位置2的写入
+				if (debug == 1)
+				{
+					Serial.println(String("AT24CXX[") + 98 + "] = " + String(AT24CXX_ReadOneByte(98)));
+					Serial.println(String("AT24CXX[") + 99 + "] = " + String(AT24CXX_ReadOneByte(99)));
+				}
+			}
+			else
+			{
+				//这里是因为存储的语句超过上限
+				E020_status = State_Storage_Exceeding_the_Upper_Limit;
+				if (debug == 1)
+				{
+					Serial.println(String("E020_status = State_Storage_Exceeding_the_Upper_Limit") + String(E020_status));
+				}
+			}
+			//------------------------------------------------------
+		}
+		else
+		{
+			//代表存储空间不足
+			E020_status = State_Storage_Exceeding_the_Upper_Limit;
+			if (debug == 1)
+			{
+				Serial.println(String("E020_status = State_Storage_Exceeding_the_Upper_Limit") + String(E020_status));
+			}
 		}
 	}
+	
 
-	array_print_test();
-	//先分割#，分割为条件语句以及执行语句
-	data_processing(AssStat);
+	//将自动策略开启
+	//if (Judgement_Data[7] == 0x01/*AT24CXX_ReadOneByte(12)*/)
+	//{
+	//	//先将字符串数组拼接成Strring字符串，读取出来
+	//	for (size_t i = 8; i <= Judgement_Length-7; i++)
+	//	{
+	//		//强制转换为char类型
+	//		AssStat.concat(String(char(Judgement_Data[i])));//拼接成关联语句，AssStat
+	//	}
+	//	if (debug == 1)
+	//	{
+	//		Serial.println(AssStat);
+	//	}
+	//}
+
+	//array_print_test();
+	////先分割#，分割为条件语句以及执行语句
+	//data_processing(AssStat);
 
 	//是否广播指令
 	Receive_IsBroadcast = Judgement_Data[6];
 
 	//进行状态的回执
-	//Send_E020(Receive_IsBroadcast, E020_status);
+	Send_E020(Receive_IsBroadcast, E020_status);
 	if (debug == 1)
 	{
 		Serial.println("完成A023状态回执");
@@ -3562,6 +3712,7 @@ int Implement_Handle(int impx, int ret_Implement_test)
 
 			analogWrite(AO1, Analog_Value1);
 
+			//--------得到延时的时间值--------
 			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
 
 			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
@@ -3578,6 +3729,7 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			}
 
 			delay(imp_time * 1000);//持续时间
+			//------------------------------
 
 			AV1 = (top_Float[1] / 0.011) / 0.8056;
 			if (AV1 - floor(AV1) >= 0.5)
@@ -3591,16 +3743,16 @@ int Implement_Handle(int impx, int ret_Implement_test)
 
 			analogWrite(AO1, Analog_Value1);
 		}
-		else if (Strimp[1].indexOf("E") != -1)
+		else if (Strimp[1] == String("="))
 		{
-			//此处代码需要重新检查
-			top_Int[0] = Strimp[1].toInt();
 
-			if (Strimp[1].indexOf("E1") != -1)
+			top_Int[0] = Strimp[2].toInt();
+
+			if (Strimp[2].indexOf("E1") != -1)
 			{
 				top_Float[0] = float(top_Int[0]) / 10;
 			}
-			else if (Strimp[1].indexOf("E2") != -1)
+			else if (Strimp[2].indexOf("E2") != -1)
 			{
 				top_Float[0] = float(top_Int[0]) / 100;
 			}
@@ -3625,26 +3777,6 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			}
 
 			analogWrite(AO1, Analog_Value1);
-
-			if (Strimp[2] != String("\0"))
-			{
-				char *c = (char *)Strimp[2].c_str();//得到字符串的指针
-
-				imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
-
-				if (debug == 1)
-				{
-					Serial.print("imp_time = ");
-					Serial.println(imp_time);
-				}
-
-				if (debug == 1)
-				{
-					imp_time = 1;
-				}
-
-				delay(imp_time * 1000);//持续时间
-			}
 		}
 		else
 		{
@@ -3659,7 +3791,7 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	{
 		if (Strimp[1] == String("="))
 		{
-			//此处代码需要检查
+			//--------得到延时的时间值--------
 			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
 
 			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
@@ -3676,6 +3808,7 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			}
 
 			delay(imp_time * 1000);//持续时间
+			//-----------------------------
 		}
 		else
 		{

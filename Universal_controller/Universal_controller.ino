@@ -17,12 +17,13 @@
 #include "user_initialization.h"
 #include "AT24CXX.h"
 #include "i2c.h"
+#include "user_HEXtoDEC.h"
 
 
 //----------------------------
 static String LORA_RecData1, LORA_RecData2;
 //全局变量
-static unsigned char Receive_Data[200];//用来存放接收到的数据
+static unsigned char Receive_Data[100];//用来存放接收到的数据
 static int Receive_Length = 0;//接收数据的长度
 static int CRC_Check_num = 0x00;//CRC校验的数值
 
@@ -107,14 +108,116 @@ void setup()
 void loop()
 {
 	//读取设置的自动策略
-	if (AT24CXX_ReadOneByte(13) == 0x01)
+	if (AT24CXX_ReadOneByte(13) > 0)
 	{
-		
+		unsigned char EEPROM_Data[200];//用来存放接收到的数据
+		String AssStat;//Association_statement，关联语句
+		int ED_Indexes = 0;//EEPROM_Data的索引值ED_Indexes
+		int Sentence_num = AT24CXX_ReadOneByte(13);//策略语句的个数
+		int Sentence_begin;//策略语句的开始处
+		int Sentence_end;//策略语句的开始处
+		//int Sentence_begin[5];//策略语句的开始处
+		//int Sentence_end[5];//策略语句的开始处
+		//------------------------------------
+
+		for (size_t i = 0; i < Sentence_num; i++)
+		{
+			if (i == 0)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(90);
+				Sentence_end = AT24CXX_ReadOneByte(91);
+				if (debug == 1)
+				{
+					Serial.println("策略语句1的起始结束位置赋值1111111111111111111111111");
+					//delay(1500);
+				}
+			}
+			else if (i == 1)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(92);
+				Sentence_end = AT24CXX_ReadOneByte(93);
+				if (debug == 1)
+				{
+					Serial.println("策略语句2的起始结束位置赋值2222222222222222222222222");
+					//delay(1500);
+				}
+			}
+			else if (i == 2)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(94);
+				Sentence_end = AT24CXX_ReadOneByte(95);
+				if (debug == 1)
+				{
+					Serial.println("策略语句3的起始结束位置赋值3333333333333333333333333333");
+				}
+			}
+			else if (i == 3)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(96);
+				Sentence_end = AT24CXX_ReadOneByte(97);
+				if (debug == 1)
+				{
+					Serial.println("策略语句4的起始结束位置赋值");
+				}
+			}
+			else if (i == 4)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(98);
+				Sentence_end = AT24CXX_ReadOneByte(99);
+				if (debug == 1)
+				{
+					Serial.println("策略语句5的起始结束位置赋值");
+					//delay(1000);
+				}
+			}
+
+			ED_Indexes = 0;//清空ED_Indexes的值
+			//这里将EEPROM语句的值赋给EEPROM_Data数组
+			for (size_t ix = Sentence_begin; ix <= Sentence_end; ix++)
+			{
+				EEPROM_Data[ED_Indexes] = AT24CXX_ReadOneByte(ix);
+				if (debug == 1)
+				{
+					/*Serial.println(String("EEPROM_Data[") + ED_Indexes + "] = " + String(EEPROM_Data[ED_Indexes], HEX));
+					Serial.flush();*/
+				}
+				ED_Indexes++;
+			}
+
+			//delay(1000);
+			AssStat.remove(0);//删除AssStat
+			//将EEPROM_Data数组的值赋给一个string
+			for (size_t i = 8; i < ED_Indexes - 7; i++)
+			{
+				//强制转换为char类型
+				AssStat.concat(String(char(EEPROM_Data[i])));//拼接成关联语句，AssStat
+			}
+			if (debug == 1)
+			{
+				Serial.println(AssStat);
+				/*delay(3500);*/
+			}
+
+			array_print_test();//数组打印测试
+
+			//先分割#，分割为条件语句以及执行语句
+			data_processing(AssStat);
+
+			AssStat.remove(0);//删除AssStat
+		}
 	}
+
+
+
 
 	forswitch();
 
-	LORA_Receive_information();	//LORA的接收函数
+	for (size_t i = 0; i < 5; i++)
+	{
+		LORA_Receive_information();	//LORA的接收函数
+		delay(50);
+	}
+	//LORA_Receive_information();	//LORA的接收函数
 
 	if (debug == 1)
 	{
@@ -192,13 +295,22 @@ void LORA_Receive_information(void)
 
 	//} while (1);
 	Receive_Length = 0;
+	if (Serial3.available() > 0)
+	{
+		Serial.println(Serial3.availableForWrite());
+		delay(500);
+	}
 	while (Serial3.available() > 0)//接收串口收到的数据
 	{
-		if (Receive_Length >= 200) break;
 		Receive_Data[Receive_Length++] = Serial3.read();
 		/*Serial.print(Receive_Data[Receive_Length - 1], HEX);
 		Serial.print(" ");*/
-		delay(3);
+		/*if (Receive_Length >= 80)
+		{
+			Serial.println("!!!Receive_Length >= 150!!!");
+			Receive_Length = 0;
+		}*/
+		delay(5);
 	}
 	if (Receive_Length > 0)
 	{
@@ -241,8 +353,14 @@ void LORA_Receive_information(void)
 
 		//--------------------------------------------------------
 		//将Receive_Data的值处理得到Check_Data
+		Check_Length = 0;
 		for (int i = 4; i < Receive_Length - 0x07; i++)
 		{
+			if (Check_Length >= 150)
+			{
+				Serial.println("!!!Check_Length >= 200!!!");
+				break;
+			}
 			Check_Data[Check_Length] = Receive_Data[i];
 			if (debug == 1)
 			{

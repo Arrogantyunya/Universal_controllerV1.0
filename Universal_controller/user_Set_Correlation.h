@@ -22,6 +22,8 @@
 
 
 //全局变量
+static int Storage_bytes_Flag = 100;			//存储字节的标志位
+
 static unsigned char Out_State[6];              //用来存放状态值rd1
 static unsigned long duration[6];               //用来存放持续时间值Duration_time
 static unsigned long remaining[6];              //用来存放剩余时间值Remaining

@@ -164,6 +164,18 @@ void Initialization()//初始化函数
 			AT24CXX_WriteOneByte(i, 0x00);
 		}
 
+		AT24CXX_WriteOneByte(89, 100);//存储字节的标志位
+
+		for (size_t i = 90; i <= 99; i++)//自动策略语句开始结束位置的初始化
+		{
+			AT24CXX_WriteOneByte(i, 0x00);
+		}
+
+		for (size_t i = 100; i < AT24C02_bytes; i++)//自动策略语句存放区域的初始化
+		{
+			AT24CXX_WriteOneByte(i,0x00);
+		}
+
 
 
 		//---------------------------------------------------------

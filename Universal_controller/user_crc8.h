@@ -36,7 +36,7 @@
 typedef unsigned long  DWORD;
 typedef unsigned short WORD;
 
-static unsigned char Check_Data[200];   //用来存放接收到的数据
+static unsigned char Check_Data[150];   //用来存放接收到的数据
 static int Check_Length = 0;
 
 
