@@ -140,7 +140,7 @@ unsigned char Send_E021(int Receive_IsBroadcast)
 unsigned char E021_init()
 {
 
-	Delivery_oldtime = millis();//定时上报状态
+	Delivery_oldtime = millis();//定时上报状态，在这里进行赋值
 
 	E021_FrameHead = 0xFE;		//E021的帧头
 
@@ -412,7 +412,7 @@ int E021_GetAnalogStatus()
 	return 0;
 }
 
-long Get_Delivery_oldtime()
+unsigned long Get_Delivery_oldtime()
 {
 	if (debug == 1)
 	{

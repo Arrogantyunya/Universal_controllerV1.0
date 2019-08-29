@@ -38,9 +38,10 @@ static String LORA_RecData1, LORA_RecData2;
 /////////////////////////////////////////////////////////////////////
 void setup()
 {
-
 	Initialization();//初始化函数
+
 	Serial.println("初始化执行结束");
+
 	if (AT24CXX_ReadOneByte(0) == 0x01 && AT24CXX_ReadOneByte(1) == 0x01)
 	{
 		Serial.println("初始化程序执行成功！");
@@ -57,40 +58,12 @@ void setup()
 			digitalWrite(LED2, LOW);
 		}
 
-		//while (AT24CXX_ReadOneByte(2) == 0x00)//Register_OK_flag	已经完成申号的标志位
-		//{
-		//	//代表未设置工作参数
-		//	Serial.println("未设置工作参数,如需要设置工作参数，请长按按键1");
-		//	digitalWrite(LED2, HIGH);
-		//	delay(1500);
-		//	//等待按键1按下
-		//	if (digitalRead(K1) == LOW)
-		//	{
-		//		delay(2000);
-		//		if (digitalRead(K1) == LOW)
-		//		{
-		//			digitalWrite(LED2, LOW);
-		//			Serial.println("K1按下");
-		//			Serial.println("本设备开始上报当前的设置参数");
-
-		//			delay(250);
-		//			//进入E011函数上报请求当前参数
-		//			Send_E011(Receive_IsBroadcast);//这里的Receive_IsBroadcast是否有值？
-		//			AT24CXX_WriteOneByte(2, 0X01);
-		//		}
-		//	}
-		//}
+		Button_Waiting_report();//按键等待上报函数
 	}
 	else
 	{
-		while (1)
-		{
-			digitalWrite(LED1, HIGH);
-			Serial.println("初始化程序执行失败");
-			delay(2000);
-		}
+		Initialization_exception();//初始化异常函数
 	}
-	
 }
 
 //函 数 名：loop() 
@@ -104,24 +77,20 @@ void setup()
 // Add the main program code into the continuous loop() function
 void loop()
 {
-	Automated_strategy();
-
-	forswitch();
-
 	LORA_Receive_information();	//LORA的接收函数
 
-	if (debug == 1)
-	{
-		/*Serial.println(String("Delivery_time = ") + Delivery_time);
-		delay(1500);*/
-	}
+	Automated_strategy();//自动策略函数
 
-	if (millis() - Get_Delivery_oldtime() >= Delivery_time * 1000 && Get_Delivery_oldtime() > 0)
-	{
-		//进行状态的回执
-		Send_E021(Receive_IsBroadcast);
-	}
+	forswitch();//执行函数
 
+	Timely_reporting();//定时上报函数
+
+	Forced_Start_Relay();//强制启动继电器
+}
+
+//强制启动继电器
+void Forced_Start_Relay(void)
+{
 	//这是强制启动继电器
 	if (digitalRead(K2) == LOW)
 	{
@@ -130,14 +99,62 @@ void loop()
 		{
 			digitalWrite(KCZJ1, LOW);
 			digitalWrite(KCZJ2, LOW);
-			/*Serial2.write(Positive_rotation, 8);
-			delay(3000);
-			Serial2.write(Shutdown, 8);*/
 		}
 		else
 		{
 			digitalWrite(KCZJ1, HIGH);
 			digitalWrite(KCZJ2, HIGH);
+		}
+	}
+}
+
+void Timely_reporting(void)//定时上报函数
+{
+	if (millis() - Get_Delivery_oldtime() >= Delivery_time * 1000 && Get_Delivery_oldtime() > 0)
+	{
+		//进行状态的回执
+		Send_E021(Receive_IsBroadcast);
+	}
+}
+
+void Restore_factory_settings(void)//恢复出厂设置函数
+{
+	
+}
+
+void Initialization_exception(void)//初始化异常函数
+{
+	while (1)
+	{
+		digitalWrite(LED1, HIGH);
+		Serial.println("初始化程序执行失败");
+		delay(2000);
+	}
+}
+
+void Button_Waiting_report(void)//按键等待上报函数
+{
+	while (AT24CXX_ReadOneByte(2) == 0x00)//Register_OK_flag	已经完成申号的标志位
+	{
+		//代表未设置工作参数
+		Serial.println("未设置工作参数,如需要设置工作参数，请长按按键1");
+		digitalWrite(LED2, HIGH);
+		delay(1500);
+		//等待按键1按下
+		if (digitalRead(K1) == LOW)
+		{
+			delay(2000);
+			if (digitalRead(K1) == LOW)
+			{
+				digitalWrite(LED2, LOW);
+				Serial.println("K1按下");
+				Serial.println("本设备开始上报当前的设置参数");
+
+				delay(250);
+				//进入E011函数上报请求当前参数
+				Send_E011(Receive_IsBroadcast);//这里的Receive_IsBroadcast是否有值？
+				AT24CXX_WriteOneByte(2, 0X01);
+			}
 		}
 	}
 }

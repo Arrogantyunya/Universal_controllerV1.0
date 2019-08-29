@@ -83,7 +83,7 @@ unsigned char Send_E021(int Receive_IsBroadcast);  //E021函数
 unsigned char E021_init();	//E021初始化函数
 int E021_GetDigitalStatus();//E021得到数字状态
 int E021_GetAnalogStatus();	//E021得到模拟状态
-long Get_Delivery_oldtime();//得到旧时间
+unsigned long Get_Delivery_oldtime();//得到旧时间
 
 
 //类结构声明
