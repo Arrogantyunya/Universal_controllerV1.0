@@ -86,6 +86,8 @@ void loop()
 	Timely_reporting();//定时上报函数
 
 	Forced_Start_Relay();//强制启动继电器
+
+	Restore_factory_settings();//恢复出厂设置函数
 }
 
 //强制启动继电器
@@ -119,7 +121,26 @@ void Timely_reporting(void)//定时上报函数
 
 void Restore_factory_settings(void)//恢复出厂设置函数
 {
-	
+	//这是恢复为出厂设置，请慎用
+	if (digitalRead(K1) == LOW)
+	{
+		delay(2000);
+		if (digitalRead(K1) == LOW)
+		{
+			//-------------------------------------------
+			//======测试时所用代码块，实际使用请注释=====
+			//将所有的标志位都清为0
+			AT24CXX_WriteOneByte(0, 0x00);//lora初始化的标志位
+			AT24CXX_WriteOneByte(1, 0x00);//EEPROM设置的标志位
+			AT24CXX_WriteOneByte(2, 0x00);//申号的标志位
+			AT24CXX_WriteOneByte(13, 0x00);//自动策略的标志位
+			//-------------------------------------------
+			Serial.println("开始进行恢复出厂设置");
+
+			Initialization();//重新进行初始化的设置
+			setup();//重新进入setup()进行申号
+		}
+	}
 }
 
 void Initialization_exception(void)//初始化异常函数
