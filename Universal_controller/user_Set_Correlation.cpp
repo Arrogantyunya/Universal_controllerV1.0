@@ -1268,8 +1268,8 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 			}
 			//判断是否属于DO2的组
 			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(23) || Judgement_Data[8] == AT24CXX_ReadOneByte(24) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(25) || Judgement_Data[8] == AT24CXX_ReadOneByte(26) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(27))
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(25) || Judgement_Data[8] == AT24CXX_ReadOneByte(26) ||
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(27))
 			{
 				if (Judgement_Data[12] == AT24CXX_ReadOneByte(21) && Judgement_Data[13] == AT24CXX_ReadOneByte(22))
 				{
@@ -1358,8 +1358,8 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 			}
 			//判断是否属于DO3的组
 			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(30) || Judgement_Data[8] == AT24CXX_ReadOneByte(31) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(32) || Judgement_Data[8] == AT24CXX_ReadOneByte(33) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(34))
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(32) || Judgement_Data[8] == AT24CXX_ReadOneByte(33) ||
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(34))
 			{
 				if (Judgement_Data[12] == AT24CXX_ReadOneByte(28) && Judgement_Data[13] == AT24CXX_ReadOneByte(29))
 				{
@@ -1448,8 +1448,8 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 			}
 			//判断是否属于DO4的组
 			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(37) || Judgement_Data[8] == AT24CXX_ReadOneByte(38) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(39) || Judgement_Data[8] == AT24CXX_ReadOneByte(40) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(41))
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(39) || Judgement_Data[8] == AT24CXX_ReadOneByte(40) ||
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(41))
 			{
 				if (Judgement_Data[12] == AT24CXX_ReadOneByte(35) && Judgement_Data[13] == AT24CXX_ReadOneByte(36))
 				{
@@ -1659,8 +1659,8 @@ void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length)//A022函
 			}
 			//判断是否属于AO2的组
 			else if (Judgement_Data[8] == AT24CXX_ReadOneByte(51) || Judgement_Data[8] == AT24CXX_ReadOneByte(52) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(53) || Judgement_Data[8] == AT24CXX_ReadOneByte(54) ||
-				Judgement_Data[8] == AT24CXX_ReadOneByte(55))
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(53) || Judgement_Data[8] == AT24CXX_ReadOneByte(54) ||
+					 Judgement_Data[8] == AT24CXX_ReadOneByte(55))
 			{
 				if (Judgement_Data[12] == AT24CXX_ReadOneByte(49) && Judgement_Data[13] == AT24CXX_ReadOneByte(50))
 				{
@@ -2822,7 +2822,10 @@ int data_processing(String AssStat)
 		Serial.println(String("condition_test() = ") + ret_condition_test);
 	}
 
-	array_print_test();//测试输出
+	if (debug == 1)
+	{
+		array_print_test();//数组打印输出
+	}
 
 	//定义一个存放返回值的数组，0代表假，1代表真，2代表与，3代表或
 	int Return_value[5];
@@ -3006,8 +3009,10 @@ int data_processing(String AssStat)
 	//------这里应该需要将所有的数组清零，防止下次冲突-------
 	//------------------------------------------------
 
-	//数组输出测试函数
-	array_print_test();
+	if (debug == 1)
+	{
+		array_print_test();
+	}
 	return 0;
 }
 
@@ -3451,8 +3456,10 @@ int Condition_Judgment(int conx, int ret_condition_test)
 		}
 	}
 
+	//conx为0,2,4时代表是条件判断语句
 	if (conx == 0 || conx == 2 || conx == 4)
 	{
+		//判断是否是X1数字输入1
 		if (Strcon[0] == String("X1"))
 		{
 			if (Strcon[1] == String("="))
@@ -3465,10 +3472,60 @@ int Condition_Judgment(int conx, int ret_condition_test)
 						Serial.println("X1=1");
 						return 1;
 					}
-					Serial.println("X1不为高电平");
+					if (debug == 1)
+					{
+						Serial.println("X1不为高电平");
+					}
+				}
+				//判断是否为低电平
+				else if (Strcon[2] == String("0"))
+				{
+					if (digitalRead(DI1) == LOW)
+					{
+						Serial.println("X1=0");
+						return 1;
+					}
+					if (debug == 1)
+					{
+						Serial.println("X1不为低电平");
+					}
 				}
 			}
 		}
+		//判断是否是X2数字输入2
+		else if (Strcon[0] == String("X2"))
+		{
+			if (Strcon[1] == String("="))
+			{
+				//判断是否为高电平
+				if (Strcon[2] == String("1"))
+				{
+					if (digitalRead(DI2) == HIGH)
+					{
+						Serial.println("X2=1");
+						return 1;
+					}
+					if (debug == 1)
+					{
+						Serial.println("X2不为高电平");
+					}
+				}
+			}
+			//判断是否为低电平
+			else if (Strcon[2] == String("0"))
+			{
+				if (digitalRead(DI2) == LOW)
+				{
+					Serial.println("X2=0");
+					return 1;
+				}
+				if (debug == 1)
+				{
+					Serial.println("X2不为低电平");
+				}
+			}
+		}
+		//判断是否是模拟输入1
 		else if (Strcon[0] == String("U1"))
 		{
 			//判断模拟输入是否大于带电压值
@@ -3478,23 +3535,79 @@ int Condition_Judgment(int conx, int ret_condition_test)
 				{
 					Serial.println(Strcon[2]);
 				}
-				//处理电压值的函数，将设定的电压值转换为analogRead的值
 
-				if (analogRead(VIN1) > 0)//这里还没有适配
+				//处理电压值的函数，将设定的电压值转换为analogRead的值
+				//Voltage_Value_Processing(Strcon[3]);
+				if (analogRead(VIN1) > Voltage_Value_Processing(Strcon[3]))
 				{
-					Serial.println("U1>0");
+					Serial.println("U1 > Voltage_Value_Processing(Strcon[3])");
 					return 1;
 				}
-				Serial.println("U1<0不符合要求");
+				Serial.println("U1 < Voltage_Value_Processing(Strcon[3])不符合要求");
 			}
 			else if (Strcon[1] == String("<"))
 			{
+				if (debug == 1)
+				{
+					Serial.println(Strcon[2]);
+				}
 
+				//处理电压值的函数，将设定的电压值转换为analogRead的值
+				//Voltage_Value_Processing(Strcon[3]);
+				if (analogRead(VIN1) < Voltage_Value_Processing(Strcon[3]))
+				{
+					Serial.println("U1 < Voltage_Value_Processing(Strcon[3])");
+					return 1;
+				}
+				if (debug == 1)
+				{
+					Serial.println("U1 > Voltage_Value_Processing(Strcon[3])不符合要求");
+				}
 			}
+		}
+		//判断是否是模拟输入2
+		else if (Strcon[0] == String("U2"))
+		{
+			//判断模拟输入是否大于带电压值
+			if (Strcon[1] == String(">"))
+			{
+				if (debug == 1)
+				{
+					Serial.println(Strcon[2]);
+				}
 
+				//处理电压值的函数，将设定的电压值转换为analogRead的值
+				//Voltage_Value_Processing(Strcon[3]);
+				if (analogRead(VIN2) > Voltage_Value_Processing(Strcon[3]))
+				{
+					Serial.println("U2 > Voltage_Value_Processing(Strcon[3])");
+					return 1;
+				}
+				Serial.println("U2 < Voltage_Value_Processing(Strcon[3])不符合要求");
+			}
+			else if (Strcon[1] == String("<"))
+			{
+				if (debug == 1)
+				{
+					Serial.println(Strcon[2]);
+				}
+
+				//处理电压值的函数，将设定的电压值转换为analogRead的值
+				//Voltage_Value_Processing(Strcon[3]);
+				if (analogRead(VIN2) < Voltage_Value_Processing(Strcon[3]))
+				{
+					Serial.println("U2 < Voltage_Value_Processing(Strcon[3])");
+					return 1;
+				}
+				if (debug == 1)
+				{
+					Serial.println("U2 > Voltage_Value_Processing(Strcon[3])不符合要求");
+				}
+			}
 		}
 
 	}
+	//conx为1,3时代表是逻辑语句
 	else if (conx == 1 || conx == 3)
 	{
 		if (Strcon[0] == String("&&"))
@@ -3511,6 +3624,14 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	return 0;
 }
 
+//函 数 名：int Implement_Handle(int impx, int ret_Implement_test)
+//功能描述：执行语句的执行函数
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：为真返回1，为假返回0
+/////////////////////////////////////////////////////////////////////
 int Implement_Handle(int impx, int ret_Implement_test)
 {
 	String TOP[2];//Trinomial Operational Processing三项式操作处理
@@ -3608,7 +3729,7 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	{
 		return 0;
 	}
-	
+	//判断是否是数字输出1
 	if (Strimp[0] == String("Y1"))
 	{
 		//这是对Y1直接赋值
@@ -3699,10 +3820,280 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			return 0;
 		}
 	}
+	//判断是否是数字输出2
 	else if (Strimp[0] == String("Y2"))
 	{
+		//这是对Y2直接赋值
+		if (Strimp[1] == String("="))
+		{
+			//判断数字输出Y2为高电平
+			if (Strimp[2] == String("1"))
+			{
+				digitalWrite(DO2, HIGH);
+			}
+			//判断数字输出Y2为低电平
+			else if (Strimp[2] == String("0"))
+			{
+				digitalWrite(DO2, LOW);
+			}
+		}
+		//三目运算符
+		else if (Strimp[1].indexOf(":") != -1)
+		{
+			//截取：冒号前的语句为TOP[0],并转换为真正的数字
+			TOP[0] = Strimp[1].substring(0, Strimp[1].indexOf(":"));
+			top_Int[0] = TOP[0].toInt();
+			//截取：冒号后的语句为TOP[1],并转换为真正的数字
+			TOP[1] = Strimp[1].substring(Strimp[1].indexOf(":") + 1, Strimp[1].length());
+			top_Int[1] = TOP[1].toInt();
 
+			if (debug == 1)
+			{
+				Serial.println(String("TOP[0] = ") + TOP[0]);
+				Serial.println(String("TOP[1] = ") + TOP[1]);
+				Serial.println(top_Int[0]);
+				Serial.println(top_Int[1]);
+			}
+
+			//执行三项式的前半段
+			if (top_Int[0] == 0x01)
+			{
+				digitalWrite(DO2, HIGH);
+				//Serial.println("digitalWrite(DO1, HIGH)");
+			}
+			else if (top_Int[0] == 0x00)
+			{
+				digitalWrite(DO2, LOW);
+			}
+
+			//--------得到延时的时间值--------
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+			while (millis() - imptime_old <= imp_time * 1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
+			//------------------------------
+
+			//执行三项式的后半段
+			if (top_Int[1] == 0x01)
+			{
+				digitalWrite(DO2, HIGH);
+			}
+			else if (top_Int[1] == 0x00)
+			{
+				digitalWrite(DO2, LOW);
+				//Serial.println("digitalWrite(DO1, LOW)");
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return 0;
+		}
 	}
+	//判断是否是数字输出3
+	else if (Strimp[0] == String("Y3"))
+	{
+		//这是对Y3直接赋值
+		if (Strimp[1] == String("="))
+		{
+			//判断数字输出Y3为高电平
+			if (Strimp[2] == String("1"))
+			{
+				digitalWrite(KCZJ1, LOW);
+			}
+			//判断数字输出Y3为低电平
+			else if (Strimp[2] == String("0"))
+			{
+				digitalWrite(KCZJ1, HIGH);
+			}
+		}
+		//三目运算符
+		else if (Strimp[1].indexOf(":") != -1)
+		{
+			//截取：冒号前的语句为TOP[0],并转换为真正的数字
+			TOP[0] = Strimp[1].substring(0, Strimp[1].indexOf(":"));
+			top_Int[0] = TOP[0].toInt();
+			//截取：冒号后的语句为TOP[1],并转换为真正的数字
+			TOP[1] = Strimp[1].substring(Strimp[1].indexOf(":") + 1, Strimp[1].length());
+			top_Int[1] = TOP[1].toInt();
+
+			if (debug == 1)
+			{
+				Serial.println(String("TOP[0] = ") + TOP[0]);
+				Serial.println(String("TOP[1] = ") + TOP[1]);
+				Serial.println(top_Int[0]);
+				Serial.println(top_Int[1]);
+			}
+
+			//执行三项式的前半段
+			if (top_Int[0] == 0x01)
+			{
+				digitalWrite(KCZJ2, LOW);
+				//Serial.println("digitalWrite(DO1, HIGH)");
+			}
+			else if (top_Int[0] == 0x00)
+			{
+				digitalWrite(KCZJ1, HIGH);
+			}
+
+			//--------得到延时的时间值--------
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+			while (millis() - imptime_old <= imp_time * 1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
+			//------------------------------
+
+			//执行三项式的后半段
+			if (top_Int[1] == 0x01)
+			{
+				digitalWrite(KCZJ1, LOW);
+			}
+			else if (top_Int[1] == 0x00)
+			{
+				digitalWrite(KCZJ1, HIGH);
+				//Serial.println("digitalWrite(DO1, LOW)");
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	//判断是否是数字输出4
+	else if (Strimp[0] == String("Y4"))
+	{
+		//这是对Y4直接赋值
+		if (Strimp[1] == String("="))
+		{
+			//判断数字输出Y4为高电平
+			if (Strimp[2] == String("1"))
+			{
+				digitalWrite(KCZJ2, LOW);
+			}
+			//判断数字输出Y4为低电平
+			else if (Strimp[2] == String("0"))
+			{
+				digitalWrite(KCZJ2, HIGH);
+			}
+		}
+		//三目运算符
+		else if (Strimp[1].indexOf(":") != -1)
+		{
+			//截取：冒号前的语句为TOP[0],并转换为真正的数字
+			TOP[0] = Strimp[1].substring(0, Strimp[1].indexOf(":"));
+			top_Int[0] = TOP[0].toInt();
+			//截取：冒号后的语句为TOP[1],并转换为真正的数字
+			TOP[1] = Strimp[1].substring(Strimp[1].indexOf(":") + 1, Strimp[1].length());
+			top_Int[1] = TOP[1].toInt();
+
+			if (debug == 1)
+			{
+				Serial.println(String("TOP[0] = ") + TOP[0]);
+				Serial.println(String("TOP[1] = ") + TOP[1]);
+				Serial.println(top_Int[0]);
+				Serial.println(top_Int[1]);
+			}
+
+			//执行三项式的前半段
+			if (top_Int[0] == 0x01)
+			{
+				digitalWrite(KCZJ2, LOW);
+				//Serial.println("digitalWrite(DO1, HIGH)");
+			}
+			else if (top_Int[0] == 0x00)
+			{
+				digitalWrite(KCZJ2, HIGH);
+			}
+
+			//--------得到延时的时间值--------
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+			while (millis() - imptime_old <= imp_time * 1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
+			//------------------------------
+
+			//执行三项式的后半段
+			if (top_Int[1] == 0x01)
+			{
+				digitalWrite(KCZJ2, LOW);
+			}
+			else if (top_Int[1] == 0x00)
+			{
+				digitalWrite(KCZJ2, HIGH);
+				//Serial.println("digitalWrite(DO1, LOW)");
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	//判断是否是模拟输出1
 	else if (Strimp[0] == String("V1"))
 	{
 		//三目运算符
@@ -3846,10 +4237,151 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			return 0;
 		}
 	}
+	//判断是否是模拟输出2
 	else if (Strimp[0] == String("V2"))
 	{
+		//三目运算符
+		if (Strimp[1].indexOf(":") != -1)
+		{
+			//截取：冒号前的语句为TOP[0],并转换为真正的数字
+			TOP[0] = Strimp[1].substring(0, Strimp[1].indexOf(":"));
+			Serial.println(String("TOP[0] = ") + TOP[0]);
 
+			//toInt()不会处理数字后字母，例如0050E2，处理结果为50
+			top_Int[0] = TOP[0].toInt();
+
+			if (TOP[0].indexOf("E1") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 10;
+			}
+			else if (TOP[0].indexOf("E2") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 100;
+			}
+			else
+			{
+				return 0;
+			}
+
+			//截取：冒号后的语句为TOP[1],并转换为真正的数字
+			TOP[1] = Strimp[1].substring(Strimp[1].indexOf(":") + 1, Strimp[1].length());
+			Serial.println(String("TOP[1] = ") + TOP[1]);
+
+			top_Int[1] = TOP[1].toInt();
+
+			if (TOP[1].indexOf("E1") != -1)
+			{
+				top_Float[1] = float(top_Int[1]) / 10;
+			}
+			else if (TOP[1].indexOf("E2") != -1)
+			{
+				top_Float[1] = float(top_Int[1]) / 100;
+			}
+			else
+			{
+				return 0;
+			}
+
+			if (debug == 1)
+			{
+				Serial.println(String("TOP[0] = ") + TOP[0]);
+				Serial.println(String("TOP[1] = ") + TOP[1]);
+				Serial.println(top_Int[0]);
+				Serial.println(top_Int[1]);
+				Serial.println(top_Float[0]);
+				Serial.println(top_Float[1]);
+			}
+
+			float AV1 = (top_Float[0] / 0.011) / 0.8056;
+			if (AV1 - floor(AV1) >= 0.5)
+			{
+				Analog_Value1 = floor(AV1) + 1;
+			}
+			else if (AV1 - floor(AV1) < 0.5)
+			{
+				Analog_Value1 = floor(AV1);
+			}
+
+			analogWrite(AO2, Analog_Value1);
+
+			//--------得到延时的时间值--------
+			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
+
+			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
+
+			if (debug == 1)
+			{
+				Serial.print("imp_time = ");
+				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
+			}
+
+			if (debug == 1)
+			{
+				imp_time = 1;
+			}
+			while (millis() - imptime_old <= imp_time * 1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
+			//------------------------------
+
+			AV1 = (top_Float[1] / 0.011) / 0.8056;
+			if (AV1 - floor(AV1) >= 0.5)
+			{
+				Analog_Value1 = floor(AV1) + 1;
+			}
+			else if (AV1 - floor(AV1) < 0.5)
+			{
+				Analog_Value1 = floor(AV1);
+			}
+
+			analogWrite(AO2, Analog_Value1);
+		}
+		else if (Strimp[1] == String("="))
+		{
+
+			top_Int[0] = Strimp[2].toInt();
+
+			if (Strimp[2].indexOf("E1") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 10;
+			}
+			else if (Strimp[2].indexOf("E2") != -1)
+			{
+				top_Float[0] = float(top_Int[0]) / 100;
+			}
+			else
+			{
+				return 0;
+			}
+			if (debug == 1)
+			{
+				Serial.println(top_Int[0]);
+				Serial.println(top_Float[0]);
+			}
+
+			float AV1 = (top_Float[1] / 0.011) / 0.8056;
+			if (AV1 - floor(AV1) >= 0.5)
+			{
+				Analog_Value1 = floor(AV1) + 1;
+			}
+			else if (AV1 - floor(AV1) < 0.5)
+			{
+				Analog_Value1 = floor(AV1);
+			}
+
+			analogWrite(AO1, Analog_Value1);
+		}
+		else
+		{
+			return 0;
+		}
 	}
+	//判断是否是延时
 	else if (Strimp[0] == String("D0"))
 	{
 		if (Strimp[1] == String("="))
@@ -4231,6 +4763,8 @@ void array_empty_test()
 	}
 	for (size_t i = 0; i < 5; i++)
 	{
+		LORA_Receive_information();
+
 		//清空判断数组
 		for (size_t i = 0; i < 5; i++)
 		{
@@ -4311,6 +4845,8 @@ void array_print_test()
 	}
 	for (size_t i = 0; i < 5; i++)
 	{
+		LORA_Receive_information();
+
 		if (i == 0)
 		{
 			Serial.print("con0[0-5] = ");
@@ -4410,11 +4946,19 @@ void array_print_test()
 		{
 			Serial.println("输出错误");
 		}
-		delay(50);
+		//delay(50);
 	}
 }
 
-void celue()
+//函 数 名：Automated_strategy()
+//功能描述：自动化策略函数，包括读取，判断，执行
+//函数说明：
+//调用函数：
+//全局变量：
+//输 入：
+//返 回：
+/////////////////////////////////////////////////////////////////////
+void Automated_strategy()
 {
 	//读取设置的自动策略
 	if (AT24CXX_ReadOneByte(13) > 0)
@@ -4468,7 +5012,7 @@ void celue()
 				Sentence_end = AT24CXX_ReadOneByte(97);
 				if (debug == 1)
 				{
-					Serial.println("策略语句4的起始结束位置赋值");
+					Serial.println("策略语句4的起始结束位置赋值444444444444444444444");
 				}
 			}
 			else if (i == 4)
@@ -4477,7 +5021,7 @@ void celue()
 				Sentence_end = AT24CXX_ReadOneByte(99);
 				if (debug == 1)
 				{
-					Serial.println("策略语句5的起始结束位置赋值");
+					Serial.println("策略语句5的起始结束位置赋值555555555555555555555555");
 					//delay(1000);
 				}
 			}
@@ -4511,7 +5055,10 @@ void celue()
 				/*delay(3500);*/
 			}
 
-			array_print_test();//数组打印测试
+			if (debug == 1)
+			{
+				array_print_test();//数组打印测试
+			}
 
 			//先分割#，分割为条件语句以及执行语句
 			data_processing(AssStat);
@@ -4519,6 +5066,44 @@ void celue()
 			AssStat.remove(0);//删除AssStat
 		}
 	}
+}
+
+//电压值处理函数
+int Voltage_Value_Processing(String str_V)
+{
+	int int_Voltage = 0;
+	float float_Voltage = 0.00, F_V = 0.00;
+
+	int_Voltage = str_V.toInt();//将str_V转换为数字
+
+	if (str_V.indexOf("E1") != -1)
+	{
+		float_Voltage = float(int_Voltage) / 10;//将数字转换为对应的进制的小数
+	}
+	else if (str_V.indexOf("E2") != -1)
+	{
+		float_Voltage = float(int_Voltage) / 100;//将数字转换为对应的进制的小数
+	}
+
+	F_V = (float_Voltage / 0.011) / 0.8056;
+
+	if (F_V - floor(F_V) >= 0.5)
+	{
+		int_Voltage = floor(F_V) + 1;
+	}
+	else
+	{
+		int_Voltage = floor(F_V);
+	}
+
+	if (debug == 1)
+	{
+		Serial.println(String("str_V = ") + str_V);
+		Serial.println(String("F_V = ") + F_V);
+		Serial.println(String("int_Voltage = ") + int_Voltage);
+	}
+
+	return int_Voltage;
 }
 
 

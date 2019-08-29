@@ -38,6 +38,7 @@ static String LORA_RecData1, LORA_RecData2;
 /////////////////////////////////////////////////////////////////////
 void setup()
 {
+
 	Initialization();//初始化函数
 	Serial.println("初始化执行结束");
 	if (AT24CXX_ReadOneByte(0) == 0x01 && AT24CXX_ReadOneByte(1) == 0x01)
@@ -103,7 +104,7 @@ void setup()
 // Add the main program code into the continuous loop() function
 void loop()
 {
-	celue();
+	Automated_strategy();
 
 	forswitch();
 
@@ -121,26 +122,6 @@ void loop()
 		Send_E021(Receive_IsBroadcast);
 	}
 
-	//这是恢复为出厂设置，请慎用
-	if (digitalRead(K1) == LOW)
-	{
-		delay(2000);
-		if (digitalRead(K1) == LOW)
-		{
-			//-------------------------------------------
-			//======测试时所用代码块，实际使用请注释=====
-			//将所有的标志位都清为0
-			AT24CXX_WriteOneByte(0, 0x00);//lora初始化的标志位
-			AT24CXX_WriteOneByte(1, 0x00);//EEPROM设置的标志位
-			AT24CXX_WriteOneByte(2, 0x00);//申号的标志位
-			AT24CXX_WriteOneByte(13, 0x00);//自动策略的标志位
-			//-------------------------------------------
-			Serial.println("开始进行恢复出厂设置");
-
-			Initialization();//重新进行初始化的设置
-			setup();//重新进入setup()进行申号
-		}
-	}
 	//这是强制启动继电器
 	if (digitalRead(K2) == LOW)
 	{

@@ -1072,8 +1072,8 @@ void LORA_Receive_information(void)
 	{
 		if (Receive_Length >= 127) break;
 		Receive_Data[Receive_Length++] = Serial3.read();
-		Serial.print(Receive_Data[Receive_Length - 1], HEX);
-		Serial.print(" ");
+		/*Serial.print(Receive_Data[Receive_Length - 1], HEX);
+		Serial.print(" ");*/
 		delay(5);
 	}
 	if (Receive_Length > 0)

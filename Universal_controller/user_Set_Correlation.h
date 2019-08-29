@@ -115,7 +115,8 @@ int Condition_Judgment(int conx, int ret_condition_test);//条件语句判断函
 int Implement_Handle(int impx, int ret_Implement_test);
 void array_empty_test();//数组清空函数
 void array_print_test();//数组打印测试函数
-void celue();//策略函数
+void Automated_strategy();//策略函数
+int Voltage_Value_Processing(String str_V);//电压值处理函数
 
 //类结构声明
 //LORA开关型设备的通用回执状态(结构类型，枚举)

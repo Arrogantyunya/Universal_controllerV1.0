@@ -31,10 +31,6 @@
 /////////////////////////////////////////////////////////////////////
 void Initialization()//初始化函数
 {
-	if (debug == 1)
-	{
-		Serial.println("进入Initialization函数");
-	}
 	//初始化引脚
 	afio_cfg_debug_ports(AFIO_DEBUG_SW_ONLY);//因为引脚复用
 	pinMode(RESETN, OUTPUT);//复位电路，给高电平进行复位
