@@ -1,0 +1,535 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="(@1 @138)" Category="CodeSchema_ProjectItem" Bounds="666.412000308316,499.796500616632,157.591333410412,25.998000077079" FilePath="$(VsSolution)\user_A011_E011.cpp" Label="user_A011_E011.cpp" />
+    <Node Id="(@1 @139)" Category="CodeSchema_ProjectItem" Bounds="20,555.794500693711,157.591333410412,25.998000077079" FilePath="$(VsSolution)\user_A021_E021.cpp" Label="user_A021_E021.cpp" />
+    <Node Id="(@1 @140)" Category="CodeSchema_ProjectItem" Bounds="207.591333410412,555.794500693711,157.591333410412,25.998000077079" FilePath="$(VsSolution)\user_A025_E025.cpp" Label="user_A025_E025.cpp" />
+    <Node Id="(@1 @141)" Category="CodeSchema_ProjectItem" Bounds="168.134666743746,499.796500616632,118.604666743746,25.998000077079" FilePath="$(VsSolution)\user_crc8.cpp" Label="user_crc8.cpp" />
+    <Node Id="(@1 @142)" Category="CodeSchema_ProjectItem" Bounds="858,40,81.4780000770791,25.998000077079" FilePath="$(VsSolution)\i2c.cpp" Label="i2c.cpp" />
+    <Node Id="(@1 @143)" Category="CodeSchema_ProjectItem" Bounds="481.980666897904,499.796500616632,154.431333410412,25.998000077079" FilePath="$(VsSolution)\user_HEXtoDEC.cpp" Label="user_HEXtoDEC.cpp" />
+    <Node Id="(@1 @144)" Category="CodeSchema_ProjectItem" Bounds="777.448666974982,555.794500693711,182.684666743746,25.998000077079" FilePath="$(VsSolution)\user_Set_Correlation.cpp" Label="user_Set_Correlation.cpp" />
+    <Node Id="(@1 @145)" Category="CodeSchema_ProjectItem" Bounds="582.814000231237,555.794500693711,164.634666743746,25.998000077079" FilePath="$(VsSolution)\user_initialization.cpp" Label="user_initialization.cpp" />
+    <Node Id="(@1 @146)" Category="CodeSchema_ProjectItem" Bounds="316.739333487492,499.796500616632,135.241333410412,25.998000077079" FilePath="$(VsSolution)\user_lorainit.cpp" Label="user_lorainit.cpp" />
+    <Node Id="(@1 @147)" Category="CodeSchema_ProjectItem" Bounds="395.182666820825,555.794500693711,157.631333410412,25.998000077079" FilePath="$(VsSolution)\user_judgement.cpp" Label="user_judgement.cpp" />
+    <Node Id="(@1 @148)" Category="CodeSchema_ProjectItem" Bounds="20,499.796500616632,118.134666743746,25.998000077079" FilePath="$(VsSolution)\AT24CXX.cpp" Label="AT24CXX.cpp" />
+    <Node Id="@101" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\timer.h" Label="timer.h" />
+    <Node Id="@103" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wcharacter.h" Label="wcharacter.h" />
+    <Node Id="@105" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\boards.h" Label="boards.h" />
+    <Node Id="@107" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\libmaple_types.h" Label="libmaple_types.h" />
+    <Node Id="@109" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wirish_types.h" Label="wirish_types.h" />
+    <Node Id="@11" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\stm32.h" Label="stm32.h" />
+    <Node Id="@111" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\vadefs.h" Label="vadefs.h" />
+    <Node Id="@113" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\codeanalysis\sourceannotations.h" Label="sourceannotations.h" />
+    <Node Id="@115" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wirish_constants.h" Label="wirish_constants.h" />
+    <Node Id="@117" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\bit_constants.h" Label="bit_constants.h" />
+    <Node Id="@119" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\ext_interrupts.h" Label="ext_interrupts.h" />
+    <Node Id="@121" Category="CodeSchema_ProjectItem" Bounds="67.3559999614605,386.113000462474,121.288000077079,25.998000077079" FilePath="$(VsSolution)\user_lorainit.h" Label="user_lorainit.h" />
+    <Node Id="@123" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\variants\generic_stm32f103r\variant.h" Label="variant.h" />
+    <Node Id="@125" Category="CodeSchema_ProjectItem" Bounds="425.16099996146,270.742000308316,143.678000077079,25.998000077079" FilePath="$(VsSolution)\user_judgement.h" Label="user_judgement.h" />
+    <Node Id="@127" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\stdint.h" Label="stdint.h" />
+    <Node Id="@129" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\print.h" Label="print.h" />
+    <Node Id="@13" Category="CodeSchema_ProjectItem" Bounds="322.18099996146,213.056500231237,143.638000077079,25.998000077079" FilePath="$(VsSolution)\user_A025_E025.h" Label="user_A025_E025.h" />
+    <Node Id="@131" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\avr\interrupt.h" Label="interrupt.h" />
+    <Node Id="@133" Category="CodeSchema_ProjectItem" Bounds="250.909333294794,386.113000462474,104.181333410412,25.998000077079" FilePath="$(VsSolution)\AT24CXX.h" Label="AT24CXX.h" />
+    <Node Id="@135" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\delay.h" Label="delay.h" />
+    <Node Id="@137" Category="CodeSchema_ProjectItem" Bounds="275.195999961461,97.685500077079,175.608000077079,25.998000077079" FilePath="$(VsSolution)\Universal_controller.ino" Label="Universal_controller.ino" />
+    <Node Id="@15" Category="CodeSchema_ProjectItem" Bounds="579.674333294794,328.427500385395,104.651333410412,25.998000077079" FilePath="$(VsSolution)\user_crc8.h" Label="user_crc8.h" />
+    <Node Id="@17" Category="CodeSchema_ProjectItem" Bounds="186.237666628127,443.798500539553,67.5246667437457,25.998000077079" FilePath="$(VsSolution)\i2c.h" Label="i2c.h" />
+    <Node Id="@19" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\rcc.h" Label="rcc.h" />
+    <Node Id="@2" Category="CodeSchema_PoundIncludeFile" Bounds="0,0,980.133333718728,601.79250077079" FilePath="$(VsSolution)\Universal_controller.vcxproj" Group="Expanded" Label="Universal_controller.vcxproj" Language="{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}" />
+    <Node Id="@21" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\rcc.h" Label="rcc.h" />
+    <Node Id="@23" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\adc.h" Label="adc.h" />
+    <Node Id="@25" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\adc.h" Label="adc.h" />
+    <Node Id="@27" Category="CodeSchema_ProjectItem" Bounds="623.76099996146,155.371000154158,140.478000077079,25.998000077079" FilePath="$(VsSolution)\user_HEXtoDEC.h" Label="user_HEXtoDEC.h" />
+    <Node Id="@29" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\nvic.h" Label="nvic.h" />
+    <Node Id="@31" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\nvic.h" Label="nvic.h" />
+    <Node Id="@33" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\bitband.h" Label="bitband.h" />
+    <Node Id="@35" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\variants\generic_stm32f103r\board\board.h" Label="board.h" />
+    <Node Id="@37" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\avr\pgmspace.h" Label="pgmspace.h" />
+    <Node Id="@39" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\printable.h" Label="printable.h" />
+    <Node Id="@4" Category="CodeSchema_ProjectItem" Bounds="148.18099996146,213.056500231237,143.638000077079,25.998000077079" FilePath="$(VsSolution)\user_A011_E011.h" Label="user_A011_E011.h" />
+    <Node Id="@41" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\libmaple.h" Label="libmaple.h" />
+    <Node Id="@43" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\vcruntime.h" Label="vcruntime.h" />
+    <Node Id="@45" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wirish_time.h" Label="wirish_time.h" />
+    <Node Id="@47" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\tone.h" Label="tone.h" />
+    <Node Id="@49" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wiring_pulse.h" Label="wiring_pulse.h" />
+    <Node Id="@51" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\avr\dtostrf.h" Label="dtostrf.h" />
+    <Node Id="@53" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wstring.h" Label="wstring.h" />
+    <Node Id="@55" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wirish_debug.h" Label="wirish_debug.h" />
+    <Node Id="@57" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wirish.h" Label="wirish.h" />
+    <Node Id="@59" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wirish_math.h" Label="wirish_math.h" />
+    <Node Id="@6" Category="CodeSchema_ProjectItem" Bounds="560.18099996146,213.056500231237,143.638000077079,25.998000077079" FilePath="$(VsSolution)\user_A021_E021.h" Label="user_A021_E021.h" />
+    <Node Id="@61" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\exti.h" Label="exti.h" />
+    <Node Id="@63" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\exti.h" Label="exti.h" />
+    <Node Id="@65" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\systick.h" Label="systick.h" />
+    <Node Id="@67" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\hardwareserial.h" Label="hardwareserial.h" />
+    <Node Id="@69" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\usb_serial.h" Label="usb_serial.h" />
+    <Node Id="@71" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\concurrencysal.h" Label="concurrencysal.h" />
+    <Node Id="@73" Category="CodeSchema_ProjectItem" FilePath="$(ProgramFiles)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.16.27023\include\sal.h" Label="sal.h" />
+    <Node Id="@75" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\util.h" Label="util.h" />
+    <Node Id="@77" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\stream.h" Label="stream.h" />
+    <Node Id="@79" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\wprogram.h" Label="wprogram.h" />
+    <Node Id="@81" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\pwm.h" Label="pwm.h" />
+    <Node Id="@83" Category="CodeSchema_ProjectItem" Bounds="393.634333294794,155.371000154158,168.731333410412,25.998000077079" FilePath="$(VsSolution)\user_Set_Correlation.h" Label="user_Set_Correlation.h" />
+    <Node Id="@85" Category="CodeSchema_ProjectItem" Bounds="144.659333294794,328.427500385395,150.681333410412,25.998000077079" FilePath="$(VsSolution)\user_initialization.h" Label="user_initialization.h" />
+    <Node Id="@87" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\gpio.h" Label="gpio.h" />
+    <Node Id="@89" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\stm32f1\include\series\gpio.h" Label="gpio.h" />
+    <Node Id="@9" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\stm32.h" Label="stm32.h" />
+    <Node Id="@91" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\io.h" Label="io.h" />
+    <Node Id="@93" Category="CodeSchema_ProjectItem" Bounds="249.54099996146,40,226.918000077079,25.998000077079" FilePath="$(VsSolution)\__vm\.Universal_controller.vsarduino.h" Label=".Universal_controller.vsarduino.h" />
+    <Node Id="@95" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\arduino.h" Label="arduino.h" />
+    <Node Id="@97" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\cores\maple\hardwaretimer.h" Label="hardwaretimer.h" />
+    <Node Id="@99" Category="CodeSchema_ProjectItem" FilePath="d:\arduino\hardware\arduino_stm32-master\stm32f1\system\libmaple\include\libmaple\timer.h" Label="timer.h" />
+    <Node Id="OthersGroup" Category="CodeSchema_PoundIncludeGroup" Group="Collapsed" Label="其他" />
+    <Node Id="PoundIncludeGraphExternalsGroup" Category="Externals" Bounds="458.066666859364,631.79250077079,64.0000000000001,25" Group="Collapsed" Label="外部" />
+  </Nodes>
+  <Links>
+    <Link Source="@101" Target="@107" Category="PoundInclude" />
+    <Link Source="@105" Target="@107" Category="PoundInclude" />
+    <Link Source="@105" Target="@109" Category="PoundInclude" />
+    <Link Source="@105" Target="@35" Category="PoundInclude" />
+    <Link Source="@107" Target="@127" Category="PoundInclude" />
+    <Link Source="@109" Target="@107" Category="PoundInclude" />
+    <Link Source="@109" Target="@23" Category="PoundInclude" />
+    <Link Source="@109" Target="@87" Category="PoundInclude" />
+    <Link Source="@109" Target="@99" Category="PoundInclude" />
+    <Link Source="@119" Target="@107" Category="PoundInclude" />
+    <Link Source="@119" Target="@29" Category="PoundInclude" />
+    <Link Source="@121" Target="@79" Category="PoundInclude" />
+    <Link Source="@121" Target="@85" Category="PoundInclude" Bounds="115.854476928711,356.664215087891,44.5009765625,29.4487915039063" />
+    <Link Source="@121" Target="@95" Category="PoundInclude" />
+    <Link Source="@125" Target="@15" Category="PoundInclude" Bounds="527.421264648438,296.739990234375,65.88134765625,28.151123046875" />
+    <Link Source="@125" Target="@79" Category="PoundInclude" />
+    <Link Source="@125" Target="@85" Category="PoundInclude" Bounds="304.204223632813,296.739990234375,160.797119140625,32.8967895507813" />
+    <Link Source="@125" Target="@95" Category="PoundInclude" />
+    <Link Source="@127" Target="@43" Category="PoundInclude" />
+    <Link Source="@129" Target="@107" Category="PoundInclude" />
+    <Link Source="@129" Target="@39" Category="PoundInclude" />
+    <Link Source="@129" Target="@53" Category="PoundInclude" />
+    <Link Source="@13" Target="@125" Category="PoundInclude" Bounds="421.942474365234,239.054504394531,49.1623840332031,26.5896911621094" />
+    <Link Source="@13" Target="@15" Category="PoundInclude" Bounds="394,239.054504394531,176.739685058594,94.9479675292969" />
+    <Link Source="@13" Target="@79" Category="PoundInclude" />
+    <Link Source="@13" Target="@85" Category="PoundInclude" Bounds="234.966537475586,239.054504394531,109.458084106445,82.1371765136719" />
+    <Link Source="@13" Target="@95" Category="PoundInclude" />
+    <Link Source="@133" Target="@17" Category="PoundInclude" Bounds="246.093826293945,412.110992431641,38.2027435302734,26.5511474609375" />
+    <Link Source="@135" Target="@107" Category="PoundInclude" />
+    <Link Source="@135" Target="@9" Category="PoundInclude" />
+    <Link Source="@137" Target="@121" Category="PoundInclude" Bounds="53,118.853881835938,222.196014404297,263.639495849609" />
+    <Link Source="@137" Target="@125" Category="PoundInclude" Bounds="367.72802734375,123.683502197266,129.27197265625,138.058502197266" />
+    <Link Source="@137" Target="@13" Category="PoundInclude" Bounds="331,123.683502197266,26.5001220703125,85.4638824462891" />
+    <Link Source="@137" Target="@133" Category="PoundInclude" Bounds="364.077056884766,116.14249420166,462.922943115234,279.607627868652" />
+    <Link Source="@137" Target="@15" Category="PoundInclude" Bounds="450.803985595703,116.54679107666,344.196014404297,214.052543640137" />
+    <Link Source="@137" Target="@17" Category="PoundInclude" Bounds="21,118.089500427246,254.196014404297,332.523597717285" />
+    <Link Source="@137" Target="@27" Category="PoundInclude" Bounds="450.803985595703,120.387596130371,203.269989013672,31.6958694458008" />
+    <Link Source="@137" Target="@4" Category="PoundInclude" Bounds="220,123.683502197266,78.5520324707031,80.3730010986328" />
+    <Link Source="@137" Target="@6" Category="PoundInclude" Bounds="450.635650634766,121.674301147461,171.807220458984,83.1771240234375" />
+    <Link Source="@137" Target="@83" Category="PoundInclude" Bounds="388.914398193359,123.683502197266,55.1265563964844,27.6521911621094" />
+    <Link Source="@137" Target="@85" Category="PoundInclude" Bounds="85,119.794242858887,190.196014404297,206.731727600098" />
+    <Link Source="@137" Target="@95" Category="PoundInclude" />
+    <Link Source="@15" Target="@79" Category="PoundInclude" />
+    <Link Source="@15" Target="@95" Category="PoundInclude" />
+    <Link Source="@17" Target="@95" Category="PoundInclude" />
+    <Link Source="@19" Target="@107" Category="PoundInclude" />
+    <Link Source="@19" Target="@21" Category="PoundInclude" />
+    <Link Source="@2" Target="(@1 @138)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @139)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @140)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @141)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @142)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @143)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @144)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @145)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @146)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @147)" Category="Contains" />
+    <Link Source="@2" Target="(@1 @148)" Category="Contains" />
+    <Link Source="@2" Target="@121" Category="Contains" />
+    <Link Source="@2" Target="@125" Category="Contains" />
+    <Link Source="@2" Target="@13" Category="Contains" />
+    <Link Source="@2" Target="@133" Category="Contains" />
+    <Link Source="@2" Target="@137" Category="Contains" />
+    <Link Source="@2" Target="@15" Category="Contains" />
+    <Link Source="@2" Target="@17" Category="Contains" />
+    <Link Source="@2" Target="@27" Category="Contains" />
+    <Link Source="@2" Target="@4" Category="Contains" />
+    <Link Source="@2" Target="@6" Category="Contains" />
+    <Link Source="@2" Target="@83" Category="Contains" />
+    <Link Source="@2" Target="@85" Category="Contains" />
+    <Link Source="@2" Target="@93" Category="Contains" />
+    <Link Source="@21" Target="@107" Category="PoundInclude" />
+    <Link Source="@21" Target="@33" Category="PoundInclude" />
+    <Link Source="@23" Target="@19" Category="PoundInclude" />
+    <Link Source="@23" Target="@25" Category="PoundInclude" />
+    <Link Source="@23" Target="@29" Category="PoundInclude" />
+    <Link Source="@23" Target="@33" Category="PoundInclude" />
+    <Link Source="@23" Target="@41" Category="PoundInclude" />
+    <Link Source="@25" Target="@107" Category="PoundInclude" />
+    <Link Source="@25" Target="@19" Category="PoundInclude" />
+    <Link Source="@25" Target="@33" Category="PoundInclude" />
+    <Link Source="@27" Target="@79" Category="PoundInclude" />
+    <Link Source="@27" Target="@95" Category="PoundInclude" />
+    <Link Source="@29" Target="@107" Category="PoundInclude" />
+    <Link Source="@29" Target="@31" Category="PoundInclude" />
+    <Link Source="@29" Target="@75" Category="PoundInclude" />
+    <Link Source="@31" Target="@107" Category="PoundInclude" />
+    <Link Source="@31" Target="@9" Category="PoundInclude" />
+    <Link Source="@33" Target="@107" Category="PoundInclude" />
+    <Link Source="@4" Target="@125" Category="PoundInclude" Bounds="291.817138671875,236.159912109375,164.342376708984,31.3280639648438" />
+    <Link Source="@4" Target="@15" Category="PoundInclude" Bounds="234.421920776367,239.054504394531,336.278213500977,97.7192077636719" />
+    <Link Source="@4" Target="@79" Category="PoundInclude" />
+    <Link Source="@4" Target="@85" Category="PoundInclude" Bounds="220,239.054504394531,0,80.3729858398438" />
+    <Link Source="@4" Target="@95" Category="PoundInclude" />
+    <Link Source="@41" Target="@107" Category="PoundInclude" />
+    <Link Source="@41" Target="@135" Category="PoundInclude" />
+    <Link Source="@41" Target="@75" Category="PoundInclude" />
+    <Link Source="@41" Target="@9" Category="PoundInclude" />
+    <Link Source="@43" Target="@111" Category="PoundInclude" />
+    <Link Source="@43" Target="@73" Category="PoundInclude" />
+    <Link Source="@45" Target="@105" Category="PoundInclude" />
+    <Link Source="@45" Target="@107" Category="PoundInclude" />
+    <Link Source="@45" Target="@65" Category="PoundInclude" />
+    <Link Source="@47" Target="@95" Category="PoundInclude" />
+    <Link Source="@49" Target="@87" Category="PoundInclude" />
+    <Link Source="@53" Target="@37" Category="PoundInclude" />
+    <Link Source="@55" Target="@87" Category="PoundInclude" />
+    <Link Source="@57" Target="@103" Category="PoundInclude" />
+    <Link Source="@57" Target="@105" Category="PoundInclude" />
+    <Link Source="@57" Target="@109" Category="PoundInclude" />
+    <Link Source="@57" Target="@115" Category="PoundInclude" />
+    <Link Source="@57" Target="@117" Category="PoundInclude" />
+    <Link Source="@57" Target="@119" Category="PoundInclude" />
+    <Link Source="@57" Target="@127" Category="PoundInclude" />
+    <Link Source="@57" Target="@131" Category="PoundInclude" />
+    <Link Source="@57" Target="@37" Category="PoundInclude" />
+    <Link Source="@57" Target="@41" Category="PoundInclude" />
+    <Link Source="@57" Target="@45" Category="PoundInclude" />
+    <Link Source="@57" Target="@47" Category="PoundInclude" />
+    <Link Source="@57" Target="@49" Category="PoundInclude" />
+    <Link Source="@57" Target="@51" Category="PoundInclude" />
+    <Link Source="@57" Target="@53" Category="PoundInclude" />
+    <Link Source="@57" Target="@55" Category="PoundInclude" />
+    <Link Source="@57" Target="@59" Category="PoundInclude" />
+    <Link Source="@57" Target="@67" Category="PoundInclude" />
+    <Link Source="@57" Target="@69" Category="PoundInclude" />
+    <Link Source="@57" Target="@81" Category="PoundInclude" />
+    <Link Source="@57" Target="@9" Category="PoundInclude" />
+    <Link Source="@57" Target="@91" Category="PoundInclude" />
+    <Link Source="@57" Target="@97" Category="PoundInclude" />
+    <Link Source="@59" Target="@127" Category="PoundInclude" />
+    <Link Source="@6" Target="@125" Category="PoundInclude" Bounds="535.697387695313,239.054504394531,65.88134765625,28.151123046875" />
+    <Link Source="@6" Target="@15" Category="PoundInclude" Bounds="632,239.054504394531,0,80.3729858398438" />
+    <Link Source="@6" Target="@79" Category="PoundInclude" />
+    <Link Source="@6" Target="@85" Category="PoundInclude" Bounds="304.314849853516,239.054504394531,322.877838134766,95.9723205566406" />
+    <Link Source="@6" Target="@95" Category="PoundInclude" />
+    <Link Source="@61" Target="@107" Category="PoundInclude" />
+    <Link Source="@61" Target="@63" Category="PoundInclude" />
+    <Link Source="@65" Target="@107" Category="PoundInclude" />
+    <Link Source="@65" Target="@75" Category="PoundInclude" />
+    <Link Source="@67" Target="@105" Category="PoundInclude" />
+    <Link Source="@67" Target="@107" Category="PoundInclude" />
+    <Link Source="@67" Target="@129" Category="PoundInclude" />
+    <Link Source="@67" Target="@77" Category="PoundInclude" />
+    <Link Source="@69" Target="@105" Category="PoundInclude" />
+    <Link Source="@69" Target="@129" Category="PoundInclude" />
+    <Link Source="@69" Target="@77" Category="PoundInclude" />
+    <Link Source="@73" Target="@113" Category="PoundInclude" />
+    <Link Source="@73" Target="@71" Category="PoundInclude" />
+    <Link Source="@75" Target="@107" Category="PoundInclude" />
+    <Link Source="@77" Target="@129" Category="PoundInclude" />
+    <Link Source="@79" Target="@57" Category="PoundInclude" />
+    <Link Source="@81" Target="@107" Category="PoundInclude" />
+    <Link Source="@83" Target="@125" Category="PoundInclude" Bounds="500.984954833984,181.369003295898,28.0150451660156,82.9485931396484" />
+    <Link Source="@83" Target="@15" Category="PoundInclude" Bounds="562.365661621094,178.039840698242,157.687072753906,143.063827514648" />
+    <Link Source="@83" Target="@6" Category="PoundInclude" Bounds="515.406860351563,181.369003295898,76.2523803710938,28.309814453125" />
+    <Link Source="@83" Target="@79" Category="PoundInclude" />
+    <Link Source="@83" Target="@85" Category="PoundInclude" Bounds="128.485641479492,181.369003295898,297.685562133789,142.660751342773" />
+    <Link Source="@83" Target="@95" Category="PoundInclude" />
+    <Link Source="@85" Target="@121" Category="PoundInclude" Bounds="161.700057983398,354.425506591797,42.5259552001953,27.5857849121094" />
+    <Link Source="@85" Target="@133" Category="PoundInclude" Bounds="238.703430175781,354.425506591797,38.2027587890625,26.5511169433594" />
+    <Link Source="@85" Target="@17" Category="PoundInclude" Bounds="220,354.425506591797,0,80.3729858398438" />
+    <Link Source="@85" Target="@95" Category="PoundInclude" />
+    <Link Source="@87" Target="@107" Category="PoundInclude" />
+    <Link Source="@87" Target="@19" Category="PoundInclude" />
+    <Link Source="@87" Target="@61" Category="PoundInclude" />
+    <Link Source="@87" Target="@89" Category="PoundInclude" />
+    <Link Source="@89" Target="@107" Category="PoundInclude" />
+    <Link Source="@89" Target="@61" Category="PoundInclude" />
+    <Link Source="@89" Target="@9" Category="PoundInclude" />
+    <Link Source="@9" Target="@11" Category="PoundInclude" />
+    <Link Source="@91" Target="@105" Category="PoundInclude" />
+    <Link Source="@91" Target="@107" Category="PoundInclude" />
+    <Link Source="@93" Target="@137" Category="PoundInclude" Bounds="363,65.9980010986328,0,22.6875" />
+    <Link Source="@95" Target="@123" Category="PoundInclude" />
+    <Link Source="@95" Target="@57" Category="PoundInclude" />
+    <Link Source="@97" Target="@99" Category="PoundInclude" />
+    <Link Source="@99" Target="@101" Category="PoundInclude" />
+    <Link Source="@99" Target="@19" Category="PoundInclude" />
+    <Link Source="@99" Target="@29" Category="PoundInclude" />
+    <Link Source="@99" Target="@33" Category="PoundInclude" />
+    <Link Source="@99" Target="@41" Category="PoundInclude" />
+    <Link Source="OthersGroup" Target="@101" Category="Contains" />
+    <Link Source="OthersGroup" Target="@103" Category="Contains" />
+    <Link Source="OthersGroup" Target="@105" Category="Contains" />
+    <Link Source="OthersGroup" Target="@107" Category="Contains" />
+    <Link Source="OthersGroup" Target="@109" Category="Contains" />
+    <Link Source="OthersGroup" Target="@11" Category="Contains" />
+    <Link Source="OthersGroup" Target="@111" Category="Contains" />
+    <Link Source="OthersGroup" Target="@113" Category="Contains" />
+    <Link Source="OthersGroup" Target="@115" Category="Contains" />
+    <Link Source="OthersGroup" Target="@117" Category="Contains" />
+    <Link Source="OthersGroup" Target="@119" Category="Contains" />
+    <Link Source="OthersGroup" Target="@123" Category="Contains" />
+    <Link Source="OthersGroup" Target="@127" Category="Contains" />
+    <Link Source="OthersGroup" Target="@129" Category="Contains" />
+    <Link Source="OthersGroup" Target="@131" Category="Contains" />
+    <Link Source="OthersGroup" Target="@135" Category="Contains" />
+    <Link Source="OthersGroup" Target="@19" Category="Contains" />
+    <Link Source="OthersGroup" Target="@21" Category="Contains" />
+    <Link Source="OthersGroup" Target="@23" Category="Contains" />
+    <Link Source="OthersGroup" Target="@25" Category="Contains" />
+    <Link Source="OthersGroup" Target="@29" Category="Contains" />
+    <Link Source="OthersGroup" Target="@31" Category="Contains" />
+    <Link Source="OthersGroup" Target="@33" Category="Contains" />
+    <Link Source="OthersGroup" Target="@35" Category="Contains" />
+    <Link Source="OthersGroup" Target="@37" Category="Contains" />
+    <Link Source="OthersGroup" Target="@39" Category="Contains" />
+    <Link Source="OthersGroup" Target="@41" Category="Contains" />
+    <Link Source="OthersGroup" Target="@43" Category="Contains" />
+    <Link Source="OthersGroup" Target="@45" Category="Contains" />
+    <Link Source="OthersGroup" Target="@47" Category="Contains" />
+    <Link Source="OthersGroup" Target="@49" Category="Contains" />
+    <Link Source="OthersGroup" Target="@51" Category="Contains" />
+    <Link Source="OthersGroup" Target="@53" Category="Contains" />
+    <Link Source="OthersGroup" Target="@55" Category="Contains" />
+    <Link Source="OthersGroup" Target="@57" Category="Contains" />
+    <Link Source="OthersGroup" Target="@59" Category="Contains" />
+    <Link Source="OthersGroup" Target="@61" Category="Contains" />
+    <Link Source="OthersGroup" Target="@63" Category="Contains" />
+    <Link Source="OthersGroup" Target="@65" Category="Contains" />
+    <Link Source="OthersGroup" Target="@67" Category="Contains" />
+    <Link Source="OthersGroup" Target="@69" Category="Contains" />
+    <Link Source="OthersGroup" Target="@71" Category="Contains" />
+    <Link Source="OthersGroup" Target="@73" Category="Contains" />
+    <Link Source="OthersGroup" Target="@75" Category="Contains" />
+    <Link Source="OthersGroup" Target="@77" Category="Contains" />
+    <Link Source="OthersGroup" Target="@79" Category="Contains" />
+    <Link Source="OthersGroup" Target="@81" Category="Contains" />
+    <Link Source="OthersGroup" Target="@87" Category="Contains" />
+    <Link Source="OthersGroup" Target="@89" Category="Contains" />
+    <Link Source="OthersGroup" Target="@9" Category="Contains" />
+    <Link Source="OthersGroup" Target="@91" Category="Contains" />
+    <Link Source="OthersGroup" Target="@95" Category="Contains" />
+    <Link Source="OthersGroup" Target="@97" Category="Contains" />
+    <Link Source="OthersGroup" Target="@99" Category="Contains" />
+    <Link Source="PoundIncludeGraphExternalsGroup" Target="OthersGroup" Category="Contains" />
+  </Links>
+  <Categories>
+    <Category Id="CodeSchema_PoundIncludeFile" Label="C++ 项目文件" BasedOn="File" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="C++ 项目文件" />
+    <Category Id="CodeSchema_PoundIncludeGroup" Label="#include 组" BasedOn="Group" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="#include 组" />
+    <Category Id="CodeSchema_ProjectItem" Label="项目项" BasedOn="File" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Type" Icon="File" NavigationActionLabel="项目项" />
+    <Category Id="Contains" Label="包含" Description="链接的源是否包含目标对象" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="包含者" IsContainment="True" OutgoingActionLabel="包含" />
+    <Category Id="Externals" Label="外部" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="外部" />
+    <Category Id="File" Label="文件" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="File" NavigationActionLabel="文件" />
+    <Category Id="Group" Label="组" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" IsProviderRoot="False" NavigationActionLabel="组" />
+    <Category Id="PoundInclude" Label="#include" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="#include 调用方" OutgoingActionLabel="#include" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="FilePath" Label="文件路径" Description="文件路径" DataType="System.String" />
+    <Property Id="Group" Label="组" Description="将节点显示为组" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
+    <Property Id="Label" Label="标签" Description="可批注对象的可显示标签" DataType="System.String" />
+    <Property Id="Language" Label="语言" Description="语言" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <QualifiedNames>
+    <Name Id="Assembly" Label="程序集" ValueType="Uri" />
+    <Name Id="File" Label="文件" ValueType="Uri" />
+  </QualifiedNames>
+  <IdentifierAliases>
+    <Alias n="1" Uri="Assembly=$(VsSolutionUri)/Universal_controller.vcxproj" />
+    <Alias n="2" Id="(@1)" />
+    <Alias n="3" Uri="File=$(VsSolutionUri)/user_A011_E011.h" />
+    <Alias n="4" Id="(@1 @3)" />
+    <Alias n="5" Uri="File=$(VsSolutionUri)/user_A021_E021.h" />
+    <Alias n="6" Id="(@1 @5)" />
+    <Alias n="7" Uri="Assembly=" />
+    <Alias n="8" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/stm32.h" />
+    <Alias n="9" Id="(@7 @8)" />
+    <Alias n="10" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/stm32.h" />
+    <Alias n="11" Id="(@7 @10)" />
+    <Alias n="12" Uri="File=$(VsSolutionUri)/user_A025_E025.h" />
+    <Alias n="13" Id="(@1 @12)" />
+    <Alias n="14" Uri="File=$(VsSolutionUri)/user_crc8.h" />
+    <Alias n="15" Id="(@1 @14)" />
+    <Alias n="16" Uri="File=$(VsSolutionUri)/i2c.h" />
+    <Alias n="17" Id="(@1 @16)" />
+    <Alias n="18" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/rcc.h" />
+    <Alias n="19" Id="(@7 @18)" />
+    <Alias n="20" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/rcc.h" />
+    <Alias n="21" Id="(@7 @20)" />
+    <Alias n="22" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/adc.h" />
+    <Alias n="23" Id="(@7 @22)" />
+    <Alias n="24" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/adc.h" />
+    <Alias n="25" Id="(@7 @24)" />
+    <Alias n="26" Uri="File=$(VsSolutionUri)/user_HEXtoDEC.h" />
+    <Alias n="27" Id="(@1 @26)" />
+    <Alias n="28" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/nvic.h" />
+    <Alias n="29" Id="(@7 @28)" />
+    <Alias n="30" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/nvic.h" />
+    <Alias n="31" Id="(@7 @30)" />
+    <Alias n="32" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/bitband.h" />
+    <Alias n="33" Id="(@7 @32)" />
+    <Alias n="34" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/variants/generic_stm32f103r/board/board.h" />
+    <Alias n="35" Id="(@7 @34)" />
+    <Alias n="36" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/avr/pgmspace.h" />
+    <Alias n="37" Id="(@7 @36)" />
+    <Alias n="38" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/printable.h" />
+    <Alias n="39" Id="(@7 @38)" />
+    <Alias n="40" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/libmaple.h" />
+    <Alias n="41" Id="(@7 @40)" />
+    <Alias n="42" Uri="File=$(ProgramFilesUri)/microsoft visual studio/2017/enterprise/vc/tools/msvc/14.16.27023/include/vcruntime.h" />
+    <Alias n="43" Id="(@7 @42)" />
+    <Alias n="44" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wirish_time.h" />
+    <Alias n="45" Id="(@7 @44)" />
+    <Alias n="46" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/tone.h" />
+    <Alias n="47" Id="(@7 @46)" />
+    <Alias n="48" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wiring_pulse.h" />
+    <Alias n="49" Id="(@7 @48)" />
+    <Alias n="50" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/avr/dtostrf.h" />
+    <Alias n="51" Id="(@7 @50)" />
+    <Alias n="52" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wstring.h" />
+    <Alias n="53" Id="(@7 @52)" />
+    <Alias n="54" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wirish_debug.h" />
+    <Alias n="55" Id="(@7 @54)" />
+    <Alias n="56" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wirish.h" />
+    <Alias n="57" Id="(@7 @56)" />
+    <Alias n="58" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wirish_math.h" />
+    <Alias n="59" Id="(@7 @58)" />
+    <Alias n="60" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/exti.h" />
+    <Alias n="61" Id="(@7 @60)" />
+    <Alias n="62" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/exti.h" />
+    <Alias n="63" Id="(@7 @62)" />
+    <Alias n="64" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/systick.h" />
+    <Alias n="65" Id="(@7 @64)" />
+    <Alias n="66" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/hardwareserial.h" />
+    <Alias n="67" Id="(@7 @66)" />
+    <Alias n="68" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/usb_serial.h" />
+    <Alias n="69" Id="(@7 @68)" />
+    <Alias n="70" Uri="File=$(ProgramFilesUri)/microsoft visual studio/2017/enterprise/vc/tools/msvc/14.16.27023/include/concurrencysal.h" />
+    <Alias n="71" Id="(@7 @70)" />
+    <Alias n="72" Uri="File=$(ProgramFilesUri)/microsoft visual studio/2017/enterprise/vc/tools/msvc/14.16.27023/include/sal.h" />
+    <Alias n="73" Id="(@7 @72)" />
+    <Alias n="74" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/util.h" />
+    <Alias n="75" Id="(@7 @74)" />
+    <Alias n="76" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/stream.h" />
+    <Alias n="77" Id="(@7 @76)" />
+    <Alias n="78" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wprogram.h" />
+    <Alias n="79" Id="(@7 @78)" />
+    <Alias n="80" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/pwm.h" />
+    <Alias n="81" Id="(@7 @80)" />
+    <Alias n="82" Uri="File=$(VsSolutionUri)/user_Set_Correlation.h" />
+    <Alias n="83" Id="(@1 @82)" />
+    <Alias n="84" Uri="File=$(VsSolutionUri)/user_initialization.h" />
+    <Alias n="85" Id="(@1 @84)" />
+    <Alias n="86" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/gpio.h" />
+    <Alias n="87" Id="(@7 @86)" />
+    <Alias n="88" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/gpio.h" />
+    <Alias n="89" Id="(@7 @88)" />
+    <Alias n="90" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/io.h" />
+    <Alias n="91" Id="(@7 @90)" />
+    <Alias n="92" Uri="File=$(VsSolutionUri)/__vm/.Universal_controller.vsarduino.h" />
+    <Alias n="93" Id="(@1 @92)" />
+    <Alias n="94" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/arduino.h" />
+    <Alias n="95" Id="(@7 @94)" />
+    <Alias n="96" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/hardwaretimer.h" />
+    <Alias n="97" Id="(@7 @96)" />
+    <Alias n="98" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/timer.h" />
+    <Alias n="99" Id="(@7 @98)" />
+    <Alias n="100" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/stm32f1/include/series/timer.h" />
+    <Alias n="101" Id="(@7 @100)" />
+    <Alias n="102" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wcharacter.h" />
+    <Alias n="103" Id="(@7 @102)" />
+    <Alias n="104" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/boards.h" />
+    <Alias n="105" Id="(@7 @104)" />
+    <Alias n="106" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/libmaple_types.h" />
+    <Alias n="107" Id="(@7 @106)" />
+    <Alias n="108" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wirish_types.h" />
+    <Alias n="109" Id="(@7 @108)" />
+    <Alias n="110" Uri="File=$(ProgramFilesUri)/microsoft visual studio/2017/enterprise/vc/tools/msvc/14.16.27023/include/vadefs.h" />
+    <Alias n="111" Id="(@7 @110)" />
+    <Alias n="112" Uri="File=$(ProgramFilesUri)/microsoft visual studio/2017/enterprise/vc/tools/msvc/14.16.27023/include/codeanalysis/sourceannotations.h" />
+    <Alias n="113" Id="(@7 @112)" />
+    <Alias n="114" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/wirish_constants.h" />
+    <Alias n="115" Id="(@7 @114)" />
+    <Alias n="116" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/bit_constants.h" />
+    <Alias n="117" Id="(@7 @116)" />
+    <Alias n="118" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/ext_interrupts.h" />
+    <Alias n="119" Id="(@7 @118)" />
+    <Alias n="120" Uri="File=$(VsSolutionUri)/user_lorainit.h" />
+    <Alias n="121" Id="(@1 @120)" />
+    <Alias n="122" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/variants/generic_stm32f103r/variant.h" />
+    <Alias n="123" Id="(@7 @122)" />
+    <Alias n="124" Uri="File=$(VsSolutionUri)/user_judgement.h" />
+    <Alias n="125" Id="(@1 @124)" />
+    <Alias n="126" Uri="File=$(ProgramFilesUri)/microsoft visual studio/2017/enterprise/vc/tools/msvc/14.16.27023/include/stdint.h" />
+    <Alias n="127" Id="(@7 @126)" />
+    <Alias n="128" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/print.h" />
+    <Alias n="129" Id="(@7 @128)" />
+    <Alias n="130" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/cores/maple/avr/interrupt.h" />
+    <Alias n="131" Id="(@7 @130)" />
+    <Alias n="132" Uri="File=$(VsSolutionUri)/AT24CXX.h" />
+    <Alias n="133" Id="(@1 @132)" />
+    <Alias n="134" Uri="File=file:///d:/arduino/hardware/arduino_stm32-master/stm32f1/system/libmaple/include/libmaple/delay.h" />
+    <Alias n="135" Id="(@7 @134)" />
+    <Alias n="136" Uri="File=$(VsSolutionUri)/Universal_controller.ino" />
+    <Alias n="137" Id="(@1 @136)" />
+    <Alias n="138" Uri="File=$(VsSolutionUri)/user_A011_E011.cpp" />
+    <Alias n="139" Uri="File=$(VsSolutionUri)/user_A021_E021.cpp" />
+    <Alias n="140" Uri="File=$(VsSolutionUri)/user_A025_E025.cpp" />
+    <Alias n="141" Uri="File=$(VsSolutionUri)/user_crc8.cpp" />
+    <Alias n="142" Uri="File=$(VsSolutionUri)/i2c.cpp" />
+    <Alias n="143" Uri="File=$(VsSolutionUri)/user_HEXtoDEC.cpp" />
+    <Alias n="144" Uri="File=$(VsSolutionUri)/user_Set_Correlation.cpp" />
+    <Alias n="145" Uri="File=$(VsSolutionUri)/user_initialization.cpp" />
+    <Alias n="146" Uri="File=$(VsSolutionUri)/user_lorainit.cpp" />
+    <Alias n="147" Uri="File=$(VsSolutionUri)/user_judgement.cpp" />
+    <Alias n="148" Uri="File=$(VsSolutionUri)/AT24CXX.cpp" />
+  </IdentifierAliases>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="C++ 项目文件" ValueLabel="具有类别">
+      <Condition Expression="HasCategory('CodeSchema_PoundIncludeFile')" />
+      <Setter Property="Background" Value="#FFEFEFEF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="外部" ValueLabel="具有类别">
+      <Condition Expression="HasCategory('Externals')" />
+      <Setter Property="Background" Value="#FFA08080" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="源文件" ValueLabel="具有类别">
+      <Condition Expression="HasCategory('CodeSchema_ProjectItem')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="#include 组" ValueLabel="具有类别">
+      <Condition Expression="HasCategory('CodeSchema_PoundIncludeGroup')" />
+      <Setter Property="Background" Value="#FFEFEFEF" />
+    </Style>
+  </Styles>
+  <Paths>
+    <Path Id="ProgramFiles" Value="C:\Program Files (x86)" />
+    <Path Id="ProgramFilesUri" Value="file:///C:/Program Files (x86)" />
+    <Path Id="VsSolution" Value="C:\Users\Administrator\Desktop\刘家辉\Universal_controller\Universal_controller" />
+    <Path Id="VsSolutionUri" Value="file:///C:/Users/Administrator/Desktop/刘家辉/Universal_controller/Universal_controller" />
+  </Paths>
+</DirectedGraph>

@@ -89,8 +89,13 @@ static String imp0[5], imp1[5], imp2[5], imp3[5], imp4[5];//执行语句块数�
 static String Strcon[5],Strimp[5];//实际使用到的条件语句块以及执行语句块，用来充当变量的数组赋值
 static size_t i_0 = 0, i_1 = 0, i_2 = 0, i_3 = 0;//循环次数函数
 
+//static unsigned char Receive_Data[128];//用来存放接收到的数据
+//static int Receive_Length = 0;//接收数据的长度
+//static int CRC_Check_num = 0x00;//CRC校验的数值
+
 
 //全局函数声明
+//void LORA_Receive_information(void);//LORA接收函数
 void Receive_A013(unsigned char * Judgement_Data, int Judgement_Length);  //A013函数
 void Receive_A020(unsigned char * Judgement_Data, int Judgement_Length);  //A020函数
 void Receive_A022(unsigned char * Judgement_Data, int Judgement_Length);  //A022函数
@@ -110,6 +115,7 @@ int Condition_Judgment(int conx, int ret_condition_test);//条件语句判断函
 int Implement_Handle(int impx, int ret_Implement_test);
 void array_empty_test();//数组清空函数
 void array_print_test();//数组打印测试函数
+void celue();//策略函数
 
 //类结构声明
 //LORA开关型设备的通用回执状态(结构类型，枚举)

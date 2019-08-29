@@ -6,6 +6,7 @@
 #include "user_initialization.h"
 #include "user_HEXtoDEC.h"
 
+
 //函 数 名：Receive_A013() 
 //功能描述：A013的执行函数
 //函数说明：设置LORA主设备的区域以及SN
@@ -2829,6 +2830,8 @@ int data_processing(String AssStat)
 	//这里的for循环是为了处理条件语句块的真假
 	for (size_t i = 0; i < ret_condition_test; i++)
 	{
+		LORA_Receive_information();	//LORA的接收函数
+
 		//将条件判断函数Condition_Judgment的返回值传入返回值数组Return_value[]
 		//0代表假，1代表真，2代表与，3代表或
 		Return_value[i] = Condition_Judgment(i, ret_condition_test);
@@ -2987,6 +2990,8 @@ int data_processing(String AssStat)
 	//这里的for循环是为了去执行 执行语句。
 	for (size_t i = 0; i < ret_implement_test; i++)
 	{
+		LORA_Receive_information();	//LORA的接收函数
+
 		if (Implement_Handle(i, ret_implement_test) == 0)
 		{
 			//这里应该有错误处理
@@ -3030,6 +3035,8 @@ int condition_test(String condition_1)
 	//得到分号;的个数
 	for (size_t i = 0; i < con_1.length(); i++)
 	{
+		LORA_Receive_information();	//LORA的接收函数
+
 		if (con_1.indexOf(";") != -1)
 		{
 			con_1 = con_1.substring(con_1.indexOf(";") + 1, con_1.length());
@@ -3062,6 +3069,8 @@ int condition_test(String condition_1)
 		//将con[i]拆分成coni[i]
 		for (size_t i = 0; i < CON[0].length(); i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			//得到逗号,的个数comma_num
 			if (CON[i_0].indexOf(",") != -1)
 			{
@@ -3108,8 +3117,13 @@ int condition_test(String condition_1)
 
 		for (size_t i = 0; i < for_num2_con; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			con0[i] = coni.substring(0, coni.indexOf(","));
-			Serial.println(String("con0[ ") + i + " ]:  " + con0[i]);//输出第一条判断语句
+			if (debug == 1)
+			{
+				Serial.println(String("con0[ ") + i + " ]:  " + con0[i]);//输出第一条判断语句
+			}
 			coni.remove(0, coni.indexOf(",") + 1);//将con1删减一部分
 		}
 		Serial.println("");
@@ -3137,6 +3151,8 @@ int condition_test(String condition_1)
 	//截取段数，并且输出
 	for (i_0 = 0; i_0 < for_num1_con; i_0++)
 	{
+		LORA_Receive_information();	//LORA的接收函数
+
 		CON[i_0] = condition_1.substring(0, condition_1.indexOf(";"));//截取出CON[i]
 		coni = CON[i_0];//CON[i]的备份
 		if (debug == 1)
@@ -3150,6 +3166,8 @@ int condition_test(String condition_1)
 		//将CON[i]拆分成coni[i]
 		for (i_1 = 0; i_1 < CON[i_0].length(); i_1++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			//得到逗号,的个数comma_num
 			if (CON[i_0].indexOf(",") != -1)
 			{
@@ -3232,6 +3250,8 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
+					LORA_Receive_information();	//LORA的接收函数
+
 					if (i < for_num2_con)
 					{
 						con0[i] = coni.substring(0, coni.indexOf(","));
@@ -3249,6 +3269,8 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
+					LORA_Receive_information();	//LORA的接收函数
+
 					if (i < for_num2_con)
 					{
 						con1[i] = coni.substring(0, coni.indexOf(","));
@@ -3266,6 +3288,8 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
+					LORA_Receive_information();	//LORA的接收函数
+
 					if (i < for_num2_con)
 					{
 						con2[i] = coni.substring(0, coni.indexOf(","));
@@ -3283,6 +3307,8 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
+					LORA_Receive_information();	//LORA的接收函数
+
 					if (i < for_num2_con)
 					{
 						con3[i] = coni.substring(0, coni.indexOf(","));
@@ -3300,6 +3326,8 @@ int condition_test(String condition_1)
 			{
 				for (size_t i = 0; i < 5; i++)
 				{
+					LORA_Receive_information();	//LORA的接收函数
+
 					if (i < for_num2_con)
 					{
 						con4[i] = coni.substring(0, coni.indexOf(","));
@@ -3341,6 +3369,8 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strcon[i] = con0[i];
 			if (debug == 1)
 			{
@@ -3356,6 +3386,8 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strcon[i] = con1[i];
 			if (debug == 1)
 			{
@@ -3371,6 +3403,8 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strcon[i] = con2[i];
 			if (debug == 1)
 			{
@@ -3386,6 +3420,8 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strcon[i] = con3[i];
 			if (debug == 1)
 			{
@@ -3401,6 +3437,8 @@ int Condition_Judgment(int conx, int ret_condition_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strcon[i] = con4[i];
 			if (debug == 1)
 			{
@@ -3479,11 +3517,14 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	long top_Int[2];//Trinomial Operational Processing三项式操作处理
 	float top_Float[2];//Trinomial Operational Processing三项式操作处理
 	int imp_time;
+	unsigned long imptime_old;
 	//---------------------------------
 	if (impx == 0)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strimp[i] = imp0[i];
 			if (debug == 1)
 			{
@@ -3499,6 +3540,8 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strimp[i] = imp1[i];
 			if (debug == 1)
 			{
@@ -3514,6 +3557,8 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strimp[i] = imp2[i];
 			if (debug == 1)
 			{
@@ -3529,6 +3574,8 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strimp[i] = imp3[i];
 			if (debug == 1)
 			{
@@ -3544,6 +3591,8 @@ int Implement_Handle(int impx, int ret_Implement_test)
 	{
 		for (int i = 0; i < 5; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			Strimp[i] = imp4[i];
 			if (debug == 1)
 			{
@@ -3605,22 +3654,30 @@ int Implement_Handle(int impx, int ret_Implement_test)
 				digitalWrite(DO1, LOW);
 			}
 			
+			//--------得到延时的时间值--------
 			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
 
 			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
 
 			if (debug == 1)
 			{
 				Serial.print("imp_time = ");
 				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
 			}
 
 			if (debug == 1)
 			{
 				imp_time = 1;
 			}
-
-			delay(imp_time*1000);//持续时间
+			while (millis() - imptime_old <= imp_time * 1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
+			//------------------------------
 
 			//执行三项式的后半段
 			if (top_Int[1] == 0x01)
@@ -3716,19 +3773,25 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
 
 			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
 
 			if (debug == 1)
 			{
 				Serial.print("imp_time = ");
 				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
 			}
 
 			if (debug == 1)
 			{
 				imp_time = 1;
 			}
-
-			delay(imp_time * 1000);//持续时间
+			while (millis()- imptime_old<= imp_time*1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
 			//------------------------------
 
 			AV1 = (top_Float[1] / 0.011) / 0.8056;
@@ -3795,20 +3858,26 @@ int Implement_Handle(int impx, int ret_Implement_test)
 			char *c = (char *)Strimp[2].c_str();//得到字符串的指针
 
 			imp_time = charhex_to_dec(c);//将16进制字符串转换为10进制数字
+			imptime_old = millis();
 
 			if (debug == 1)
 			{
 				Serial.print("imp_time = ");
 				Serial.println(imp_time);
+				Serial.print("imptime_old = ");
+				Serial.println(imptime_old);
 			}
 
 			if (debug == 1)
 			{
 				imp_time = 1;
 			}
-
-			delay(imp_time * 1000);//持续时间
-			//-----------------------------
+			while (millis() - imptime_old <= imp_time * 1000)
+			{
+				LORA_Receive_information();
+			}
+			//delay(imp_time * 1000);//持续时间
+			//------------------------------
 		}
 		else
 		{
@@ -3849,6 +3918,8 @@ int implement_test(String implement_1)
 	//得到分号;的个数
 	for (size_t i = 0; i < imp_1.length(); i++)
 	{
+		LORA_Receive_information();	//LORA的接收函数
+
 		if (imp_1.indexOf(";") != -1)
 		{
 			imp_1 = imp_1.substring(imp_1.indexOf(";") + 1, imp_1.length());
@@ -3881,6 +3952,8 @@ int implement_test(String implement_1)
 		//将con[i]拆分成coni[i]
 		for (size_t i = 0; i < IMP[0].length(); i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			//得到逗号,的个数comma_num
 			if (IMP[i_0].indexOf(",") != -1)
 			{
@@ -3927,6 +4000,8 @@ int implement_test(String implement_1)
 
 		for (size_t i = 0; i < for_num2_imp; i++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			imp0[i] = impi.substring(0, impi.indexOf(","));
 			Serial.println(String("imp0[ ") + i + " ]:  " + imp0[i]);//输出第一条判断语句
 			impi.remove(0, impi.indexOf(",") + 1);//将imp1删减一部分
@@ -3951,6 +4026,8 @@ int implement_test(String implement_1)
 	//截取段数，并且输出
 	for (i_2 = 0; i_2 < for_num1_imp; i_2++)
 	{
+		LORA_Receive_information();	//LORA的接收函数
+
 		IMP[i_2] = implement_1.substring(0, implement_1.indexOf(";"));//截取出IMP[i]
 		impi = IMP[i_2];//IMP[i]的备份
 		if (debug == 1)
@@ -3964,6 +4041,8 @@ int implement_test(String implement_1)
 		//将CON[i]拆分成coni[i]
 		for (i_3 = 0; i_3 < IMP[i_2].length(); i_3++)
 		{
+			LORA_Receive_information();	//LORA的接收函数
+
 			//得到逗号,的个数comma_num
 			if (IMP[i_2].indexOf(",") != -1)
 			{
@@ -4334,5 +4413,113 @@ void array_print_test()
 		delay(50);
 	}
 }
+
+void celue()
+{
+	//读取设置的自动策略
+	if (AT24CXX_ReadOneByte(13) > 0)
+	{
+		unsigned char EEPROM_Data[200];//用来存放接收到的数据
+		String AssStat;//Association_statement，关联语句
+		int ED_Indexes = 0;//EEPROM_Data的索引值ED_Indexes
+		int Sentence_num = AT24CXX_ReadOneByte(13);//策略语句的个数
+		int Sentence_begin;//策略语句的开始处
+		int Sentence_end;//策略语句的开始处
+		//int Sentence_begin[5];//策略语句的开始处
+		//int Sentence_end[5];//策略语句的开始处
+		//------------------------------------
+
+		for (size_t i = 0; i < Sentence_num; i++)
+		{
+			LORA_Receive_information();	//LORA的接收函数
+
+			if (i == 0)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(90);
+				Sentence_end = AT24CXX_ReadOneByte(91);
+				if (debug == 1)
+				{
+					Serial.println("策略语句1的起始结束位置赋值1111111111111111111111111");
+					//delay(1500);
+				}
+			}
+			else if (i == 1)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(92);
+				Sentence_end = AT24CXX_ReadOneByte(93);
+				if (debug == 1)
+				{
+					Serial.println("策略语句2的起始结束位置赋值2222222222222222222222222");
+					//delay(1500);
+				}
+			}
+			else if (i == 2)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(94);
+				Sentence_end = AT24CXX_ReadOneByte(95);
+				if (debug == 1)
+				{
+					Serial.println("策略语句3的起始结束位置赋值3333333333333333333333333333");
+				}
+			}
+			else if (i == 3)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(96);
+				Sentence_end = AT24CXX_ReadOneByte(97);
+				if (debug == 1)
+				{
+					Serial.println("策略语句4的起始结束位置赋值");
+				}
+			}
+			else if (i == 4)
+			{
+				Sentence_begin = AT24CXX_ReadOneByte(98);
+				Sentence_end = AT24CXX_ReadOneByte(99);
+				if (debug == 1)
+				{
+					Serial.println("策略语句5的起始结束位置赋值");
+					//delay(1000);
+				}
+			}
+
+			ED_Indexes = 0;//清空ED_Indexes的值
+			//这里将EEPROM语句的值赋给EEPROM_Data数组
+			for (size_t ix = Sentence_begin; ix <= Sentence_end; ix++)
+			{
+				LORA_Receive_information();	//LORA的接收函数
+
+				EEPROM_Data[ED_Indexes] = AT24CXX_ReadOneByte(ix);
+				if (debug == 1)
+				{
+					/*Serial.println(String("EEPROM_Data[") + ED_Indexes + "] = " + String(EEPROM_Data[ED_Indexes], HEX));
+					Serial.flush();*/
+				}
+				ED_Indexes++;
+			}
+
+			//delay(1000);
+			AssStat.remove(0);//删除AssStat
+			//将EEPROM_Data数组的值赋给一个string
+			for (size_t i = 8; i < ED_Indexes - 7; i++)
+			{
+				//强制转换为char类型
+				AssStat.concat(String(char(EEPROM_Data[i])));//拼接成关联语句，AssStat
+			}
+			if (debug == 1)
+			{
+				Serial.println(AssStat);
+				/*delay(3500);*/
+			}
+
+			array_print_test();//数组打印测试
+
+			//先分割#，分割为条件语句以及执行语句
+			data_processing(AssStat);
+
+			AssStat.remove(0);//删除AssStat
+		}
+	}
+}
+
 
 

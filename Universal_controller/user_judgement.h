@@ -31,7 +31,7 @@
 #include"user_crc8.h"
 
  //全局变量
-static unsigned char Judgement_Data[200];   	//用来存放接收到的数据
+static unsigned char Judgement_Data[128];   	//用来存放接收到的数据
 static int Judgement_Length = 0;
 static int Judgement_flag = 0;
 //static int Judgement_DeviceTypeID1 = 0xC0;	//这里设置了设备类型
