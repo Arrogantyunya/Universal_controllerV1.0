@@ -18,7 +18,9 @@
 
 //全局函数声明
 int LORA_Initialization(void);//初始化函数
-void LORA_Receive_information(void);//LORA接收函数
+void LORA_Receive_information(void);
+unsigned char Signal_query();
+//LORA接收函数
 String addr_write();
 
 //全局变量

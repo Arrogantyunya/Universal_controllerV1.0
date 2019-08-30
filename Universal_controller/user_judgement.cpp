@@ -53,7 +53,7 @@ unsigned char Judgement_function(unsigned char * Judgement_Data, int Judgement_L
 				if (Judgement_Data[3] == Judgement_Length + 0x01 - 0x0B)
 				{
 					//判断设备类型
-					if (Judgement_Data[4] == 0xC0 && Judgement_Data[5] == 0x02)
+					if (Judgement_Data[4] == 0xC0 /*&& Judgement_Data[5] == 0x02*/)
 					{
 						//判断帧ID
 						if (Judgement_Data[1] == 0xA0 && Judgement_Data[2] == 0x11)//帧ID为A011

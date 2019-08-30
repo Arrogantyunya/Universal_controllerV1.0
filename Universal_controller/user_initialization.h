@@ -20,11 +20,11 @@
 #ifndef _USER_INITIALIZATION_h
 #define _USER_INITIALIZATION_h	//防止头文件user_initialization.h被重复调用
 
-//#if defined(ARDUINO) && ARDUINO >= 100
-//	#include <Arduino.h>//引用标准库的头文件
-//#else
-//	#include "WProgram.h"
-//#endif
+#if defined(ARDUINO) && ARDUINO >= 100
+	#include <Arduino.h>//引用标准库的头文件
+#else
+	#include "WProgram.h"
+#endif
 
 #include <arduino.h>
 #include "user_lorainit.h"
