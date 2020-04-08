@@ -72,7 +72,7 @@ static int E021_FrameEnd6 = 0x0A;		//E021的帧尾6
 static unsigned char E021_Check_Data[50];   //用来存放接收到的数据
 static int E021_Check_Length = 0;
 
-static unsigned long Delivery_time = 120;		//用于处理定时发送的新时间变量
+static unsigned long Delivery_time = 10;		//用于处理定时发送的新时间变量
 static unsigned long Delivery_oldtime = 0;		//用于处理定时发送的旧时间变量
 
 

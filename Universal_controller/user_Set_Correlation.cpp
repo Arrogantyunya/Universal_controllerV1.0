@@ -2320,8 +2320,8 @@ unsigned char Send_E020(int Receive_IsBroadcast,int E020_status)
 	return 0;
 }
 
-//函 数 名：E025_init() 
-//功能描述：E025的的初始化函数
+//函 数 名：E020_init() 
+//功能描述：E020的的初始化函数
 //函数说明：
 //调用函数：
 //全局变量：
